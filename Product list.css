@@ -1,0 +1,120 @@
+body {
+  padding: 1.5em;
+  background: #fff;
+  background: whitesmoke;
+}
+
+/*SIDE BAR*/
+.sticky-offset {
+  top: 56px;
+}
+
+#body-row {
+  margin-left:0;
+  margin-right:0;
+  display: flex;
+
+}
+#sidebar-container {
+  min-height: 100vh;   
+  background-color: #333;
+  padding: 0;
+}
+
+.sidebar-expanded {
+  width: 230px;
+}
+
+  /* Menu item*/
+#sidebar-container .list-group a {
+  height: 50px;
+  color: white;
+}
+
+  /* Submenu item*/
+#sidebar-container .list-group .sidebar-submenu a {
+  height: 45px;
+  padding-left: 30px;
+}
+.sidebar-submenu {
+  font-size: 0.9rem;
+}
+
+  /* Separators */
+.sidebar-separator-title {
+  background-color: #333;
+  height: 35px;
+}
+.logo-separator {
+  background-color: #333;    
+  height: 60px;
+}
+  /* Opened submenu icon */
+#sidebar-container .list-group .list-group-item[aria-expanded="true"] .submenu-icon::after {
+content: " \f0da";
+font-family: FontAwesome;
+display: inline;
+text-align: right;
+padding-left: 10px;
+}
+
+/*PRODUCT LIST*/
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between; 
+  flex-wrap: wrap;
+}
+.container .product {
+  width: 400px;
+  height: 250px;
+  display: flex;
+  margin: 1em 0em;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0px 0px 21px 3px rgba(0, 0, 0, 0.15);
+}
+.container .product .img-container {
+  flex: 2;
+}
+.container .product .img-container img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.container .product .product-info {
+  background: #fff;
+  flex: 3;
+  position: relative;
+}
+.container .product .product-info .product-content {
+  padding: .2em 0 0 1em;
+}
+.container .product .product-info .product-content h1 {
+  font-size: 1.5em;
+}
+.container .product .product-info .product-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.container .product .product-info .product-content ul li {
+  color: #636363;
+  font-size: .9em;
+  
+}
+.container .product .product-info .product-content .timer {
+  font-size: 1.5em;
+  font-weight: bold;
+  position: absolute;
+  bottom: 5;
+}
+
+.container .product .product-info .product-content .buttons {
+  position: absolute;
+  right: 10;
+  bottom: 10;
+}
+

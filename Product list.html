@@ -3,11 +3,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="Product list.css">
     <title>Product list</title>
 </head>
 <body>
+  <div class="row" id="body-row">
+
+    <!--sidebar-->
+    <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-3">
+        <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
+        <!-- Bootstrap List Group -->
+        <ul class="list-group sticky-top sticky-offset">
+            <!-- Separator with title -->
+            <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+                <small>CATEGORY</small>
+            </li>
+            <!-- /END Separator -->
+            <!-- Menu with submenu -->
+            <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-start align-items-center">
+                    <span class="fa fa-dashboard fa-fw mr-3"></span>
+                    <span class="menu-collapsed">Category 1</span>
+                    <span class="submenu-icon ml-auto"></span>
+                </div>
+            </a>
+            <!-- Submenu content -->
+            <div id="submenu1" class="collapse sidebar-submenu">
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                    <span class="menu-collapsed">Charts</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                    <span class="menu-collapsed">Reports</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                    <span class="menu-collapsed">Tables</span>
+                </a>
+            </div>
+            <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-start align-items-center">
+                    <span class="fa fa-user fa-fw mr-3"></span>
+                    <span class="menu-collapsed">Category 2</span>
+                    <span class="submenu-icon ml-auto"></span>
+                </div>
+            </a>
+            <!-- Submenu content -->
+            <div id="submenu2" class="collapse sidebar-submenu">
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                    <span class="menu-collapsed">Settings</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                    <span class="menu-collapsed">Password</span>
+                </a>
+            </div>
+            <a href="#" class="bg-dark list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-start align-items-center">
+                    <span class="fa fa-tasks fa-fw mr-3"></span>
+                    <span class="menu-collapsed">Category 3</span>
+                </div>
+            </a>
+            <!-- Logo -->
+            <li class="list-group-item logo-separator d-flex justify-content-center">
+                <img src="https://v4-alpha.getbootstrap.com/assets/brand/bootstrap-solid.svg" width="30" height="30">
+            </li>
+        </ul>
+        <!-- List Group END-->
+    </div>
     
-
-
+    <!--Product-->
+    <div class="container col-9">     
+      <div class="product col-6">
+        <div class="img-container">
+          <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?dpr=1&auto=compress,format&fit=crop&w=1400&h=&q=80&cs=tinysrgb&crop=">
+        </div>
+        <div class="product-info">
+          <div class="product-content">
+            <h1>Nike Airmax</h1>
+            <ul>
+              <li>Open date: 01/01/1999</li>
+              <li>Number of bids: 15</li>
+              <li>Auto buy: 500$</li>
+              <li>Highest bid: <span style="font-weight: bold;">100$</span> (usename1)</li>
+            </ul>
+            <span class="timer">2d 12:37:25</span>
+            <div class="buttons">
+              <button type="button" class="btn btn-outline-dark btn-sm"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>     
+      <div class="product col-6">
+        <div class="img-container">
+          <img src="https://images.unsplash.com/photo-1434493907317-a46b5bbe7834?dpr=1&auto=compress,format&fit=crop&w=1500&h=&q=80&cs=tinysrgb&crop=">
+        </div>
+        <div class="product-info">
+          <div class="product-content">
+              <h1>Apple watch</h1>
+              <ul>
+                <li>Open date: 01/01/1999</li>
+                <li>Number of bids: 15</li>
+                <li>Auto buy: 1500$</li>
+                <li>Highest bid: <span style="font-weight: bold;">560$</span> (usename2)</li>
+              </ul>
+              <span class="timer">2d 12:37:25</span>
+              <div class="buttons">
+                <button type="button" class="btn btn-outline-dark btn-sm"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="product col-6">
+        <div class="img-container">
+          <img src="https://images.unsplash.com/photo-1434493907317-a46b5bbe7834?dpr=1&auto=compress,format&fit=crop&w=1500&h=&q=80&cs=tinysrgb&crop=">
+        </div>
+        <div class="product-info">
+          <div class="product-content">
+              <h1>Apple watch</h1>
+              <ul>
+                <li>Open date: 01/01/1999</li>
+                <li>Number of bids: 15</li>
+                <li>Auto buy: 1500$</li>
+                <li>Highest bid: <span style="font-weight: bold;">560$</span> (usename2)</li>
+              </ul>
+              <span class="timer">2d 12:37:25</span>
+              <div class="buttons">
+                <button type="button" class="btn btn-outline-dark btn-sm"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="product col-6">
+        <div class="img-container">
+          <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?dpr=1&auto=compress,format&fit=crop&w=1400&h=&q=80&cs=tinysrgb&crop=">
+        </div>
+        <div class="product-info">
+          <div class="product-content">
+            <h1>Nike Airmax</h1>
+            <ul>
+              <li>Open date: 01/01/1999</li>
+              <li>Number of bids: 15</li>
+              <li>Auto buy: 500$</li>
+              <li>Highest bid: <span style="font-weight: bold;">100$</span> (usename1)</li>
+            </ul>
+            <span class="timer">2d 12:37:25</span>
+            <div class="buttons">
+              <button type="button" class="btn btn-outline-dark btn-sm"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="product col-6">
+        <div class="img-container">
+          <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?dpr=1&auto=compress,format&fit=crop&w=1400&h=&q=80&cs=tinysrgb&crop=">
+        </div>
+        <div class="product-info">
+          <div class="product-content">
+            <h1>Nike Airmax</h1>
+            <ul>
+              <li>Open date: 01/01/1999</li>
+              <li>Number of bids: 15</li>
+              <li>Auto buy: 500$</li>
+              <li>Highest bid: <span style="font-weight: bold;">100$</span> (usename1)</li>
+            </ul>
+            <span class="timer">2d 12:37:25</span>
+            <div class="buttons">
+              <button type="button" class="btn btn-outline-dark btn-sm"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>     
+      <div class="product col-6">
+        <div class="img-container">
+          <img src="https://images.unsplash.com/photo-1434493907317-a46b5bbe7834?dpr=1&auto=compress,format&fit=crop&w=1500&h=&q=80&cs=tinysrgb&crop=">
+        </div>
+        <div class="product-info">
+          <div class="product-content">
+              <h1>Apple watch</h1>
+              <ul>
+                <li>Open date: 01/01/1999</li>
+                <li>Number of bids: 15</li>
+                <li>Auto buy: 1500$</li>
+                <li>Highest bid: <span style="font-weight: bold;">560$</span> (usename2)</li>
+              </ul>
+              <span class="timer">2d 12:37:25</span>
+              <div class="buttons">
+                <button type="button" class="btn btn-outline-dark btn-sm"><i class="fa fa-bookmark" aria-hidden="true"></i></button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
