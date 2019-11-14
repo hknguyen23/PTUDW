@@ -3,29 +3,68 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Online Auction</title>
+		<link rel="stylesheet" type="text/css" href="style.css">	
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	</head>
 	
 	<body>
 		<header>
-			<div class="d-flex align-items-center p-2 px-md-3 border-bottom bg-dark shadow-sm">
+			<div class="d-flex align-items-center p-2 border-bottom bg-dark shadow-sm">
 				<nav class="mr-md-auto">
-					<a class="navbar-brand text-white" href="#">Online Auction</a>
-					<a class="pl-2 pr-1 text-white" href="#">Home</a>
-					<a class="pl-2 pr-1 text-white" href="#">About</a>
-
+					<a class="navbar-brand text-white" href="#">
+						<i class="fa fa-gavel fa-lg" aria-hidden="true"></i>
+						Online Auction
+					</a>
+					
+					<a class="pl-2 pr-2 text-white" href="#">
+						<i class="fa fa-home fa-lg" aria-hidden="true"></i>
+						Home
+					</a>
+					
+					<a class="pl-2 pr-3 text-white" href="#">
+						<i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+						About
+					</a>
+					
+					<a class="dropdown-toggle text-white" href="#" data-toggle="dropdown" aria-expanded="false">
+						<i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+						Menu
+					</a>
+					
+					<ul class="dropdown-menu">
+						<li class="dropdown-submenu" data-toggle="dropdown" aria-expanded="false">
+							<a class="dropdown-item" tabindex="-1" href="#:;">Điện tử</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" tabindex="-1" href="#:;">Máy tính xách tay</a></li>
+								<li><a class="dropdown-item" tabindex="-1" href="#:;">Điện thoại thông minh</a></li>
+							</ul>
+						</li>
+						<li><a class="dropdown-item" href="#">Something else here</a></li>
+						<li><a class="dropdown-item" href="#">Something else here</a></li>
+					</ul>
 				</nav>
 				
 				<input class="form-control col-md-3 mr-2 pl-3" type="text" placeholder="Search">
-				<a class="btn btn-outline-success mr-2 pl-3" href="#">Search</a>
+				<a class="btn btn-primary mr-2 pl-3" href="#">
+					<i class="fa fa-search fa-lg" aria-hidden="true"></i>
+					Search
+				</a>
 				
-				<a class="btn btn-outline-success mr-2 pl-3" href="#">Your account</a>
-				<a class="btn btn-outline-success pl-3" href="#">Sign Out</a>
-
+				<a class="btn btn-primary mr-2 pl-3" href="#">
+					<i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
+					Your Account
+				</a>
+				
+				<a class="btn btn-primary pl-3" href="#">
+					<i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+					Sign Out
+				</a>
 			</div>
 		</header>
 		
 		<main role="main">
+			<h2 class="text-center">Top 5 most views product</h2>
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
 				<ol class="carousel-indicators">
 					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -96,15 +135,53 @@
 					<span class="sr-only">Next</span>
 				</a>
 			</div>
-			
-			<footer class="container">
-				<p class="float-right"><a href="#">Back to top</a></p>
-				<p>© 2017-2019 Company, Inc. · <a href="">Privacy</a> · <a href="#">Terms</a></p>
-			</footer>
 		</main>
 		
+		<footer id="footer" class="footer-1">
+			<div class="main-footer text-white">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-sm-6 col-md-3">
+							<div>
+								<h5>ABOUT THIS WEBSITE</h5>
+								<p>About this website, little discription will goes here.. </p>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-3">
+							<h5>Card payment</h5>
+							<div>
+								<i class="fa fa-cc-visa fa-lg" aria-hidden="true"></i>
+								<i class="fa fa-cc-paypal fa-lg" aria-hidden="true"></i>
+								<i class="fa fa-cc-mastercard fa-lg" aria-hidden="true"></i>
+								<i class="fa fa-cc-discover fa-lg" aria-hidden="true"></i>
+								<i class="fa fa-cc-jcb fa-lg" aria-hidden="true"></i>
+							</div>	
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-3">
+							<div>
+								<h5>Get Started</h5>
+								<p>Want to bid, buy stuff with low cost</p>
+								<a class="btn btn-primary" href="#" target="_blank">Sign Up Now</a>
+							</div>
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-3">
+							<div>
+								<h5>Contact</h5>
+								<p>Mail: <a href="mailto:info@domain.com" title="glorythemes">info@domain.com</a></p>
+								<p>Tel: <a href="tel:0987654321">0987654321</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+				
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="script.js"></script>
 	</body>
 </html>
