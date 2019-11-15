@@ -3,6 +3,9 @@ body {
   background: #fff;
   background: whitesmoke;
 }
+.btn {
+  transition: none;
+}
 
 /*SIDE BAR*/
 .sticky-offset {
@@ -71,6 +74,7 @@ padding-left: 10px;
   height: 250px;
   display: flex;
   margin: 1em 0em;
+  padding: 0;
   border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
@@ -116,5 +120,12 @@ padding-left: 10px;
   position: absolute;
   right: 10;
   bottom: 10;
+}
+.container .product .product-info .product-content .btn-outline-dark:hover{
+  background-color: #fff !important;
+}
+
+.container .product .product-info .product-content .buttons:hover .fa{
+  color:green;
 }
 
