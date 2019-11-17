@@ -97,10 +97,18 @@ padding-left: 10px;
 .container .product .product-info .product-content {
   padding: .2em 0 0 1em;
 }
-.container .product .product-info .product-content h1 {
-  font-size: 1.5em;
+.container .product .product-info .product-content .title {
+  height: 3em; 
+  width: 212.96;
+  line-height: 1.5em;
+  overflow: hidden;
 }
+.container .product .product-info .product-content .title h1 {
+  font-size: 1.2em;
+}
+
 .container .product .product-info .product-content ul {
+  width: 212.96;
   list-style: none;
   padding-left: 0;
 }
@@ -108,7 +116,9 @@ padding-left: 10px;
 .container .product .product-info .product-content ul li {
   color: #000000;
   font-size: .9em;
-  
+  overflow: hidden;
+  text-emphasis: ellipsis;
+  white-space: nowrap;
 }
 .container .product .product-info .product-content .timer {
   font-size: 1.5em;
