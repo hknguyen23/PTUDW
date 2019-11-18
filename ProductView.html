@@ -105,26 +105,26 @@
 						<div> Danh mục: Điện tử > Điện thoại di động </div>
 						<div class="card" style="border: none;">
 							<div class="row mt-3">
-								<div class = "float-left col-sm-4">
+									<div class="" style="width: 35%;">
 									<img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg" src="assets/images/S10_1.jpg"
 										name="main_window" id="main_window" height="300" width="300"/>
-									<div class="row justify-content-around mt-3">
+									<div class="row justify-content-center mt-2">
 										<div>
-											<img class="dotted_grey mb-md-3" src="assets/images/S10_1.jpg" height="100" width="100" onmouseover="show(1)"/>
+											<img class="dotted_grey m-1" src="assets/images/S10_1.jpg" height="100" width="100" onmouseover="show(1)"/>
 										</div>
 										<div>
-											<img class="dotted_grey mb-md-3" src="assets/images/S10_2.jpg" height="100" width="100" onmouseover="show(2)"/>
+											<img class="dotted_grey m-1" src="assets/images/S10_2.jpg" height="100" width="100" onmouseover="show(2)"/>
 										</div>
 										<div>
-											<img class="dotted_grey mb-md-3" src="assets/images/S10_3.jpg" height="100" width="100" onmouseover="show(3)"/>
+											<img class="dotted_grey m-1" src="assets/images/S10_3.jpg" height="100" width="100" onmouseover="show(3)"/>
 										</div>
 										<div>
-											<img class="dotted_grey mb-md-3" src="assets/images/S10_4.jpg" height="100" width="100" onmouseover="show(4)"/>
+											<img class="dotted_grey m-1" src="assets/images/S10_4.jpg" height="100" width="100" onmouseover="show(4)"/>
 										</div>
 									</div>
 								</div>
 
-								<div class="p-4 float-right col-sm-8 shadow" id="product_detail" >
+								<div class="p-4 shadow-lg" style="width: 65%;" id="product_detail" >
 									<h3 style="color: royalblue;">Samsung Galaxy S10 (Black) 8GB+128GB </h3>
 									<div class="row my-4">
 										<div class="float-left col-md-4 text-right">
@@ -144,7 +144,7 @@
 											Tên người bán:
 										</div>
 										<div class="float-right col-md-8 text-left" id="seller" name="seller">
-											**** Ping <span name="seller-score" id="seller-score">(10)</span>
+											Tập Cận Bình <span name="seller-score" id="seller-score">(10)</span>
 										</div>
 									</div>
 
@@ -153,7 +153,7 @@
 											Người ra giá cao nhất:
 										</div>
 										<div class="float-right col-md-8 text-left" id="bidder" name="bidder">
-											Hồ Cẩm Đào  <span name="bidder-score" id="bidder-score">(8)</span>
+											**** Đào  <span name="bidder-score" id="bidder-score">(8)</span>
 										</div>
 									</div>
 
@@ -218,42 +218,44 @@
 									
 									<!-- lịch sử đấu giá -->
 									<div class="mt-3">
-										<button class="btn" onclick="extendTable('history')">Xem lịch sử đấu giá>></button>
-										<div style="display: none;" name="history" id="history">
-											<table  name="bidding_history" id="bidding_history" class="bidding_history mt-3" align="center"  border="1">
-												<tr>
-													<th>Thời điểm</th>
-													<th>Người mua</th>
-													<th>Giá</th>
-												</tr>
-												<tr>
-													<td>1/11/2019 10:43</td>
-													<td>**** Ping</td>
-													<td>19000000</td>
-												</tr>
-												<tr>
-													<td>1/11/2019 9:43</td>
-													<td>**** Phụng</td>
-													<td>18000000</td>
-												</tr>
-												<tr>
-													<td>1/11/2019 8:43</td>
-													<td>**** Chinh</td>
-													<td>17500000</td>
-												</tr>
-												<tr>
-													<td>1/11/2019 7:43</td>
-													<td>**** Dung</td>
-													<td>16900000</td>
-												</tr>
-												<tr>
-													<td>31/10/2019 23:43</td>
-													<td>**** Minh</td>
-													<td>15000000</td>
-												</tr>
-											</table>
+											<a href="#history" data-toggle="collapse">Xem lịch sử đấu giá
+												<i class="fa fa-angle-double-down"></i></a>
+											<div name="history" id="history" class="collapse">
+												<table name="bidding_history" id="bidding_history" class="bidding_history mt-3" align="center"
+													border="1">
+													<tr>
+														<th>Thời điểm</th>
+														<th>Người mua</th>
+														<th>Giá</th>
+													</tr>
+													<tr>
+														<td>1/11/2019 10:43</td>
+														<td>**** Ping</td>
+														<td>19000000</td>
+													</tr>
+													<tr>
+														<td>1/11/2019 9:43</td>
+														<td>**** Phụng</td>
+														<td>18000000</td>
+													</tr>
+													<tr>
+														<td>1/11/2019 8:43</td>
+														<td>**** Chinh</td>
+														<td>17500000</td>
+													</tr>
+													<tr>
+														<td>1/11/2019 7:43</td>
+														<td>**** Dung</td>
+														<td>16900000</td>
+													</tr>
+													<tr>
+														<td>31/10/2019 23:43</td>
+														<td>**** Minh</td>
+														<td>15000000</td>
+													</tr>
+												</table>
+											</div>
 										</div>
-									</div>
 								</div>
 							</div>
 						</div>
