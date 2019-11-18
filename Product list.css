@@ -6,6 +6,10 @@ body {
   transition: none;
 }
 
+.container{
+  margin-left:250px;  
+
+}
 /* RIBBON */
 .card {
   position: relative;
@@ -153,7 +157,6 @@ body {
 }
 
 
-
 .sidebar-container {
   position: fixed;
   width: 220px;
@@ -233,4 +236,8 @@ body {
 
 .sidebar-navigation .header::before {
   background-color: transparent;
+}
+
+.content-container {
+  padding-left: 220px;
 }
