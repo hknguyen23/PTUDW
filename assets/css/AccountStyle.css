@@ -1,5 +1,4 @@
 .table {
-	text-align: right;
 	width: 100%;
 }
 
@@ -12,7 +11,7 @@ table tr th{
 	width: 25%;
 }
 
-#data{
+#second-col{
 	text-align: left;
 	width: 70%;
 }
@@ -26,11 +25,6 @@ tbody tr.selected{
 	background-color: #ffd659;
 }
 */
-
-.password {
-	/* Default */
-	-webkit-text-security: disc;
-}
 
 /* Sidebar */
 #sidebar-wrapper {

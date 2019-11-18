@@ -2,12 +2,11 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Change infomation</title>
+		<title>Your point and details</title>
 		
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="assets/css/HomeStyle.css">	
-		<link rel="stylesheet" type="text/css" href="assets/css/AccountStyle.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/ChangeInfoStyle.css">	
+		<link rel="stylesheet" type="text/css" href="assets/css/AccountStyle.css">	
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -159,88 +158,54 @@
 					<!-- /#sidebar-wrapper -->
 					
 					<div class="text-center mt-3" id="page-content-wrapper">
-						<h1>Thông tin cá nhân</h1>
-						<div>Thông tin cơ bản, như tên và ảnh của bạn, mà bạn sử dụng trên trang web của chúng tôi</div>
+						<h1>Điểm đánh giá và chi tiết</h1>
+						<div>Xem điểm đánh giá và chi tiết các lần được đánh giá & đoạn nhận xét mà người đánh giá gửi</div>
 						
-						<form method="get" action="AccountManagement.html">
-							<div class="card m-3">
-								<h2 class="card-header">Hồ sơ</h2>
-								<div class="card-body">
-									<table class="table">
-										<tr>
-											<th>Ảnh</th>
-											<td id="second-col">Bấm vào để chọn ảnh khác</td>
-											<td style="text-align: right;">
-												<img name="avatar" id="avatar" type="file" class="rounded-circle mb-3"
-													src="assets/images/avatar.jpg" alt="Your avatar" width="200" height="200">
-												<input class="hidden" id="avatarInput" type="file" onchange="changeAvatar(this);"></input>
-											</td>
-										</tr>
-										<tr>
-											<th>Họ và tên</th>
-											<td id="second-col">
-												<input name="name" value="Nguyễn Văn A"></input>
-											</td>
-											<td id="required" style="text-align: right;">required</td>
-										</tr>
-										<tr>
-											<th>Ngày sinh</th>
-											<td id="second-col">
-												<input name="dob" value="01/01/1999"></input>
-											</td>
-											<td id="required" style="text-align: right;">required</td>
-										</tr>
-										<tr>
-											<th>Giới tính</th>
-											<td id="second-col">
-												<input type="checkbox" name="gender" value="male" checked>
-													<label for="male">Nam</label>
-												</input>
-												<input type="checkbox" name="gender" value="female">
-													<label for="female">Nữ</label>
-												</input>
-												<input type="checkbox" name="gender" value="other">
-													<label for="other">Khác</label>
-												</input>
-											</td>
-											<td id="required" style="text-align: right;">required</td>
-										</tr>
-										<tr>
-											<th>Nhập mật khẩu cũ</th>
-											<td id="second-col" class="password"><input type="password" name="oldPassword"></td>
-											<td id="required" style="text-align: right;">required</td>
-										</tr>
-										<tr>
-											<th>Nhập mật khẩu mới</th>
-											<td id="second-col" class="password"><input type="password" name="newPassword"></td>
-											<td id="required" style="text-align: right;">required</td>
-										</tr>
-										<tr>
-											<th>Nhập mật khẩu mới lần nữa</th>
-											<td id="second-col" class="password"><input type="password" name="newPassword"></td>
-											<td id="required" style="text-align: right;">required</td>
-										</tr>
-										<tr>
-											<th>Thay đổi Email</th>
-											<td id="second-col">
-												<input name="email" value="someone@example.com"></input>
-											</td>
-											<td id="required" style="text-align: right;">required</td>								
-										</tr>
-										<tr>
-											<th>Điện thoại</th>
-											<td id="second-col">
-												<input name="phoneNumber" value="0987654321"></input>
-											</td>
-											<td id="required" style="text-align: right;">required</td>
-										</tr>
-									</table>
-								</div>
+						<div class="card m-3">
+							<h2 class="card-header">Điểm đánh giá</h2>
+							<div class="card-body">
+								<h3>8/10</h3>
 							</div>
-							<button class="btn btn-primary" type="submit">
-								Lưu lại
-							</button>
-						</form>
+						</div>
+						
+						<div class="card m-3">
+							<h2 class="card-header">Chi tiết các lần được đánh giá</h2>
+							<div class="card-body">
+								<table class="table table-hover text-left">
+									<thead>
+										<tr>
+											<th style="width: 5%;" scope="col">#</th>
+											<th style="word-break: break-all; width: 10%;" scope="col">Người đánh giá</th>
+											<th style="width: 5%;" scope="col">Điểm</th>
+											<th scope="col">Nhận xét</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th style="width: 5%;" scope="row">1</th>
+											<td style="word-break: break-all; width: 10%;">Mark</td>
+											<td style="width: 5%;">+1</td>
+											<td style="word-break: break-all;">
+												ThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLong
+											</td>
+										</tr>
+										<tr>
+											<th style="width: 5%;" scope="row">2</th>
+											<td style="word-break: break-all; width: 10%;">LONGLONGLONGLONGLONGLONG</td>
+											<td style="width: 5%;">-1</td>
+											<td style="word-break: break-all;">@fat</td>
+										</tr>
+										<tr>
+											<th style="width: 5%;"" scope="row">3</th>
+											<td style="word-break: break-all; width: 10%;">Larry the Bird</td>
+											<td style="width: 5%;">+1</td>
+											<td style="word-break: break-all;">@twitter</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>		
@@ -300,6 +265,5 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   
 		<script type="text/javascript" src="assets/js/AccountScript.js"></script>
-		<script type="text/javascript" src="assets/js/changeAvatar.js"></script>		
 	</body>
 </html>

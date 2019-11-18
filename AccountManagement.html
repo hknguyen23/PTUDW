@@ -76,12 +76,12 @@
 								
 								<input class="form-control col-md-3 mr-2 pl-3" type="text" placeholder="Search">
 				
-								<a class="btn btn-primary mr-2 pl-3" href="#">
+								<a class="btn btn-primary mr-2 pl-3" href="AccountManagement.html">
 									<i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
 									Tài khoản
 								</a>
 								
-								<a class="btn btn-primary pl-3" href="#">
+								<a class="btn btn-primary pl-3" href="HomeNotSignIn.html">
 									<i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
 									Thoát
 								</a>
@@ -99,12 +99,19 @@
 					<div class="bg-light border-right" id="sidebar-wrapper">
 						<div class="list-group list-group-flush">
 							<!-- Bao gồm việc sửa thông tin cá nhân -->
-							<a href="#" class="list-group-item list-group-item-action bg-light">Xem thông tin cá nhân</a>
+							<a href="AccountManagement.html" class="list-group-item list-group-item-action bg-light">
+								Xem thông tin cá nhân
+							</a>
+							<a href="YourPointAndDetail.html" class="list-group-item list-group-item-action bg-light">
+								Xem điểm đánh giá và chi tiết
+							</a>							
 							<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
 								href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
 								Xem danh sách
 								<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
 							</a>
+							
+							<!-- Submenu của Xem danh sách -->
 							<div id="submenu-watch" class="collapse sidebar-submenu">
 								<a href="#" class="list-group-item list-group-item-action bg-light">
 									<span class="menu-collapsed">Sản phẩm yêu thích</span>
@@ -122,11 +129,14 @@
 									<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
 								</a>
 							</div>
+							
 							<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
 								href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
 								Quản lý người dùng
 								<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
 							</a>
+							
+							<!-- Submenu của Quản lý người dùng -->
 							<div id="submenu-user" class="collapse sidebar-submenu">
 								<a href="#" class="list-group-item list-group-item-action bg-light">
 									<!-- Bao gồm việc xóa người dùng, click vào người dùng nào thì dẫn link đến đó -->
@@ -146,6 +156,7 @@
 						</div>
 					</div>
 					<!-- /#sidebar-wrapper -->
+					
 					<div class="text-center mt-3" id="page-content-wrapper">
 						<h1>Thông tin cá nhân</h1>
 						<div>Thông tin cơ bản, như tên và ảnh của bạn, mà bạn sử dụng trên trang web của chúng tôi</div>
@@ -157,35 +168,38 @@
 									<table class="table">
 										<tr>
 											<th>Ảnh</th>
-											<td id="data">Một bức ảnh giúp cá nhân hóa tài khoản của bạn</td>
-											<td>
+											<td id="second-col">Một bức ảnh giúp cá nhân hóa tài khoản của bạn</td>
+											<td style="text-align: right;">
 												<img class="rounded-circle" src="assets/images/avatar.jpg" alt="Your avatar"
 													width="200" height="200">
 											</td>
 										</tr>
 										<tr>
 											<th>Họ và tên</th>
-											<td id="data" colspan="2">Nguyễn Văn A</td>
+											<td id="second-col" colspan="2">Nguyễn Văn A</td>
 										</tr>
 										<tr>
 											<th>Ngày sinh</th>
-											<td id="data" colspan="2">01/01/1999</td>
+											<td id="second-col" colspan="2">01/01/1999</td>
 										</tr>
 										<tr>
 											<th>Giới tính</th>
-											<td id="data" colspan="2">Nam</td>
+											<td id="second-col" colspan="2">Nam</td>
 										</tr>
 										<tr>
 											<th>Mật khẩu</th>
-											<td id="data" class="password" colspan="2">12345678</td>
+											<td id="second-col">
+												<input class="password" type="password" value="12345678"
+													style="border: none" readonly></input>
+											</td>
 										</tr>
 										<tr>
 											<th>Email</th>
-											<td id="data" colspan="2">someone@example.com</td>
+											<td id="second-col" colspan="2">someone@example.com</td>
 										</tr>
 										<tr>
 											<th>Điện thoại</th>
-											<td id="data" colspan="2">0987654321</td>
+											<td id="second-col" colspan="2">0987654321</td>
 										</tr>
 									</table>
 								</div>
@@ -253,6 +267,5 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   
 		<script type="text/javascript" src="assets/js/AccountScript.js"></script>
-		<script type="text/javascript" src="assets/js/HomeScript.js"></script>
 	</body>
 </html>
