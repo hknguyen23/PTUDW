@@ -1,0 +1,16 @@
+.bidding_history tr td, .bidding_history tr th {
+    padding: 5px;
+    width: 200px;
+}
+
+@media all and (max-width: 1000px) {
+    .card div.row {
+        display: block !important;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .left, .right {
+        width: 100% !important;
+    }
+}

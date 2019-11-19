@@ -4,173 +4,255 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Online Auction</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script type="text/javascript" href="javascript.js"></script>
-
+	<title>Online Auction | Đăng sản phẩm</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/HomeStyle.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/PostProduct.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-	<style>
-		img.background {
-			filter: brightness(40%);
-		}
-
-		.centered {
-			position: absolute;
-			top: 10%;
-			left: 0;
-			width: 100%;
-			text-align: center;
-		}
-
-		@media all and (max-width: 1000px) {
-			div.main {
-				display: block !important;
-				width: 95%;
-				margin-left: auto;
-				margin-right: auto;
-			}
-		}
-	</style>
-
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body style="background-color:whitesmoke;">
+<body style="background-color: lightgray;">
 
-	<div class="main mt-3 mb-3 mx-md-auto row" style="background-color: white; width: 90%; height: 90%;" ;>
-		<div class="position-relative w-50">
-			<img class="background" src="Img/bg-01.jpg" width="100%" />
-			<div class="centered text-white">
-				<img style="display: block;" class="shadow mx-md-auto rounded-lg" src="./Img/S10_1.jpg"
-					name="main_window" id="main_window" height="300" width="300" />
+	<header class="sticky-top">
+		<div id="menu_area" class="menu-area">
+			<div class="container-fruid">
+				<div class="row">
+					<nav class="navbar navbar-light navbar-expand-lg mainmenu">
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
 
-				<div class="row justify-content-center my-3 mx-md-auto" style="width: 75%;">
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav mr-auto">
+								<li class="active">
+									<a class="navbar-brand" href="#">
+										<i class="fa fa-gavel fa-lg" aria-hidden="true"></i>
+										Sàn đấu giá trực tuyến
+									</a>
+								</li>
 
-					<img class="dotted_grey m-md-1" name="_1" id="_1" src="./Img/S10_1.jpg" height="100" width="100"
-						onmouseover="show(1)" />
+								<li>
+									<a class="pl-2 pr-2" href="HomeSignedIn.html">
+										<i class="fa fa-home fa-lg" aria-hidden="true"></i>
+										Trang chủ
+									</a>
+								</li>
 
-					<img class="dotted_grey m-md-1 " name="_1" id="_1" src="./Img/S10_2.jpg" height="100" width="100"
-						onmouseover="show(2)" />
+								<li>
+									<a class="pl-2 pr-3" href="#about">
+										<i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+										Thông tin
+									</a>
+								</li>
 
-					<img class="dotted_grey m-md-1" name="_2" id="_2" src="./Img/S10_3.jpg" height="100" width="100"
-						onmouseover="show(3)" />
+								<li class="dropright">
+									<a class="" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+										Menu
+										<i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<li><a href="#">Quần áo</a></li>
+										<li class="dropright">
+											<a href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">
+												Điện tử
+												<i class="fa fa-caret-right" style="float: right;"
+													aria-hidden="true"></i>
+											</a>
+											<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+												<li><a href="#">Điện thoại thông minh</a></li>
+												<li><a href="#">Máy tính xách tay</a></li>
+												<!-- Add more item here -->
+											</ul>
+										</li>
+										<li><a href="#">Thực phẩm</a></li>
+										<!-- Add more item here -->
+									</ul>
+								</li>
+								<!-- Add more item here -->
+							</ul>
 
-					<img class="dotted_grey m-md-1 " name="_3" id="_3" src="./Img/S10_4.jpg" height="100" width="100"
-						onmouseover="show(4)" />
-				</div>
+							<input class="form-control col-md-3 mr-2 pl-3" type="text" placeholder="Search">
 
-				<!-- click để tải hình lên (chưa có xử lý) -->
-				<div>
-					<i class="fa fa-plus-square" aria-hidden="true"></i>
-					<label for="inputId"> Tải ảnh lên
-						<input id="inputId" type="file" class="collapse" />
-					</label>
+							<a class="btn btn-primary mr-2 pl-3" href="AccountManagement.html">
+								<i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
+								Tài khoản
+							</a>
+
+							<a class="btn btn-primary pl-3" href="HomeNotSignIn.html">
+								<i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+								Thoát
+							</a>
+						</div>
+					</nav>
 				</div>
 			</div>
 		</div>
+	</header>
+	<div class="">
+		<div class="main row mt-3 mb-3 mx-md-auto" style="background-color: white; width: 90%; height: 90%;" ;>
+			<div class="col-sm-6" style="padding: 0px;">
+				<img class="background" src="assets/images/bg-01.jpg" width="100%" />
+				<div class="left centered text-white">
+					<img style="display: block;" class="shadow mx-md-auto rounded-lg" src="assets/images/S10_1.jpg"
+						name="main_window" id="main_window" height="50%" width="50%" />
 
-		<div class="p-4 w-50">
-			<h3>
-				Thông tin sản phẩm đấu giá
-			</h3>
-			<div style="color:tomato;">*Điền đầy dủ các thông tin dưới đây</div>
-			<!-- <form action="#" method="POST" name="product_detail" class=""> -->
-			<form action="#" method="POST" name="product_detail" class="p-3">
-				<div class="form-group row">
-					<label for="inputName" class="col-sm-4 col-form-label">Tên sản phẩm: </label>
-					<div class="col-sm-8">
-						<input type="text" class="form-control" id="inputName" placeholder="Tên sản phẩm">
+					<div class="row justify-content-center my-3 mx-md-auto gallery" style="width: 80%;">
+
+						<img class="dotted_grey m-md-1" name="pic-01" id="pic-01" src="assets/images/S10_1.jpg"/>
+
+						<img class="dotted_grey m-md-1 " name="pic-02" id="pic-02" src="assets/images/S10_2.jpg" />
+
+						<img class="dotted_grey m-md-1" name="pic-03" id="pic-03" src="assets/images/S10_3.jpg" />
+
+						<img class="dotted_grey m-md-1 " name="pic-04" id="pic-04" src="assets/images/S10_4.jpg" />
+					</div>
+
+					<!-- click để tải hình lên (chưa có xử lý) -->
+					<div>
+						<i class="fa fa-plus-square" aria-hidden="true"></i>
+						<label for="inputId"> Tải ảnh lên
+							<input id="inputId" type="file" class="collapse" />
+						</label>
 					</div>
 				</div>
+			</div>
 
-				<div class="form-group row">
-					<label for="inputName" class="col-sm-4 col-form-label">Loại sản phẩm: </label>
-					<div class="col-sm-4">
-						<br />
-						<!-- <select id="category" required>
-							<option value="">select model type</option>
-							<option class="Volvo" value="1">Volvo</option>
-							<option class="Saab" value="2">Saab</option>
-							<option class="Opel" value="3">Opel</option>
-							<option class="Audi" value="4">Audi</option>
-						</select>
-						<select id="subcategory">
-							<optgroup class="Volvo" required>
-								<option value="">select model type</option>
-								<option value="44">XC60</option>
-								<option value="55">XC90</option>
-							</optgroup>
-							<optgroup class="Saab" required>
-								<option value="">select model type</option>
-								<option value="66">Saab 9XX</option>
-								<option value="77">Saab Aero-X</option>
-							</optgroup>
-							<optgroup class="Opel" required>
-								<option value="">select model type</option>
-								<option value="88">Corsa A</option>
-								<option value="99">Corsa B</option>
-							</optgroup>
-							<optgroup class="Audi" required>
-								<option value="">select model type</option>
-								<option value="616">Audi A4</option>
-								<option value="717">Audi A8</option>
-							</optgroup>
-						</select> -->
+			<div class="right p-4 col-sm-6">
+				<h3>
+					Thông tin sản phẩm đấu giá
+				</h3>
+				<div style="color:tomato;">*Điền đầy dủ các thông tin dưới đây</div>
+				<!-- <form action="#" method="POST" name="product_detail" class=""> -->
+				<form action="#" method="POST" name="product_detail" class="p-3">
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-4 col-form-label">Tên sản phẩm: </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="inputName" placeholder="Tên sản phẩm" required>
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label for="startingPrice" class="col-sm-4 col-form-label">Giá khởi điểm (đ): </label>
-					<div class="col-sm-8">
-						<input type="text" class="form-control" id="startingPrice" placeholder="Giá khởi điểm">
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-4 col-form-label">Loại sản phẩm: </label>
+						<div class="col-sm-8" style="line-height: 250%;">
+							<select id="category" style="width:100%" required>
+								<option value="">Chọn loại sản phẩm</option>
+								<option class="smartPhone" value="1">Điện thoại thông minh</option>
+								<option class="watch" value="2">Đồng hồ</option>
+								<option class="laptop" value="3">Laptop/PC</option>
+								<option class="clothing" value="4">Quần áo</option>
+								<option class="appliance" value="5">Đồ gia dụng</option>
+								<option class="jewelry" value="6">Trang sức</option>
+								<option class="sportingGoods" value="7">Vật dụng thể thao</option>
+								<option class="books" value="7">Sách</option>
+							</select>
+
+						</div>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label for="price_step" class="col-sm-4 col-form-label">Bước giá (đ): </label>
-					<div class="col-sm-8">
-						<input type="text" class="form-control" id="price_step" placeholder="Bước giá">
+
+					<div class="form-group row">
+						<label for="startingPrice" class="col-sm-4 col-form-label">Giá khởi điểm (đ): </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="startingPrice" placeholder="Giá khởi điểm"
+								onkeypress="return checkInput(event)" required />
+						</div>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label for="buy_now" class="col-sm-4 col-form-label">Giá mua ngay (đ): </label>
-					<div class="col-sm-8">
-						<input type="text" class="form-control" id="buy_now" placeholder="Nếu có">
+					<div class="form-group row">
+						<label for="price_step" class="col-sm-4 col-form-label">Bước giá (đ): </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="price_step" placeholder="Bước giá" requrired
+								onkeypress="return checkInput(event)">
+						</div>
 					</div>
-				</div>
-
-				<div class="form-group row">
-					<label for="message" class="col-sm-4 col-form-label">Mô tả sản phẩm: </label>
-					<div class="col-sm-8">
-						<textarea name="message" style="width: 100%;" rows="6"></textarea>
+					<div class="form-group row">
+						<label for="buy_now" class="col-sm-4 col-form-label">Giá mua ngay (đ): </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="buy_now" value="0"
+								onkeypress="return checkInput(event)">
+						</div>
 					</div>
-				</div>
+
+					<div class="form-group row">
+						<label for="message" class="col-sm-4 col-form-label">Mô tả sản phẩm: </label>
+						<div class="col-sm-8">
+							<textarea name="message" style="width: 100%;" rows="6"></textarea>
+						</div>
+					</div>
 
 
-				<div class=" wrapper">
-					<label class="col-sm-4" for="myCheckBox">Tự động gia hạn: </label>
-					<span class="col-sm-8"><input name="myCheckBox" id="myCheckBox" type="checkbox" /></span>
-					<div class="clearboth"></div>
-				</div>
+					<div class=" wrapper">
+						<label class="col-sm-4" for="myCheckBox">Tự động gia hạn: </label>
+						<span class="col-sm-8"><input name="myCheckBox" id="myCheckBox" type="checkbox" /></span>
+						<div class="clearboth"></div>
+					</div>
 
-				
+
 					<div class="row justify-content-center">
-						<button type="submit" class="m-2 btn btn-primary">Xác nhận</button>
+						<button type="submit" class="m-2 btn btn-danger">Xác nhận</button>
 					</div>
-			</form>
+				</form>
+			</div>
+
+			<!-- <div class="clear-fix"></div> -->
+
 		</div>
-
-		<!-- <div class="clear-fix"></div> -->
-
 	</div>
-
-
-
+	<footer class="footer">
+		<div class="text-white bg-dark">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div id="about">
+							<h5>GIỚI THIỆU</h5>
+							<p>Đây là phần giới thiệu về trang web của chúng tôi, bao gồm:...</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3 text-center">
+						<h5>Các loại dịch vụ thanh toán</h5>
+						<div>
+							<i class="fa fa-cc-visa fa-lg" aria-hidden="true"></i>
+							<i class="fa fa-cc-paypal fa-lg" aria-hidden="true"></i>
+							<i class="fa fa-cc-mastercard fa-lg" aria-hidden="true"></i>
+							<i class="fa fa-cc-discover fa-lg" aria-hidden="true"></i>
+							<i class="fa fa-cc-jcb fa-lg" aria-hidden="true"></i>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div>
+							<h5>Chào mừng đến với website của chúng tôi</h5>
+							<p>Bạn muốn tham gia vào các cuộc đấu giá thú vị, mua được sản phẩm giá rẻ</p>
+							<p>
+								Nếu bạn chưa có tài khoản<br>
+								<a class="btn btn-primary" href="#" target="_blank">
+									<i class="fa fa-hand-o-right fa-lg" aria-hidden="true"></i>
+									Đăng ký ngay bây giờ
+								</a>
+							</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div>
+							<h5>Thông tin liên hệ</h5>
+							<p>Mail: <a href="mailto:info@domain.com" title="glorythemes">info@domain.com</a></p>
+							<p>Tel: <a href="tel:0987654321">0987654321</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</footer>
 
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="script.js"></script>
+	<script src="assets/js/PostProduct.js"></script>
+	<script type="text/javascript" href="assets/js/PostProduct.js"></script>
 </body>
 
 </html>
