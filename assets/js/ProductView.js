@@ -18,6 +18,7 @@ function checkPrice() {
     }
     return true;
 }
+
 function show(img_id) {
     var new_src = document.getElementById(img_id).src;
     document.getElementById('main_window').src = new_src

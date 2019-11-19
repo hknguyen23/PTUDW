@@ -6,11 +6,21 @@
 		
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="assets/css/HomeStyle.css">	
-		<link rel="stylesheet" type="text/css" href="assets/css/AccountStyle.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/ChangeInfoStyle.css">	
+		<link rel="stylesheet" type="text/css" href="assets/css/AccountStyle.css">	
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		
+		<style>
+			#required{
+				font-weight: bold;
+				color: red;
+			}
+
+			#avatarInput{
+				max-width: 210px;
+			}
+		</style>
 	</head>
 	
 	<body>
@@ -139,18 +149,12 @@
 							
 							<!-- Submenu của Quản lý người dùng -->
 							<div id="submenu-user" class="collapse sidebar-submenu">
-								<a href="#" class="list-group-item list-group-item-action bg-light">
-									<!-- Bao gồm việc xóa người dùng, click vào người dùng nào thì dẫn link đến đó -->
+								<a href="AllUsers.html" class="list-group-item list-group-item-action bg-light">
+									<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
 									<span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
 								</a>
-								<a href="#" class="list-group-item list-group-item-action bg-light">
+								<a href="BidderList.html" class="list-group-item list-group-item-action bg-light">
 									<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
-								</a>
-								<a href="#" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Nâng cấp bidder</span>
-								</a>
-								<a href="#" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Hạ cấp seller</span>
 								</a>
 							</div>
 							<!-- Add more items here-->
@@ -173,7 +177,7 @@
 											<td style="text-align: right;">
 												<img name="avatar" id="avatar" type="file" class="rounded-circle mb-3"
 													src="assets/images/avatar.jpg" alt="Your avatar" width="200" height="200">
-												<input class="hidden" id="avatarInput" type="file" onchange="changeAvatar(this);"></input>
+												<input name="avatarInput" class="hidden" id="avatarInput" type="file" onchange="changeAvatar(this);"></input>
 											</td>
 										</tr>
 										<tr>
@@ -295,11 +299,26 @@
 		</footer>
 			
 		<!-- JS -->	
+		<script>
+			// Change avatar
+			function changeAvatar(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					
+					reader.onload = function (e) {
+						$('#avatar').attr('src', e.target.result).width(200).height(200);
+					};
+										
+					reader.readAsDataURL(input.files[0]);
+					avatarInput.value = input.files[0].name;
+				}
+			}
+		</script>
+		
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   
 		<script type="text/javascript" src="assets/js/AccountScript.js"></script>
-		<script type="text/javascript" src="assets/js/changeAvatar.js"></script>		
 	</body>
 </html>
