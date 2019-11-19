@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Your account</title>
+		<title>Bidders List</title>
 		
 		<!-- CSS -->
 		<link rel="stylesheet" type="text/css" href="assets/css/HomeStyle.css">	
@@ -152,63 +152,91 @@
 					<!-- /#sidebar-wrapper -->
 					
 					<div class="text-center mt-3" id="page-content-wrapper">
-						<h1>Thông tin cá nhân</h1>
-						<div>Thông tin cơ bản, như tên và ảnh của bạn, mà bạn sử dụng trên trang web của chúng tôi</div>
+						<h1>Danh sách các bidder xin nâng cấp tài khoản</h1>
+						<div>Hiển thị thông tin: tên tài khoản, họ và tên, ngày sinh, giới tính, bậc (bidder/seller)</div>
 						
-						<form>
-							<div class="card m-3">
-								<h2 class="card-header">Hồ sơ</h2>
-								<div class="card-body">		
-									<table id="myTable" class="table">
+						<div class="card m-3">
+							<h2 class="card-header">Danh sách</h2>
+							<div class="card-body">
+								<table class="table table-hover text-left">
+									<thead>
 										<tr>
-											<th>Ảnh</th>
-											<td id="second-col">Một bức ảnh giúp cá nhân hóa tài khoản của bạn</td>
-											<td style="text-align: right;">
-												<img class="rounded-circle" src="assets/images/avatar.jpg" alt="Your avatar"
-													width="200" height="200">
+											<th style="width: 5%;" scope="col">#</th>
+											<th style="width: 15%;" scope="col">Tên tài khoản</th>
+											<th style="word-break: break-all; width: 20%;" scope="col">Họ và tên</th>
+											<th style="text-align: center; width: 5%;" scope="col">Điểm</th>
+											<th style="text-align: center; width: 5%;" scope="col">Đồng ý</th>
+											<th style="text-align: center; width: 10%;" scope="col">Không đồng ý</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th style="width: 5%;" scope="row">1</th>
+											<td style="width: 15%;">myaccount_002</td>
+											<td style="word-break: break-all; width: 20%;">John</td>
+											<td style="text-align: center; width: 5%;">9</td>
+											<td style="text-align: center; width: 5%;">
+												<input type="checkbox"></input>
+											</td>
+											<td style="text-align: center; width: 10%;">
+												<input type="checkbox"></input>
 											</td>
 										</tr>
 										<tr>
-											<th>Họ và tên</th>
-											<td id="second-col" colspan="2">Nguyễn Văn A</td>
-										</tr>
-										<tr>
-											<th>Ngày sinh</th>
-											<td id="second-col" colspan="2">01/01/1999</td>
-										</tr>
-										<tr>
-											<th>Giới tính</th>
-											<td id="second-col" colspan="2">Nam</td>
-										</tr>
-										<tr>
-											<th>Mật khẩu</th>
-											<td id="second-col">
-												<input class="password" type="password" value="12345678"
-													style="border: none" readonly></input>
+											<th style="width: 5%;" scope="row">2</th>
+											<td style="width: 15%;">myaccount_005</td>
+											<td style="word-break: break-all; width: 20%;">Jane Doe</td>
+											<td style="text-align: center; width: 5%;">8</td>
+											<td style="text-align: center; width: 5%;">
+												<input type="checkbox"></input>
+											</td>
+											<td style="text-align: center; width: 10%;">
+												<input type="checkbox"></input>
 											</td>
 										</tr>
 										<tr>
-											<th>Email</th>
-											<td id="second-col" colspan="2">someone@example.com</td>
+											<th style="width: 5%;" scope="row">3</th>
+											<td style="width: 15%;">myaccount_006</td>
+											<td style="word-break: break-all; width: 20%;">Katy</td>
+											<td style="text-align: center; width: 5%;">9</td>
+											<td style="text-align: center; width: 5%;">
+												<input type="checkbox"></input>
+											</td>
+											<td style="text-align: center; width: 10%;">
+												<input type="checkbox"></input>
+											</td>
 										</tr>
 										<tr>
-											<th>Điện thoại</th>
-											<td id="second-col" colspan="2">0987654321</td>
+											<th style="width: 5%;" scope="row">4</th>
+											<td style="width: 15%;">myaccount_007</td>
+											<td style="word-break: break-all; width: 20%;">Jack</td>
+											<td style="text-align: center; width: 5%;">9</td>
+											<td style="text-align: center; width: 5%;">
+												<input type="checkbox"></input>
+											</td>
+											<td style="text-align: center; width: 10%;">
+												<input type="checkbox"></input>
+											</td>
 										</tr>
 										<tr>
-											<th>Cấp bậc</th>
-											<td id="second-col" colspan="2">Bidder</td>
+											<th style="width: 5%;" scope="row">5</th>
+											<td style="width: 15%;">myaccount_008</td>
+											<td style="word-break: break-all; width: 20%;">Jenifer</td>
+											<td style="text-align: center; width: 5%;">9</td>
+											<td style="text-align: center; width: 5%;">
+												<input type="checkbox"></input>
+											</td>
+											<td style="text-align: center; width: 10%;">
+												<input type="checkbox"></input>
+											</td>
 										</tr>
-									</table>
-								</div>
+									</tbody>
+								</table>
 							</div>
-							<a class="btn btn-primary" href="ChangeInfo.html">
-								Thay đổi thông tin
-							</a>
-							<a class="btn btn-primary" href="#" onclick="upgradeRequest();">
-								Xin nâng cấp thành Seller
-							</a>
-						</form>
+						</div>
+						<button class="btn btn-primary" type="submit">
+							OK
+						</button>
 					</div>
 				</div>
 			</div>		
@@ -261,21 +289,8 @@
 				</div>
 			</div>
 		</footer>
-			
-		<!-- JS -->	
-		<script>
-			function upgradeRequest(){
-				var table = document.getElementById('myTable');
-				var str = table.rows[7].cells[1].innerHTML;
-				if (str == 'Bidder'){
-					window.alert('Yêu cầu của bạn đã được gửi đi');
-				}
-				if (str == 'Seller'){
-					window.alert('Bạn đã là Seller');
-				}
-			}
-		</script>
 		
+		<!-- JS -->
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
