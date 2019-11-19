@@ -1,427 +1,455 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Product Information</title>
-		
-		<!-- CSS -->
-		<link rel="stylesheet" type="text/css" href="assets/css/HomeStyle.css">
-		<link rel="stylesheet" type="text/css" href="assets/css/carousel.css">
-		
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
-		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<style>
-			.bidding_history tr td,.bidding_history tr th{
-				padding: 5px;
-				width: 200px;
-			}
-		</style>
-	</head>
-	
-	<body>
-		<header class="sticky-top">		
-			<div id="menu_area" class="menu-area">
-				<div class="container-fruid">
-					<div class="row">
-						<nav class="navbar navbar-light navbar-expand-lg mainmenu">
-							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-								aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-								<span class="navbar-toggler-icon"></span>
-							</button>
 
-							<div class="collapse navbar-collapse" id="navbarSupportedContent">
-								<ul class="navbar-nav mr-auto">
-									<li class="active">
-										<a class="navbar-brand" href="#">
-											<i class="fa fa-gavel fa-lg" aria-hidden="true"></i>
-											Sàn đấu giá trực tuyến
-										</a>
-									</li>
-									
-									<li>
-										<a class="pl-2 pr-2" href="HomeSignedIn.html">
-											<i class="fa fa-home fa-lg" aria-hidden="true"></i>
-											Trang chủ
-										</a>
-									</li>
-									
-									<li>
-										<a class="pl-2 pr-3" href="#about">
-											<i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-											Thông tin
-										</a>
-									</li>
-									
-									<li class="dropright">
-										<a class="" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-											aria-haspopup="true" aria-expanded="false">
-											<i class="fa fa-bars fa-lg" aria-hidden="true"></i>
-											Menu
-											<i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
-										</a>
-										<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-											<li><a href="#">Quần áo</a></li>
-											<li class="dropright">
-												<a href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-													aria-haspopup="true" aria-expanded="false">
-													Điện tử
-													<i class="fa fa-caret-right" style="float: right;" aria-hidden="true"></i>
-												</a>
-												<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-													<li><a href="#">Điện thoại thông minh</a></li>
-													<li><a href="#">Máy tính xách tay</a></li>
-													<!-- Add more item here -->
-												</ul>
-											</li>
-											<li><a href="#">Thực phẩm</a></li>
-											<!-- Add more item here -->
-										</ul>
-									</li>
-									<!-- Add more item here -->
-								</ul>
-								
-								<input class="form-control col-md-3 mr-2 pl-3" type="text" placeholder="Search">
-				
-								<a class="btn btn-primary mr-2 pl-3" href="AccountManagement.html">
-									<i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
-									Tài khoản
-								</a>
-								
-								<a class="btn btn-primary pl-3" href="HomeNotSignIn.html">
-									<i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
-									Thoát
-								</a>
-							</div>
-						</nav>
-					</div>
-				</div>
-			</div>   
-		</header>
+<head>
+	<meta charset="UTF-8">
+	<title>Product Information</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/css/HomeStyle.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/carousel.css">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
 		
-		<main class="main" role="main">
+		.bidding_history tr td,
+		.bidding_history tr th {
+			padding: 5px;
+			width: 200px;
+			
+		}
+	</style>
+</head>
+
+<body>
+	<header class="sticky-top">
+		<div id="menu_area" class="menu-area">
 			<div class="container-fruid">
-				<div id="page-content-wrapper">
-					<div class="container pt-3">
-						<div> Danh mục: Điện tử > Điện thoại di động </div>
-						<div class="card" style="border: none;">
-							<div class="row mt-3">
-									<div class="" style="width: 35%;">
-									<img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg" src="assets/images/S10_1.jpg"
-										name="main_window" id="main_window" height="300" width="300"/>
-									<div class="row justify-content-center mt-2">
-										<div>
-											<img class="dotted_grey m-1" src="assets/images/S10_1.jpg" height="100" width="100" onmouseover="show(1)"/>
-										</div>
-										<div>
-											<img class="dotted_grey m-1" src="assets/images/S10_2.jpg" height="100" width="100" onmouseover="show(2)"/>
-										</div>
-										<div>
-											<img class="dotted_grey m-1" src="assets/images/S10_3.jpg" height="100" width="100" onmouseover="show(3)"/>
-										</div>
-										<div>
-											<img class="dotted_grey m-1" src="assets/images/S10_4.jpg" height="100" width="100" onmouseover="show(4)"/>
-										</div>
-									</div>
-								</div>
+				<div class="row">
+					<nav class="navbar navbar-light navbar-expand-lg mainmenu">
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
 
-								<div class="p-4 shadow-lg" style="width: 65%;" id="product_detail" >
-									<h3 style="color: royalblue;">Samsung Galaxy S10 (Black) 8GB+128GB </h3>
-									<div class="row my-4">
-										<div class="float-left col-md-4 text-right">
-											Giá hiện tại (đ):
-										</div>
-										<div class="float-right text-left col-md-8 " style="color:tomato;" id="current_price" name="current_price">
-											19000000 
-										</div>
-										<!-- <script>
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav mr-auto">
+								<li class="active">
+									<a class="navbar-brand" href="#">
+										<i class="fa fa-gavel fa-lg" aria-hidden="true"></i>
+										Sàn đấu giá trực tuyến
+									</a>
+								</li>
+
+								<li>
+									<a class="pl-2 pr-2" href="HomeSignedIn.html">
+										<i class="fa fa-home fa-lg" aria-hidden="true"></i>
+										Trang chủ
+									</a>
+								</li>
+
+								<li>
+									<a class="pl-2 pr-3" href="#about">
+										<i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+										Thông tin
+									</a>
+								</li>
+
+								<li class="dropright">
+									<a class="" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-bars fa-lg" aria-hidden="true"></i>
+										Menu
+										<i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<li><a href="#">Quần áo</a></li>
+										<li class="dropright">
+											<a href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">
+												Điện tử
+												<i class="fa fa-caret-right" style="float: right;"
+													aria-hidden="true"></i>
+											</a>
+											<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+												<li><a href="#">Điện thoại thông minh</a></li>
+												<li><a href="#">Máy tính xách tay</a></li>
+												<!-- Add more item here -->
+											</ul>
+										</li>
+										<li><a href="#">Thực phẩm</a></li>
+										<!-- Add more item here -->
+									</ul>
+								</li>
+								<!-- Add more item here -->
+							</ul>
+
+							<input class="form-control col-md-3 mr-2 pl-3" type="text" placeholder="Search">
+
+							<a class="btn btn-primary mr-2 pl-3" href="AccountManagement.html">
+								<i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
+								Tài khoản
+							</a>
+
+							<a class="btn btn-primary pl-3" href="HomeNotSignIn.html">
+								<i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+								Thoát
+							</a>
+						</div>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<main class="main" role="main">
+		<!-- <div class="container-fruid"> -->
+		<div id="page-content-wrapper">
+			<div class="container pt-3">
+				<div class="">
+					<div class="float-left w-65" style="color: royalblue;"> Danh mục: Điện tử > Điện thoại di động </div>
+					<button type="button" class="btn btn-info float-right w-35">
+						<i class="fa fa-heart" aria-hidden="true"></i> Thêm Watch List
+					</button>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="card" style="border: none;">
+					<div class="row mt-3">
+						<div class="" style="width: 35%;">
+							<img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg"
+								src="assets/images/S10_1.jpg" name="main_window" id="main_window" height="300"
+								width="300" />
+							<div class="row justify-content-center mt-2">
+								<div>
+									<img class="dotted_grey m-1" name="pic_01" id="pic_01" src="assets/images/S10_1.jpg"
+										height="100" width="100" onmouseover="show('pic_01')" />
+								</div>
+								<div>
+									<img class="dotted_grey m-1" name="pic_02" id="pic_02" src="assets/images/S10_2.jpg"
+										height="100" width="100" onmouseover="show('pic_02')" />
+								</div>
+								<div>
+									<img class="dotted_grey m-1" name="pic_03" id="pic_03" src="assets/images/S10_3.jpg"
+										height="100" width="100" onmouseover="show('pic_03')" />
+								</div>
+								<div>
+									<img class="dotted_grey m-1" name="pic_04" id="pic_04" src="assets/images/S10_4.jpg"
+										height="100" width="100" onmouseover="show('pic_04')" />
+								</div>
+							</div>
+						</div>
+
+						<div class="p-4 shadow-lg" style="width: 65%;" id="product_detail">
+							<h3 class="" style="color: royalblue;">Samsung Galaxy S10 (Black) 8GB+128GB </h3>
+
+							<div class="row my-4">
+								<div class="col-md-4 text-right">
+									Giá hiện tại (đ):
+								</div>
+								<div class="text-left col-md-8 " style="color:tomato;" id="current_price"
+									name="current_price">
+									19000000
+								</div>
+								<!-- <script>
 												var x = +document.getElementById("current_price").innerHTML;
 												document.getElementById("current_price").innerHTML = x.toLocaleString();// 1000->1.000
 										</script> -->
-									</div>
+							</div>
 
-									<div class="row my-4">
-										<div class="float-left col-md-4 text-right">
-											Tên người bán:
-										</div>
-										<div class="float-right col-md-8 text-left" id="seller" name="seller">
-											Tập Cận Bình <span name="seller-score" id="seller-score">(10)</span>
-										</div>
-									</div>
-
-									<div class="row my-4">
-										<div class="float-left col-md-4 text-right">
-											Người ra giá cao nhất:
-										</div>
-										<div class="float-right col-md-8 text-left" id="bidder" name="bidder">
-											**** Đào  <span name="bidder-score" id="bidder-score">(8)</span>
-										</div>
-									</div>
-
-									<div class="row my-4">
-										<div class="float-left col-md-4 text-right">
-											Thời điểm đăng bán:
-										</div>
-										<div class="float-right col-md-8 text-left" id="post_date" name="post_date">
-											08/11/2019
-										</div>
-									</div>
-						
-									<div class="row my-4">
-										<div class="float-left col-md-4 text-right">
-											Thời điểm kết thúc:
-										</div>
-										<div class="float-right col-md-8 text-left" id="exp_date" name="exp_date">
-											24 giờ nữa
-										</div>
-									</div>
-
-									<div class="row my-4">
-										<div class="float-left col-md-4 text-right">
-											Mô tả sản phẩm:
-										</div>
-										<div class="rounded-lg float-right col-md-7 text-left overflow-auto" style="background-color: silver; height: 170px;" id="exp_date" name="exp_date">
-												三星 Galaxy S10 是韩国三星公司推出的新一代智能手机产品，
-												搭载高通骁龙 855 处理器，屏幕 6.1 英寸；后置三摄，
-												分别为 1200 像素长焦摄像头，1200 万广角摄像头和 1600万 超广角摄像头。
-												北京时间 2019 年 2 月 21 日，三星 Galaxy S10 在旧金山正式发布；
-												2019 年 2 月 28 日，三星在乌镇举行发布会发布国行版，2019 年 3 月 8 日正式开售。
-										</div>
-									</div>
-								
-									<div> 
-										<div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
-											Đặt giá của bạn:
-										</div>
-										<form method="post" id = "frmain" onsubmit="return checkPrice()">
-											<div class="dropdown">
-												<input type="text" class="float-left col-md-3 font-weight-bold" id="price" name="price"
-													onmouseover="checkInput()" onkeypress="return checkInput(event)"/>
-												<div class="dropdown-menu text-danger " id="dropdown1" name="dropdown1">Giá đặt phải lớn hơn giá hiện tại</div>
-											</div>
-											<span class="float-right col-md-5 text-muted">
-												Giá đề nghị (đ): 
-												<span id="suggest" name="suggest"></span> 
-												<script>
-													var current_price = +document.getElementById("current_price").innerHTML;
-													document.getElementById("suggest").innerHTML = current_price + 100000;
-												</script>
-											</span>
-						
-											<div class="clearfix"></div>
-											<div class="mt-4 text-center">
-												<button  type="submit" class="btn btn-danger">
-													Xác nhận
-												</button>
-											</div>
-										</form>
-									</div>
-									
-									<!-- lịch sử đấu giá -->
-									<div class="mt-3">
-											<a href="#history" data-toggle="collapse">Xem lịch sử đấu giá
-												<i class="fa fa-angle-double-down"></i></a>
-											<div name="history" id="history" class="collapse">
-												<table name="bidding_history" id="bidding_history" class="bidding_history mt-3" align="center"
-													border="1">
-													<tr>
-														<th>Thời điểm</th>
-														<th>Người mua</th>
-														<th>Giá</th>
-													</tr>
-													<tr>
-														<td>1/11/2019 10:43</td>
-														<td>**** Ping</td>
-														<td>19000000</td>
-													</tr>
-													<tr>
-														<td>1/11/2019 9:43</td>
-														<td>**** Phụng</td>
-														<td>18000000</td>
-													</tr>
-													<tr>
-														<td>1/11/2019 8:43</td>
-														<td>**** Chinh</td>
-														<td>17500000</td>
-													</tr>
-													<tr>
-														<td>1/11/2019 7:43</td>
-														<td>**** Dung</td>
-														<td>16900000</td>
-													</tr>
-													<tr>
-														<td>31/10/2019 23:43</td>
-														<td>**** Minh</td>
-														<td>15000000</td>
-													</tr>
-												</table>
-											</div>
-										</div>
+							<div class="row my-4">
+								<div class="col-md-4 text-right">
+									Tên người bán:
+								</div>
+								<div class="col-md-8 text-left" id="seller" name="seller">
+									Tập Cận Bình <span name="seller-score" id="seller-score">(10)</span>
 								</div>
 							</div>
-						</div>
-					</div>
 
-					<div class="text-center my-5">
-						<h2>Các sản phẩm liên quan</h2>
-						<div class="mx-auto my-auto">
-							<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
-								<div class="carousel-inner" role="listbox">
-									<div class="carousel-item active">
-										<div class="col-md-4">
-											<div class="card card-body">
-												<img class="img-fluid" src="assets/images/A8+_1.jpg">
-												<h6>Samsung Galaxy A8+ 6GB/64GB (Black)</h6>
-												<p>Price: $9.52</p>
-												<p>Time left: 01:11:30</p>
-												<p>Time bidded: 155</p>
-												<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See details</a></p>
-											</div>
-										</div>
-									</div>
-									<div class="carousel-item">
-										<div class="col-md-4">
-											<div class="card card-body">
-												<img class="img-fluid" src="assets/images/Note8_1.jpg">
-												<h6>Samsung Galaxy Note8 6GB/128GB New 99%</h6>
-												<p>Price: $77.93</p>
-												<p>Time left: 02:19:37</p>
-												<p>Time bidded: 124</p>
-												<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See details</a></p>
-											</div>
-										</div>
-									</div>
-									<div class="carousel-item">
-										<div class="col-md-4">
-											<div class="card card-body">
-												<img class="img-fluid" src="assets/images/Mate20pro_1.jpg">
-												<h6>Huawei Mate 20 Pro 8GB/256GB</h6>
-												<p>Price: $200.45</p>
-												<p>Time left: 00:05:10</p>
-												<p>Time bidded: 100</p>
-												<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See details</a></p>
-												</div>
-											</div>
-										</div>
-									<div class="carousel-item">
-										<div class="col-md-4">
-											<div class="card card-body">
-												<img class="img-fluid" src="assets/images/IpXS_1.jpg">
-												<h6>Iphone Xs 2018 6GB/128GB</h6>
-												<p>Price: $14.78</p>
-												<p>Time left: 00:45:56</p>
-												<p>Time bidded: 97</p>
-												<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See details</a></p>
-											</div>
-										</div>
-									</div>
-									<div class="carousel-item">
-										<div class="col-md-4">
-											<div class="card card-body">
-												<img class="img-fluid" src="assets/images/OnePlus7pro_1.jpg">
-												<h6>Oneplus 7 Pro 8GB/256GB New 99%</h6>
-												<p>Price: $299.51</p>
-												<p>Time left: 00:20:34</p>
-												<p>Time bidded: 85</p>
-												<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See details</a></p>
-											</div>
-										</div>
-									</div>
+							<div class="row my-4">
+								<div class="col-md-4 text-right">
+									Người ra giá cao nhất:
 								</div>
-															
-								<a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
-									<i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;" aria-hidden="true"></i>
-								</a>
-								<a class="right carousel-control-next w-auto" href="#myCarousel" role="button" data-slide="next">
-									<i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;" aria-hidden="true"></i>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</main>
-			
-			<footer class="footer">
-				<div class="text-white bg-dark">
-					<div class="container">
-						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-md-3">
-								<div id="about">
-									<h5>GIỚI THIỆU</h5>
-									<p>Đây là phần giới thiệu về trang web của chúng tôi, bao gồm:...</p>
+								<div class="col-md-8 text-left" id="bidder" name="bidder">
+									**** Đào <span name="bidder-score" id="bidder-score">(8)</span>
 								</div>
 							</div>
-							<div class="col-xs-12 col-sm-6 col-md-3 text-center">
-								<h5>Các loại dịch vụ thanh toán</h5>
-								<div>
-									<i class="fa fa-cc-visa fa-lg" aria-hidden="true"></i>
-									<i class="fa fa-cc-paypal fa-lg" aria-hidden="true"></i>
-									<i class="fa fa-cc-mastercard fa-lg" aria-hidden="true"></i>
-									<i class="fa fa-cc-discover fa-lg" aria-hidden="true"></i>
-									<i class="fa fa-cc-jcb fa-lg" aria-hidden="true"></i>
-								</div>	
-							</div>
-							<div class="col-xs-12 col-sm-6 col-md-3">
-								<div>
-									<h5>Chào mừng đến với website của chúng tôi</h5>
-									<p>Bạn muốn tham gia vào các cuộc đấu giá thú vị, mua được sản phẩm giá rẻ</p>
-									<p>
-										Nếu bạn chưa có tài khoản<br>
-										<a class="btn btn-primary" href="#" target="_blank">
-											<i class="fa fa-hand-o-right fa-lg" aria-hidden="true"></i>
-											Đăng ký ngay bây giờ
-										</a>
-									</p>
+
+							<div class="row my-4">
+								<div class="col-md-4 text-right">
+									Thời điểm đăng bán:
+								</div>
+								<div class="col-md-8 text-left" id="post_date" name="post_date">
+									08/11/2019
 								</div>
 							</div>
-							<div class="col-xs-12 col-sm-6 col-md-3">
-								<div>
-									<h5>Thông tin liên hệ</h5>
-									<p>Mail: <a href="mailto:info@domain.com" title="glorythemes">info@domain.com</a></p>
-									<p>Tel: <a href="tel:0987654321">0987654321</a></p>
+
+							<div class="row my-4">
+								<div class="col-md-4 text-right">
+									Thời điểm kết thúc:
+								</div>
+								<div class="col-md-8 text-left" id="exp_date" name="exp_date">
+									24 giờ nữa
+								</div>
+							</div>
+
+							<div class="row my-4">
+								<div class="col-md-4 text-right">
+									Mô tả sản phẩm:
+								</div>
+								<div class="rounded-lg col-md-7 text-left overflow-auto"
+									style="background-color: silver; height: 165px;" id="exp_date" name="exp_date">
+									三星 Galaxy S10 是韩国三星公司推出的新一代智能手机产品，
+									搭载高通骁龙 855 处理器，屏幕 6.1 英寸；后置三摄，
+									分别为 1200 像素长焦摄像头，1200 万广角摄像头和 1600万 超广角摄像头。
+									北京时间 2019 年 2 月 21 日，三星 Galaxy S10 在旧金山正式发布；
+									2019 年 2 月 28 日，三星在乌镇举行发布会发布国行版，2019 年 3 月 8 日正式开售。
+								</div>
+							</div>
+
+							<div>
+								<div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
+									Đặt giá của bạn:
+								</div>
+								<form method="post" id="frmain" onsubmit="return checkPrice()">
+									<div class="dropdown">
+										<input type="text" class="float-left col-md-3 font-weight-bold" id="price"
+											name="price" onmouseover="checkInput()"
+											onkeypress="return checkInput(event)" />
+										<div class="dropdown-menu text-danger " id="dropdown1" name="dropdown1">Giá
+											đặt phải lớn hơn giá hiện tại</div>
+									</div>
+									<span class="float-right col-md-5 text-muted">
+										Giá đề nghị (đ):
+										<span id="suggest" name="suggest"></span>
+										<script>
+											var current_price = +document.getElementById("current_price").innerHTML;
+											document.getElementById("suggest").innerHTML = current_price + 100000;
+										</script>
+									</span>
+
+									<div class="clearfix"></div>
+									<div class="mt-4 text-center">
+										<button type="submit" class="btn btn-danger">
+											Xác nhận
+										</button>
+									</div>
+								</form>
+							</div>
+
+							<!-- lịch sử đấu giá -->
+							<div class="mt-3">
+								<a href="#history" data-toggle="collapse">Xem lịch sử đấu giá
+									<i class="fa fa-angle-double-down"></i></a>
+								<div name="history" id="history" class="collapse">
+									<table name="bidding_history" id="bidding_history" class="bidding_history mt-3"
+										align="center" border="1">
+										<tr>
+											<th>Thời điểm</th>
+											<th>Người mua</th>
+											<th>Giá</th>
+										</tr>
+										<tr>
+											<td>1/11/2019 10:43</td>
+											<td>**** Ping</td>
+											<td>19000000</td>
+										</tr>
+										<tr>
+											<td>1/11/2019 9:43</td>
+											<td>**** Phụng</td>
+											<td>18000000</td>
+										</tr>
+										<tr>
+											<td>1/11/2019 8:43</td>
+											<td>**** Chinh</td>
+											<td>17500000</td>
+										</tr>
+										<tr>
+											<td>1/11/2019 7:43</td>
+											<td>**** Dung</td>
+											<td>16900000</td>
+										</tr>
+										<tr>
+											<td>31/10/2019 23:43</td>
+											<td>**** Minh</td>
+											<td>15000000</td>
+										</tr>
+									</table>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</footer>
-		
-		<script>
-			function suggest_price()
-			{
-				var current_price = +document.getElementById("current_price").innerHTML;
-				document.getElementById("suggest").innerHTML = current_price + 100000;
+
+			<div class="text-center my-5">
+				<h2>Các sản phẩm liên quan</h2>
+				<div class="mx-auto my-auto">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+						<div class="carousel-inner" role="listbox">
+							<div class="carousel-item active">
+								<div class="col-md-4">
+									<div class="card card-body">
+										<img class="img-fluid" src="assets/images/A8+_1.jpg">
+										<h6>Samsung Galaxy A8+ 6GB/64GB (Black)</h6>
+										<p>Price: $9.52</p>
+										<p>Time left: 01:11:30</p>
+										<p>Time bidded: 155</p>
+										<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+												details</a></p>
+									</div>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<div class="col-md-4">
+									<div class="card card-body">
+										<img class="img-fluid" src="assets/images/Note8_1.jpg">
+										<h6>Samsung Galaxy Note8 6GB/128GB New 99%</h6>
+										<p>Price: $77.93</p>
+										<p>Time left: 02:19:37</p>
+										<p>Time bidded: 124</p>
+										<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+												details</a></p>
+									</div>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<div class="col-md-4">
+									<div class="card card-body">
+										<img class="img-fluid" src="assets/images/Mate20pro_1.jpg">
+										<h6>Huawei Mate 20 Pro 8GB/256GB</h6>
+										<p>Price: $200.45</p>
+										<p>Time left: 00:05:10</p>
+										<p>Time bidded: 100</p>
+										<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+												details</a></p>
+									</div>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<div class="col-md-4">
+									<div class="card card-body">
+										<img class="img-fluid" src="assets/images/IpXS_1.jpg">
+										<h6>Iphone Xs 2018 6GB/128GB</h6>
+										<p>Price: $14.78</p>
+										<p>Time left: 00:45:56</p>
+										<p>Time bidded: 97</p>
+										<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+												details</a></p>
+									</div>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<div class="col-md-4">
+									<div class="card card-body">
+										<img class="img-fluid" src="assets/images/OnePlus7pro_1.jpg">
+										<h6>Oneplus 7 Pro 8GB/256GB New 99%</h6>
+										<p>Price: $299.51</p>
+										<p>Time left: 00:20:34</p>
+										<p>Time bidded: 85</p>
+										<p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+												details</a></p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
+							<i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;"
+								aria-hidden="true"></i>
+						</a>
+						<a class="right carousel-control-next w-auto" href="#myCarousel" role="button"
+							data-slide="next">
+							<i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;"
+								aria-hidden="true"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<footer class="footer">
+		<div class="text-white bg-dark">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div id="about">
+							<h5>GIỚI THIỆU</h5>
+							<p>Đây là phần giới thiệu về trang web của chúng tôi, bao gồm:...</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3 text-center">
+						<h5>Các loại dịch vụ thanh toán</h5>
+						<div>
+							<i class="fa fa-cc-visa fa-lg" aria-hidden="true"></i>
+							<i class="fa fa-cc-paypal fa-lg" aria-hidden="true"></i>
+							<i class="fa fa-cc-mastercard fa-lg" aria-hidden="true"></i>
+							<i class="fa fa-cc-discover fa-lg" aria-hidden="true"></i>
+							<i class="fa fa-cc-jcb fa-lg" aria-hidden="true"></i>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div>
+							<h5>Chào mừng đến với website của chúng tôi</h5>
+							<p>Bạn muốn tham gia vào các cuộc đấu giá thú vị, mua được sản phẩm giá rẻ</p>
+							<p>
+								Nếu bạn chưa có tài khoản<br>
+								<a class="btn btn-primary" href="#" target="_blank">
+									<i class="fa fa-hand-o-right fa-lg" aria-hidden="true"></i>
+									Đăng ký ngay bây giờ
+								</a>
+							</p>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div>
+							<h5>Thông tin liên hệ</h5>
+							<p>Mail: <a href="mailto:info@domain.com" title="glorythemes">info@domain.com</a></p>
+							<p>Tel: <a href="tel:0987654321">0987654321</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</footer>
+
+	<script>
+		function suggest_price() {
+			var current_price = +document.getElementById("current_price").innerHTML;
+			document.getElementById("suggest").innerHTML = current_price + 100000;
+		}
+
+		function checkInput(event) {
+			document.getElementById("dropdown1").style.display = "none";
+			return (event.charCode != 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))
+		}
+
+		function checkPrice() {
+
+			var current_price = +document.getElementById("current_price").innerHTML;
+			var input_price = +frmain.price.value;
+			if (input_price <= current_price) {
+				document.getElementById("dropdown1").style.display = "block";
+				return false;
 			}
-			
-			function checkInput(event)
-			{
-				document.getElementById("dropdown1").style.display = "none";
-				return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))
-			}
-			
-			function checkPrice()
-			{
-				
-				var current_price = +document.getElementById("current_price").innerHTML;
-				var input_price = +frmain.price.value; 
-				if(input_price <= current_price)
-				{	
-					document.getElementById("dropdown1").style.display = "block";
-					return false;
-				}
-				return true;
-			}
-			
-			function extendTable(tabeleID)
-			{
-				document.getElementById(tabeleID).style.display = "block";
-			}
-		</script>	
-		
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		
-		<script type="text/javascript" src="assets/js/carousel.js"></script>		
-	</body>
+			return true;
+		}
+		function show(img_id) {
+			var new_src = document.getElementById(img_id).src;
+			document.getElementById('main_window').src = new_src
+		}
+	</script>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="assets/js/carousel.js"></script>
+</body>
+
 </html>
