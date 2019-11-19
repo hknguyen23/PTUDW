@@ -9,3 +9,9 @@ $(document).scroll(function() {
     checkOffset();
 });
 
+$(document).ready(function() {
+	$(".ellipsis").dotdotdot({
+		height: 100,
+		watch: true,
+	});
+});

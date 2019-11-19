@@ -2,13 +2,14 @@ body {
   background: #fff;
   background: whitesmoke;
 }
-.btn {
-  transition: none;
-}
 
-.container{
+.offset-left  {
   margin-left:250px;  
 }
+.card-title{
+  width: auto;
+}
+
 /* RIBBON */
 .card {
   position: relative;
