@@ -9,9 +9,15 @@ $(document).scroll(function() {
     checkOffset();
 });
 
+
 $(document).ready(function() {
 	$(".ellipsis").dotdotdot({
 		height: 100,
 		watch: true,
 	});
+});
+
+
+$('.fa-bookmark').on('click', function(){
+    $(this).toggleClass('green-color');
 });
