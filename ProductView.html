@@ -3,24 +3,17 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Product Information</title>
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/HomeStyle.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/carousel.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/ProductView.css">
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css"
 		href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<style>
-		
-		.bidding_history tr td,
-		.bidding_history tr th {
-			padding: 5px;
-			width: 200px;
-			
-		}
-	</style>
 </head>
 
 <body>
@@ -106,11 +99,11 @@
 	</header>
 
 	<main class="main" role="main">
-		<!-- <div class="container-fruid"> -->
 		<div id="page-content-wrapper">
 			<div class="container pt-3">
-				<div class="">
-					<div class="float-left w-65" style="color: royalblue;"> Danh mục: Điện tử > Điện thoại di động </div>
+				<div>
+					<div class="float-left w-65" style="color: royalblue;"> Danh mục: Điện tử > Điện thoại di động
+					</div>
 					<button type="button" class="btn btn-info float-right w-35">
 						<i class="fa fa-heart" aria-hidden="true"></i> Thêm Watch List
 					</button>
@@ -119,7 +112,7 @@
 
 				<div class="card" style="border: none;">
 					<div class="row mt-3">
-						<div class="" style="width: 35%;">
+						<div class="left" style="width: 35%;">
 							<img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg"
 								src="assets/images/S10_1.jpg" name="main_window" id="main_window" height="300"
 								width="300" />
@@ -143,14 +136,14 @@
 							</div>
 						</div>
 
-						<div class="p-4 shadow-lg" style="width: 65%;" id="product_detail">
+						<div class="right p-4 shadow-lg" style="width: 65%;" id="product_detail">
 							<h3 class="" style="color: royalblue;">Samsung Galaxy S10 (Black) 8GB+128GB </h3>
 
 							<div class="row my-4">
 								<div class="col-md-4 text-right">
 									Giá hiện tại (đ):
 								</div>
-								<div class="text-left col-md-8 " style="color:tomato;" id="current_price"
+								<div class="text-left col-md-8" style="color:tomato;" id="current_price"
 									name="current_price">
 									19000000
 								</div>
@@ -418,37 +411,10 @@
 		</div>
 	</footer>
 
-	<script>
-		function suggest_price() {
-			var current_price = +document.getElementById("current_price").innerHTML;
-			document.getElementById("suggest").innerHTML = current_price + 100000;
-		}
-
-		function checkInput(event) {
-			document.getElementById("dropdown1").style.display = "none";
-			return (event.charCode != 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))
-		}
-
-		function checkPrice() {
-
-			var current_price = +document.getElementById("current_price").innerHTML;
-			var input_price = +frmain.price.value;
-			if (input_price <= current_price) {
-				document.getElementById("dropdown1").style.display = "block";
-				return false;
-			}
-			return true;
-		}
-		function show(img_id) {
-			var new_src = document.getElementById(img_id).src;
-			document.getElementById('main_window').src = new_src
-		}
-	</script>
-
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+	<script src="assets/js/ProductView.js"></script>
 	<script type="text/javascript" src="assets/js/carousel.js"></script>
 </body>
 
