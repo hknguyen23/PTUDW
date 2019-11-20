@@ -43,6 +43,29 @@ body {
   box-shadow: none;
 }
 
+/* Form Search */
+.form-group .form-control{
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 0;
+}
+.form-group .form-control:focus,.form-control:active {
+  outline: none !important;
+  box-shadow: none;
+}
+.form-group input{
+  width: 90%;
+  margin : 10px auto;
+  background: #262626 !important;
+  border: 1px solid #3e3e3e;
+  border-radius: 0.2rem !important;
+}
+.form-group .custom-btn{
+  width: 90%;
+  margin : 10px auto;
+  border: none;
+}
 /* RIBBON */
 .card {
   position: relative;
