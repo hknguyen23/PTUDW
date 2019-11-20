@@ -27,7 +27,7 @@ img.background {
 }
 
 textarea {
-    resize: none;
+    resize: none !important;
 }
 
 .gallery img {
@@ -38,10 +38,21 @@ textarea {
     background-size: cover;
 }
 
+#uploadField {
+   font-size: large;
+}
+
 @media all and (max-width: 1000px) {
     .main {
+        display: block !important;
         width: 95% !important;
         margin-left: auto !important;
         margin-right: auto !important;
     }
+    .left #main_window, .gallery {
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+   
 }
