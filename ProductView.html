@@ -114,7 +114,7 @@
 								<img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg"
 									src="assets/images/S10_1.jpg" name="main_window" id="main_window" height="300"
 									width="300" />
-								<div class="row justify-content-center mt-2">
+								<div class="row gallery justify-content-center mt-2">
 									<div>
 										<img class="dotted_grey m-1" name="pic_01" id="pic_01" src="assets/images/S10_1.jpg"
 											height="100" width="100" onmouseover="show('pic_01')" />
@@ -206,11 +206,11 @@
 										Đặt giá của bạn:
 									</div>
 									<form method="post" id="frmain" onsubmit="return checkPrice()">
-										<div class="dropdown">
+										<div class="dropdown bg-info">
 											<input type="text" class="float-left col-md-3 font-weight-bold" id="price"
 												name="price" onmouseover="checkInput()"
 												onkeypress="return checkInput(event)" />
-											<div class="dropdown-menu text-danger " id="dropdown1" name="dropdown1">Giá
+											<div class="dropdown-menu text-danger" style="top: 20px; left: 20%;" id="dropdown1" name="dropdown1">Giá
 												đặt phải lớn hơn giá hiện tại</div>
 										</div>
 										<span class="float-right col-md-5 text-muted">
@@ -236,7 +236,7 @@
 									<a href="#history" data-toggle="collapse">Xem lịch sử đấu giá
 										<i class="fa fa-angle-double-down"></i></a>
 									<div name="history" id="history" class="collapse">
-										<table name="bidding_history" id="bidding_history" class="bidding_history mt-3"
+										<table name="bidding_history" id="table" class="bidding_history mt-3"
 											align="center" border="1">
 											<tr>
 												<th>Thời điểm</th>
@@ -245,7 +245,7 @@
 											</tr>
 											<tr>
 												<td>1/11/2019 10:43</td>
-												<td>**** Ping</td>
+												<td>**** Đào</td>
 												<td>19000000</td>
 											</tr>
 											<tr>
