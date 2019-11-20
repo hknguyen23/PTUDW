@@ -1,10 +1,16 @@
 .bidding_history tr td, .bidding_history tr th {
     padding: 5px;
     width: 200px;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #ff0000;
+    color: #FFF;
 }
 
 @media all and (max-width: 1000px) {
-    .card div.row {
+    .card>div {
         display: block !important;
         width: 100%;
         margin-left: auto;
@@ -12,5 +18,15 @@
     }
     .left, .right {
         width: 100% !important;
+    }
+    .left #main_window {
+        width: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .right .row div  {
+        display: block !important;
+        /* text-align: left !important; */
     }
 }
