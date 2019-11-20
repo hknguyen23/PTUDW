@@ -1,0 +1,32 @@
+/* Carousel */
+@media (max-width: 768px) {
+    .carousel-inner .carousel-item > div {
+        display: none;
+    }
+	
+    .carousel-inner .carousel-item > div:first-child {
+        display: block;
+    }
+}
+
+.carousel-inner .carousel-item.active, .carousel-inner .carousel-item-next, .carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+.carousel-inner .item.left.active {
+	transform: translateX(-33%);
+}
+.carousel-inner .item.right.active {
+	transform: translateX(33%);
+}
+
+.carousel-inner .item.next {
+	transform: translateX(33%)
+}
+.carousel-inner .item.prev {
+	transform: translateX(-33%)
+}
+
+.carousel-inner .item.right, .carousel-inner .item.left { 
+	transform: translateX(0);
+}
