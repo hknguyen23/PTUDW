@@ -27,6 +27,6 @@
 
     .right .row div  {
         display: block !important;
-        /* text-align: left !important; */
+        text-align: left !important;
     }
 }
