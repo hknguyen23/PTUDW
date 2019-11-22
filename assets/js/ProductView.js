@@ -25,12 +25,11 @@ function show(img_id) {
 }
 
 // bật tắt chức năng add to watch list
-$(".btn.addToFav").click(function() {
-    $(this).toggleClass("btn-warning");
-    $(this).toggleClass("btn-outline-warning");
-  });
+$(".btn.addToFav").click(function () {
+    $(this).toggleClass("btn-warning btn-outline-warning");
+});
 
-  $("a.up-down-icon").click(function() {
-    $(this).toggleClass("fa-angle-double-up");
-    $(this).toggleClass("fa-angle-double-down");
-  });
+$("a.history_expand").click(function () {
+    $(this).find('i').toggleClass("fa-angle-double-up fa-angle-double-down");
+
+});
