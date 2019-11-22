@@ -9,6 +9,10 @@
     color: #FFF;
 }
 
+/* #addToFav {
+    background-color: red;
+} */
+
 @media all and (max-width: 1000px) {
     .card>div {
         display: block !important;
@@ -19,11 +23,11 @@
     .left, .right {
         width: 100% !important;
     }
-    .left #main_window {
+    .left #main_window { 
         width: auto;
         margin-left: auto;
         margin-right: auto;
-    }
+    }  
 
     .right .row div  {
         display: block !important;
