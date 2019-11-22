@@ -23,3 +23,14 @@ function show(img_id) {
     var new_src = document.getElementById(img_id).src;
     document.getElementById('main_window').src = new_src
 }
+
+// bật tắt chức năng add to watch list
+$(".btn.addToFav").click(function() {
+    $(this).toggleClass("btn-warning");
+    $(this).toggleClass("btn-outline-warning");
+  });
+
+  $("a.up-down-icon").click(function() {
+    $(this).toggleClass("fa-angle-double-up");
+    $(this).toggleClass("fa-angle-double-down");
+  });

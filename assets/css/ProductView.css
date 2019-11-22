@@ -9,10 +9,6 @@
     color: #FFF;
 }
 
-/* #addToFav {
-    background-color: red;
-} */
-
 @media all and (max-width: 1000px) {
     .card>div {
         display: block !important;
