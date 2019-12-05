@@ -1,0 +1,265 @@
+<main class="main" role="main">
+    <div id="page-content-wrapper">
+        <div class="container pt-3">
+            <div>
+                <div class="float-left w-65" style="color: royalblue;"> Danh mục: Điện tử > Điện thoại di động
+                </div>
+                <button type="button" class="btn btn-outline-warning addToFav float-right w-35">
+                    <i class="heart fa fa-heart" aria-hidden="true"></i> Thêm Watch List
+                </button>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="card" style="border: none;">
+                <div class="row mt-3">
+                    <div class="left" style="width: 35%;">
+                        <img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg"
+                            src="assets/images/S10_1.jpg" name="main_window" id="main_window" height="300"
+                            width="300" />
+                        <div class="row gallery justify-content-center mt-2">
+                            <div>
+                                <img class="dotted_grey m-1" name="pic_01" id="pic_01" src="assets/images/S10_1.jpg"
+                                    height="100" width="100" onmouseover="show('pic_01')" />
+                            </div>
+                            <div>
+                                <img class="dotted_grey m-1" name="pic_02" id="pic_02" src="assets/images/S10_2.jpg"
+                                    height="100" width="100" onmouseover="show('pic_02')" />
+                            </div>
+                            <div>
+                                <img class="dotted_grey m-1" name="pic_03" id="pic_03" src="assets/images/S10_3.jpg"
+                                    height="100" width="100" onmouseover="show('pic_03')" />
+                            </div>
+                            <div>
+                                <img class="dotted_grey m-1" name="pic_04" id="pic_04" src="assets/images/S10_4.jpg"
+                                    height="100" width="100" onmouseover="show('pic_04')" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right p-4 shadow-lg" style="width: 65%;" id="product_detail">
+                        <h3 class="" style="color: royalblue;">Samsung Galaxy S10 (Black) 8GB+128GB </h3>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 text-right">
+                                Giá hiện tại (đ):
+                            </div>
+                            <div class="text-left col-md-8" style="color:tomato;" id="current_price"
+                                name="current_price">
+                                19000000
+                            </div>
+                            <!-- <script>
+													var x = +document.getElementById("current_price").innerHTML;
+													document.getElementById("current_price").innerHTML = x.toLocaleString();// 1000->1.000
+											</script> -->
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 text-right">
+                                Tên người bán:
+                            </div>
+                            <div class="col-md-8 text-left" id="seller" name="seller">
+                                Tập Cận Bình <span name="seller-score" id="seller-score">(10)</span>
+                            </div>
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 text-right">
+                                Người ra giá cao nhất:
+                            </div>
+                            <div class="col-md-8 text-left" id="bidder" name="bidder">
+                                **** Đào <span name="bidder-score" id="bidder-score">(8)</span>
+                            </div>
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 text-right">
+                                Thời điểm đăng bán:
+                            </div>
+                            <div class="col-md-8 text-left" id="post_date" name="post_date">
+                                08/11/2019
+                            </div>
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 text-right">
+                                Thời điểm kết thúc:
+                            </div>
+                            <div class="col-md-8 text-left" id="exp_date" name="exp_date">
+                                24 giờ nữa
+                            </div>
+                        </div>
+
+                        <div class="row my-4">
+                            <div class="col-md-4 text-right">
+                                Mô tả sản phẩm:
+                            </div>
+                            <div class="rounded-lg col-md-7 text-left overflow-auto"
+                                style="background-color: silver; height: 165px;" id="exp_date" name="exp_date">
+                                三星 Galaxy S10 是韩国三星公司推出的新一代智能手机产品，
+                                搭载高通骁龙 855 处理器，屏幕 6.1 英寸；后置三摄，
+                                分别为 1200 像素长焦摄像头，1200 万广角摄像头和 1600万 超广角摄像头。
+                                北京时间 2019 年 2 月 21 日，三星 Galaxy S10 在旧金山正式发布；
+                                2019 年 2 月 28 日，三星在乌镇举行发布会发布国行版，2019 年 3 月 8 日正式开售。
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
+                                Đặt giá của bạn:
+                            </div>
+                            <form method="post" id="frmain" onsubmit="return checkPrice()">
+                                <div class="dropdown bg-info">
+                                    <input type="text" class="float-left col-md-3 font-weight-bold" id="price"
+                                        name="price" onmouseover="checkInput()" onkeypress="return checkInput(event)" />
+                                    <div class="dropdown-menu text-danger" style="top: 20px; left: 20%;" id="dropdown1"
+                                        name="dropdown1">Giá
+                                        đặt phải lớn hơn giá hiện tại</div>
+                                </div>
+                                <span class="float-right col-md-5 text-muted">
+                                    Giá đề nghị (đ):
+                                    <span id="suggest" name="suggest"></span>
+                                    <script>
+                                        var current_price = +document.getElementById("current_price").innerHTML;
+                                        document.getElementById("suggest").innerHTML = current_price + 100000;
+                                    </script>
+                                </span>
+
+                                <div class="clearfix"></div>
+                                <div class="mt-4 text-center">
+                                    <button type="submit" class="btn btn-danger">
+                                        Xác nhận
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- lịch sử đấu giá -->
+                        <div class="mt-3">
+                            <a href="#history" class="history_expand" data-toggle="collapse">Xem lịch sử đấu giá
+                                <i class="fa fa-angle-double-down"></i></a>
+                            <div name="history" id="history" class="collapse">
+                                <table name="bidding_history" id="table" class="bidding_history mt-3" align="center"
+                                    border="1">
+                                    <tr>
+                                        <th>Thời điểm</th>
+                                        <th>Người mua</th>
+                                        <th>Giá</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1/11/2019 10:43</td>
+                                        <td>**** Đào</td>
+                                        <td>19000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1/11/2019 9:43</td>
+                                        <td>**** Phụng</td>
+                                        <td>18000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1/11/2019 8:43</td>
+                                        <td>**** Chinh</td>
+                                        <td>17500000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1/11/2019 7:43</td>
+                                        <td>**** Dung</td>
+                                        <td>16900000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>31/10/2019 23:43</td>
+                                        <td>**** Minh</td>
+                                        <td>15000000</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center my-5">
+            <h2>Các sản phẩm liên quan</h2>
+            <div class="mx-auto my-auto">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <img class="img-fluid" src="assets/images/A8+_1.jpg">
+                                    <h6>Samsung Galaxy A8+ 6GB/64GB (Black)</h6>
+                                    <p>Price: $9.52</p>
+                                    <p>Time left: 01:11:30</p>
+                                    <p>Time bidded: 155</p>
+                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+                                            details</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <img class="img-fluid" src="assets/images/Note8_1.jpg">
+                                    <h6>Samsung Galaxy Note8 6GB/128GB New 99%</h6>
+                                    <p>Price: $77.93</p>
+                                    <p>Time left: 02:19:37</p>
+                                    <p>Time bidded: 124</p>
+                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+                                            details</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <img class="img-fluid" src="assets/images/Mate20pro_1.jpg">
+                                    <h6>Huawei Mate 20 Pro 8GB/256GB</h6>
+                                    <p>Price: $200.45</p>
+                                    <p>Time left: 00:05:10</p>
+                                    <p>Time bidded: 100</p>
+                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+                                            details</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <img class="img-fluid" src="assets/images/IpXS_1.jpg">
+                                    <h6>Iphone Xs 2018 6GB/128GB</h6>
+                                    <p>Price: $14.78</p>
+                                    <p>Time left: 00:45:56</p>
+                                    <p>Time bidded: 97</p>
+                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+                                            details</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <img class="img-fluid" src="assets/images/OnePlus7pro_1.jpg">
+                                    <h6>Oneplus 7 Pro 8GB/256GB New 99%</h6>
+                                    <p>Price: $299.51</p>
+                                    <p>Time left: 00:20:34</p>
+                                    <p>Time bidded: 85</p>
+                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
+                                            details</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
+                        <i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;"
+                            aria-hidden="true"></i>
+                    </a>
+                    <a class="right carousel-control-next w-auto" href="#myCarousel" role="button" data-slide="next">
+                        <i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;"
+                            aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
