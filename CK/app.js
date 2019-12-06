@@ -26,6 +26,15 @@ app.get("/", function(req, res) {
   });
 });
 
+app.get("/homeSignedIn", function(req, res) {
+  // 
+  res.render("homeSignedIn", {
+    title: "Online Auction",
+    css: ["HomeStyle.css", "carousel.css"],
+    js: ["carousel.js"]
+  });
+});
+
 app.get("/accountManagement", function(req, res) {
   res.render("accountManagement", {
     title: "Your account",
@@ -35,7 +44,6 @@ app.get("/accountManagement", function(req, res) {
 });
 
 app.get("/allUsers", function(req, res) {
-  // dấu / yêu cầu hiển thị trang chủ
   res.render("allUsers", {
     title: "All users list",
     css: ["HomeStyle.css", "AccountStyle.css"],
@@ -44,7 +52,6 @@ app.get("/allUsers", function(req, res) {
 });
 
 app.get("/bidderList", function(req, res) {
-  // dấu / yêu cầu hiển thị trang chủ
   res.render("bidderList", {
     title: "Bidders List",
     css: ["HomeStyle.css", "AccountStyle.css"],
@@ -53,7 +60,6 @@ app.get("/bidderList", function(req, res) {
 });
 
 app.get("/changeInfo", function(req, res) {
-  // dấu / yêu cầu hiển thị trang chủ
   // res.render("changeInfo", {
   //   title: "Change infomation",
   //   css: ["HomeStyle.css", "AccountStyle.css"],
@@ -65,7 +71,6 @@ app.get("/changeInfo", function(req, res) {
 });
 
 app.get("/daBan", function(req, res) {
-  // dấu / yêu cầu hiển thị trang chủ
   res.render("đãBán", {
     title: "Danh sách đã bán",
     css: ["List.css"],
@@ -74,7 +79,6 @@ app.get("/daBan", function(req, res) {
 });
 
 app.get("/daDang", function(req, res) {
-  // dấu / yêu cầu hiển thị trang chủ
   res.render("đãĐăng", {
     title: "Danh Sách Đã Đăng",
     css: ["List.css"],
@@ -83,7 +87,6 @@ app.get("/daDang", function(req, res) {
 });
 
 app.get("/daThang", function(req, res) {
-  // dấu / yêu cầu hiển thị trang chủ
   res.render("đãThắng", {
     title: "Danh Sách Đã Thắng",
     css: ["List.css"],
@@ -92,7 +95,6 @@ app.get("/daThang", function(req, res) {
 });
 
 app.get("/dangDauGia", function(req, res) {
-  // dấu / yêu cầu hiển thị trang chủ
   res.render("đangĐấuGiá", {
     title: "Danh Sách Đang Đấu Giá",
     css: ["List.css"],
@@ -116,14 +118,12 @@ app.get("/postProduct", function(req, res) {
 });
 
 app.get("/productList", function(req, res) {
-  // dấu / yêu cầu hiển thị trang chủ
-  // res.render("productList", {
-  //   title: "Product list",
-  //   css: ["List.css"],
-  //   js: ["List.js"]
-  // });
+  res.render("productList", {
+    title: "Product list",
+    css: ["List.css"],
+    js: ["List.js"]
+  });
 
-  // chưa có
 });
 
 app.get("/productView", function(req, res) {
@@ -135,23 +135,20 @@ app.get("/productView", function(req, res) {
 });
 
 app.get("/search", function(req, res) {
-  // res.render("search", {
-  //   title: "Tìm kiếm",
-  //   css: ["List.css"],
-  //   js: ["List.js"]
-  // });
+  res.render("search", {
+    title: "Tìm kiếm",
+    css: ["List.css"],
+    js: ["List.js"]
+  });
 
-  //chưa có
 });
 
 app.get("/theoDoi", function(req, res) {
-  // res.render("theoDõi", {
-  //   title: "Danh sách theo dõi",
-  //   css: ["List.css"],
-  //   js: ["List.js"]
-  // });
-
-  //chưa có
+  res.render("theoDõi", {
+    title: "Danh sách theo dõi",
+    css: ["List.css"],
+    js: ["List.js"]
+  });
 });
 
 app.get("/yourPointAndDetail", function(req, res) {
