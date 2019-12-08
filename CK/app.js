@@ -16,24 +16,36 @@ app.engine(
 
 app.set("view engine", "hbs");
 
+
+// user route
+app.use('/bidder',require('./routes/bidder/home.bidder.route'));
+app.use('/bidder/productViews',require('./routes/bidder/productView.bidder.route')); 
+// app.use('/bidder',require('./routes/bidder/home.bidder.route'));
+// app.use('/bidder',require('./routes/bidder/home.bidder.route'));
+// app.use('/bidder',require('./routes/bidder/home.bidder.route'));
+// app.use('/bidder',require('./routes/bidder/home.bidder.route'));
+// admin route
+// app.use('/admin', require('./routes/admin/'));
+
+
+
+
+
+
+
+
+
+
 //4. Use HANDLEBARS TEMPLATE
 app.get("/", function(req, res) {
   // dấu / yêu cầu hiển thị trang chủ
-  res.render("homeNotSignedIn", {
+  res.render("home", {
     title: "Online Auction",
     css: ["HomeStyle.css", "carousel.css"],
     js: ["carousel.js"]
   });
 });
 
-app.get("/homeSignedIn", function(req, res) {
-  // 
-  res.render("homeSignedIn", {
-    title: "Online Auction",
-    css: ["HomeStyle.css", "carousel.css"],
-    js: ["carousel.js"]
-  });
-});
 
 app.get("/accountManagement", function(req, res) {
   res.render("accountManagement", {

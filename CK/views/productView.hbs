@@ -2,7 +2,7 @@
     <div id="page-content-wrapper">
         <div class="container pt-3">
             <div>
-                <div class="float-left w-65" style="color: royalblue;"> Danh mục: Điện tử > Điện thoại di động
+                <div class="float-left w-65" style="color: royalblue;"> Danh mục: Điện thoại di động
                 </div>
                 <button type="button" class="btn btn-outline-warning addToFav float-right w-35">
                     <i class="heart fa fa-heart" aria-hidden="true"></i> Thêm Watch List
@@ -13,11 +13,10 @@
             <div class="card" style="border: none;">
                 <div class="row mt-3">
                     <div class="left" style="width: 35%;">
-                        <img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg"
-                            src="assets/images/S10_1.jpg" name="main_window" id="main_window" height="300"
-                            width="300" />
+                        <img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg" src={{image.0.imgurl}}
+                            name="main_window" id="main_window" height="300" width="300" />
                         <div class="row gallery justify-content-center mt-2">
-                            <div>
+                            {{!-- <div>
                                 <img class="dotted_grey m-1" name="pic_01" id="pic_01" src="assets/images/S10_1.jpg"
                                     height="100" width="100" onmouseover="show('pic_01')" />
                             </div>
@@ -32,12 +31,19 @@
                             <div>
                                 <img class="dotted_grey m-1" name="pic_04" id="pic_04" src="assets/images/S10_4.jpg"
                                     height="100" width="100" onmouseover="show('pic_04')" />
+                            </div> --}}
+                            {{#each this.image}}
+                            <div>
+                                <img class="dotted_grey m-1" id={{@index}} src={{imgurl}} height="100" width="100"
+                                    onmouseover="show({{@index}})" />
                             </div>
+                            {{/each}}
+
                         </div>
                     </div>
 
                     <div class="right p-4 shadow-lg" style="width: 65%;" id="product_detail">
-                        <h3 class="" style="color: royalblue;">Samsung Galaxy S10 (Black) 8GB+128GB </h3>
+                        <h3 class="" style="color: royalblue;">{{details.TENSANPHAM}}</h3>
 
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
@@ -45,7 +51,7 @@
                             </div>
                             <div class="text-left col-md-8" style="color:tomato;" id="current_price"
                                 name="current_price">
-                                19000000
+                                {{details.GIA}}
                             </div>
                             <!-- <script>
 													var x = +document.getElementById("current_price").innerHTML;
@@ -58,7 +64,8 @@
                                 Tên người bán:
                             </div>
                             <div class="col-md-8 text-left" id="seller" name="seller">
-                                Tập Cận Bình <span name="seller-score" id="seller-score">(10)</span>
+                                {{details.SELLER}} <span name="seller-score"
+                                    id="seller-score">({{details.DIEMSELLER}})</span>
                             </div>
                         </div>
 
@@ -67,7 +74,7 @@
                                 Người ra giá cao nhất:
                             </div>
                             <div class="col-md-8 text-left" id="bidder" name="bidder">
-                                **** Đào <span name="bidder-score" id="bidder-score">(8)</span>
+                               {{biddingHistory.0.tentaikhoan}} <span name="bidder-score" id="bidder-score">({{biddingHistory.0.diemndg}})</span>
                             </div>
                         </div>
 
@@ -76,7 +83,7 @@
                                 Thời điểm đăng bán:
                             </div>
                             <div class="col-md-8 text-left" id="post_date" name="post_date">
-                                08/11/2019
+                                {{details.NGAYDANG}}
                             </div>
                         </div>
 
@@ -85,7 +92,7 @@
                                 Thời điểm kết thúc:
                             </div>
                             <div class="col-md-8 text-left" id="exp_date" name="exp_date">
-                                24 giờ nữa
+                                {{details.THOIGIANCONLAI}}
                             </div>
                         </div>
 
@@ -95,11 +102,12 @@
                             </div>
                             <div class="rounded-lg col-md-7 text-left overflow-auto"
                                 style="background-color: silver; height: 165px;" id="exp_date" name="exp_date">
-                                三星 Galaxy S10 是韩国三星公司推出的新一代智能手机产品，
+                                {{!-- 三星 Galaxy S10 是韩国三星公司推出的新一代智能手机产品，
                                 搭载高通骁龙 855 处理器，屏幕 6.1 英寸；后置三摄，
                                 分别为 1200 像素长焦摄像头，1200 万广角摄像头和 1600万 超广角摄像头。
                                 北京时间 2019 年 2 月 21 日，三星 Galaxy S10 在旧金山正式发布；
-                                2019 年 2 月 28 日，三星在乌镇举行发布会发布国行版，2019 年 3 月 8 日正式开售。
+                                2019 年 2 月 28 日，三星在乌镇举行发布会发布国行版，2019 年 3 月 8 日正式开售。 --}}
+                                {{details.MOTADAI}}
                             </div>
                         </div>
 
@@ -145,31 +153,13 @@
                                         <th>Người mua</th>
                                         <th>Giá</th>
                                     </tr>
+                                    {{#each this.biddingHistory}}
                                     <tr>
-                                        <td>1/11/2019 10:43</td>
-                                        <td>**** Đào</td>
-                                        <td>19000000</td>
+                                        <td>{{thoigian}}</td>
+                                        <td>{{tentaikhoan}}</td>
+                                        <td>{{gia}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>1/11/2019 9:43</td>
-                                        <td>**** Phụng</td>
-                                        <td>18000000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1/11/2019 8:43</td>
-                                        <td>**** Chinh</td>
-                                        <td>17500000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1/11/2019 7:43</td>
-                                        <td>**** Dung</td>
-                                        <td>16900000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>31/10/2019 23:43</td>
-                                        <td>**** Minh</td>
-                                        <td>15000000</td>
-                                    </tr>
+                                    {{/each}}
                                 </table>
                             </div>
                         </div>

@@ -81,6 +81,17 @@
 
                             <input class="form-control col-md-3 mr-2 pl-3" type="text" placeholder="Search">
 
+                            {{#if isUser}}
+                            <a class="btn btn-primary mr-2 pl-3" href="AccountManagement.html">
+                                <i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
+                                Tài khoản
+                            </a>
+
+                            <a class="btn btn-primary pl-3" href="HomeNotSignIn.html">
+                                <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+                                Thoát
+                            </a>
+                            {{else}}
                             <a class="btn btn-primary mr-2 pl-3" href="Login.html#sign-up">
                                 <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>
                                 Đăng ký
@@ -90,6 +101,8 @@
                                 <i class="fa fa-sign-in fa-lg" aria-hidden="true"></i>
                                 Đăng nhập
                             </a>
+                            {{/if}}
+
                         </div>
                     </nav>
                 </div>
