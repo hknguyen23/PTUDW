@@ -7,9 +7,9 @@ const isUser = true;
 router.get("/:id", async(req, res) => {
     //id = id sản phẩm
     const id = +req.params.id;
-    const [productDetails, image, biddingHistory] =
-    await Promise.all([model.getProduct(id), model.getImage(id), model.getBiddingHistory(id)]);
-    console.log(biddingHistory);
+    const [productDetails, image, biddingHistory, relationProduct] =
+    await Promise.all([model.getProduct(id), model.getImage(id), model.getBiddingHistory(id), model.getRelation(id)]);
+    console.log(relationProduct);
     // const [value1, value2] = await Promise.all([getValue1Async(), getValue2Async()]);
     res.render("productView", {
         title: "Thông tin sản phẩm",
@@ -18,6 +18,7 @@ router.get("/:id", async(req, res) => {
         details: productDetails[0],
         biddingHistory,
         image,
+        relationProduct,
         isUser
     });
 });

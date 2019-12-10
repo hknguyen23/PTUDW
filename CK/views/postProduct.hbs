@@ -3,10 +3,10 @@
         <div class="col-sm-6" style="padding: 0px;">
             <img class="background" src="assets/images/bg-01.jpg" width="100%" />
             <div class="left centered text-white">
-                <img style="display: block;" class="shadow mx-md-auto rounded-lg" src="assets/images/S10_1.jpg"
+                <img style="display: block;" class="shadow mx-md-auto rounded-lg" src=""
                     name="main_window" id="main_window" height="50%" width="50%" />
 
-                <div class="row justify-content-center my-3 mx-md-auto gallery" style="width: 80%;">
+                {{!-- <div class="row justify-content-center my-3 mx-md-auto gallery" style="width: 80%;">
 
                     <img class="dotted_grey m-md-1" name="pic-01" id="pic-01" src="assets/images/S10_1.jpg" />
 
@@ -15,14 +15,21 @@
                     <img class="dotted_grey m-md-1" name="pic-03" id="pic-03" src="assets/images/S10_3.jpg" />
 
                     <img class="dotted_grey m-md-1 " name="pic-04" id="pic-04" src="assets/images/S10_4.jpg" />
+                </div> --}}
+                <div class="gallery dotted_grey m-md-1" onchange="displaymain()">
+
                 </div>
 
+
                 <!-- click để tải hình lên (chưa có xử lý) -->
-                <div id="uploadField">
+                <div id="uploadField" >
                     <i class="fa fa-plus-square" aria-hidden="true"></i>
-                    <label for="inputId"> Tải ảnh lên
-                        <input id="inputId" type="file" class="collapse" />
+                    <label for="gallery-photo-add"> Tải ảnh lên
+                        {{!-- <input id="inputId" type="file"  multiple  class="" /> --}}
+                        <input type="file" multiple id="gallery-photo-add" class="" accept="image/*">
+                    
                     </label>
+                    
                 </div>
             </div>
         </div>
@@ -45,15 +52,18 @@
                     <label for="inputName" class="col-sm-4 col-form-label">Loại sản phẩm: </label>
                     <div class="col-sm-8" style="line-height: 250%;">
                         <select id="category" style="width:100%" required>
-                            <option value="">Chọn loại sản phẩm</option>
-                            <option class="smartPhone" value="1">Điện thoại thông minh</option>
+                            <option value="-1">Chọn loại sản phẩm</option>
+                            {{!-- <option class="smartPhone" value="1">Điện thoại thông minh</option>
                             <option class="watch" value="2">Đồng hồ</option>
                             <option class="laptop" value="3">Laptop/PC</option>
                             <option class="clothing" value="4">Quần áo</option>
                             <option class="appliance" value="5">Đồ gia dụng</option>
                             <option class="jewelry" value="6">Trang sức</option>
                             <option class="sportingGoods" value="7">Vật dụng thể thao</option>
-                            <option class="books" value="7">Sách</option>
+                            <option class="books" value="7">Sách</option> --}}
+                            {{#each this.catList}}
+                            <option class="" value="{{this.id}}">{{this.tenloai}}</option>
+                            {{/each}}
                         </select>
 
                     </div>

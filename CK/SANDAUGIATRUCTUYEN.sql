@@ -141,6 +141,7 @@ INSERT INTO HINHANH(IDSanPham, IDHinh, ImgURL) VALUES
 (1, 1, 'assets/images/product/1/1.jpg'),
 (1, 2, 'assets/images/product/1/2.jpg'),
 (1, 3, 'assets/images/product/1/3.jpg'),
+(1, 4, 'assets/images/product/1/4.jpg'),
 (2, 1, 'assets/images/product/2/1.jpg'),
 (2, 2, 'assets/images/product/2/2.jpg'),
 (2, 3, 'assets/images/product/2/3.jpg'),
