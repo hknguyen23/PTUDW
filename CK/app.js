@@ -1,6 +1,10 @@
 var express = require("express");
 var exphbs = require("express-handlebars"); //1. Import handlebars
 var path = require("path");
+var date = require("date-and-time");
+const numeral = require('numeral');
+require('express-async-errors');
+
 var app = express();
 
 app.use(express.static("public"));
@@ -10,7 +14,11 @@ app.engine(
   "hbs",
   exphbs({
     defaultLayout: "main.hbs",
-    layoutsDir: "views/_layouts"
+    layoutsDir: "views/_layouts",
+    helpers: {
+      formatDate: val => date.format(val, 'YYYY/MM/DD'),
+      formatMoney: val => numeral(val).format('0,0[.]00')+'d',
+    }
   })
 );
 
@@ -20,6 +28,7 @@ app.set("view engine", "hbs");
 // user route
 app.use('/bidder',require('./routes/bidder/home.bidder.route'));
 app.use('/bidder/productViews',require('./routes/bidder/productView.bidder.route')); 
+app.use('/lists/category',require('./routes/lists/category.lists.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));

@@ -34,10 +34,14 @@
     <div class="offset-left col-9 p-0">
         <!--Product-->
         <div class="container">
+            {{#if this.empty}}
+            <h1 class="my-4">Not Found</h1>
+            {{else}}
             <!-- Page Heading -->
-            <h1 class="my-4">Laptop
+            <h1 class="my-4">{{products.1.TenLoai}}
             </h1>
             <div class="row">
+                {{#each this.products}}
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <!-- Shop card -->
                     <div class="card h-100">
@@ -45,181 +49,35 @@
                             <div class="ribbon">NEW</div>
                         </div>
                         <div class="img-wrap">
-                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg"
+                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg align-top"
                                     aria-hidden="true"></i></button>
                             <a href="ProductView.html"><img class="img-fluid mx-auto d-block"
-                                    src="assets/images/S10_5.jpg" alt=""></a>
+                                    src="{{MainImg}}" alt=""></a>
                         </div>
                         <div class="card-body d-flex flex-column justify-content-between">
                             <h4 class="card-title align-self-center ellipsis">
-                                <a href="ProductView.html">Project One</a>
+                                <a href="ProductView.html">{{this.TenSanPham}}</a>
                             </h4>
                             <div class="d-flex justify-content-between">
                                 <span>Mua ngay:</span>
-                                <span>550$</span>
+                                <span>{{formatMoney this.GiaMuaNgay}}</span>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <span>Giá hiện tại: </span>
-                                <span class="font-weight-bold">100$</span>
+                                <span class="font-weight-bold">{{formatMoney Gia}}</span>
                             </div>
-                            <span class="d-flex justify-content-end">(masa23vn)</span>
-                            <h3 class="mt-auto align-self-center">2d 12:37:25</h3>
+                            <span class="d-flex justify-content-end">({{this.TenTaiKhoan}})</span>
+                            <h3 class="mt-auto align-self-center">{{this.ThoiGianConLai}}</h3>
                             <div class="d-flex justify-content-between small">
-                                <span> 15 Lượt</span>
-                                <span>01/01/1999</span>
+                                <span> {{this.SoLanDuocDauGia}} Lượt</span>
+                                <span>{{formatDate this.NgayDang}}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="card h-100">
-                        <div class="ribbon-wrapper">
-                            <div class="ribbon">NEW</div>
-                        </div>
-                        <div class="img-wrap">
-                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg"
-                                    aria-hidden="true"></i></button>
-                            <a href="ProductView.html"><img class="img-fluid mx-auto d-block"
-                                    src="assets/images/DareUkeyboard.jpg" alt=""></a>
-                        </div>
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <h4 class="card-title align-self-center ellipsis">
-                                <a href="ProductView.html">Project One</a>
-                            </h4>
-                            <div class="d-flex justify-content-between">
-                                <span>Mua ngay:</span>
-                                <span>550$</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Giá hiện tại: </span>
-                                <span class="font-weight-bold">100$</span>
-                            </div>
-                            <span class="d-flex justify-content-end">(masa23vn)</span>
-                            <h3 class="mt-auto align-self-center">2d 12:37:25</h3>
-                            <div class="d-flex justify-content-between small">
-                                <span> 15 Lượt</span>
-                                <span>01/01/1999</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="card h-100">
-                        <div class="img-wrap">
-                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg"
-                                    aria-hidden="true"></i></button>
-                            <a href="ProductView.html"><img class="img-fluid mx-auto d-block"
-                                    src="assets/images/A8+_1.jpg" alt=""></a>
-                        </div>
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <h4 class="card-title align-self-center ellipsis">
-                                <a href="ProductView.html">Project One</a>
-                            </h4>
-                            <div class="d-flex justify-content-between">
-                                <span>Mua ngay:</span>
-                                <span>550$</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Giá hiện tại: </span>
-                                <span class="font-weight-bold">100$</span>
-                            </div>
-                            <span class="d-flex justify-content-end">(masa23vn)</span>
-                            <h3 class="mt-auto align-self-center">2d 12:37:25</h3>
-                            <div class="d-flex justify-content-between small">
-                                <span> 15 Lượt</span>
-                                <span>01/01/1999</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="card h-100">
-                        <div class="img-wrap">
-                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg"
-                                    aria-hidden="true"></i></button>
-                            <a href="ProductView.html"><img class="img-fluid mx-auto d-block"
-                                    src="assets/images/Gearfit2.jpg" alt=""></a>
-                        </div>
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <h4 class="card-title align-self-center ellipsis">
-                                <a href="ProductView.html">Project One</a>
-                            </h4>
-                            <div class="d-flex justify-content-between">
-                                <span>Mua ngay:</span>
-                                <span>550$</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Giá hiện tại: </span>
-                                <span class="font-weight-bold">100$</span>
-                            </div>
-                            <span class="d-flex justify-content-end">(masa23vn)</span>
-                            <h3 class="mt-auto align-self-center">2d 12:37:25</h3>
-                            <div class="d-flex justify-content-between small">
-                                <span> 15 Lượt</span>
-                                <span>01/01/1999</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="card h-100">
-                        <div class="img-wrap">
-                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg"
-                                    aria-hidden="true"></i></button>
-                            <a href="ProductView.html"><img class="img-fluid mx-auto d-block"
-                                    src="assets/images/Gearfit2.jpg" alt=""></a>
-                        </div>
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <h4 class="card-title align-self-center ellipsis">
-                                <a href="ProductView.html">Project One</a>
-                            </h4>
-                            <div class="d-flex justify-content-between">
-                                <span>Mua ngay:</span>
-                                <span>550$</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Giá hiện tại: </span>
-                                <span class="font-weight-bold">100$</span>
-                            </div>
-                            <span class="d-flex justify-content-end">(masa23vn)</span>
-                            <h3 class="mt-auto align-self-center">2d 12:37:25</h3>
-                            <div class="d-flex justify-content-between small">
-                                <span> 15 Lượt</span>
-                                <span>01/01/1999</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <div class="card h-100">
-                        <div class="img-wrap">
-                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg"
-                                    aria-hidden="true"></i></button>
-                            <a href="ProductView.html"><img class="img-fluid mx-auto d-block"
-                                    src="assets/images/Gearfit2.jpg" alt=""></a>
-                        </div>
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <h4 class="card-title align-self-center ellipsis">
-                                <a href="ProductView.html">Project One</a>
-                            </h4>
-                            <div class="d-flex justify-content-between">
-                                <span>Mua ngay:</span>
-                                <span>550$</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Giá hiện tại: </span>
-                                <span class="font-weight-bold">100$</span>
-                            </div>
-                            <span class="d-flex justify-content-end">(masa23vn)</span>
-                            <h3 class="mt-auto align-self-center">2d 12:37:25</h3>
-                            <div class="d-flex justify-content-between small">
-                                <span> 15 Lượt</span>
-                                <span>01/01/1999</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{/each}}
             </div>
+            {{/if}}
             <!-- /.row -->
 
             <!-- Pagination -->
