@@ -34,11 +34,8 @@
     <div class="offset-left col-9 p-0">
         <!--Product-->
         <div class="container">
-            {{#if this.empty}}
-            <h1 class="my-4">Not Found</h1>
-            {{else}}
             <!-- Page Heading -->
-            <h1 class="my-4">{{products.1.TenLoai}}
+            <h1 class="my-4">{{this.pageTitle}}
             </h1>
             <div class="row">
                 {{#each this.products}}
@@ -77,7 +74,6 @@
                 </div>
                 {{/each}}
             </div>
-            {{/if}}
             <!-- /.row -->
 
             <!-- Pagination -->

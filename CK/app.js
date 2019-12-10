@@ -1,11 +1,12 @@
-var express = require("express");
-var exphbs = require("express-handlebars"); //1. Import handlebars
-var path = require("path");
-var date = require("date-and-time");
+const express = require("express");
+const exphbs = require("express-handlebars"); //1. Import handlebars
+const path = require("path");
+const morgan = require('morgan');
+const date = require("date-and-time");
 const numeral = require('numeral');
 require('express-async-errors');
 
-var app = express();
+const app = express();
 
 app.use(express.static("public"));
 
@@ -179,6 +180,17 @@ app.get("/yourPointAndDetail", function(req, res) {
     js: ["AccountScript.js"]
   });
 });
+
+// ERROR HANDLER
+app.use((req, res, next) => {
+  // res.render('vwError/404');
+  res.send('You\'re lost');
+})
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('View error on console.');
+})
 
 app.listen(3000, () => {
   console.log("server running at port 3000");

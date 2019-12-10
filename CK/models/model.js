@@ -18,7 +18,7 @@ module.exports = {
         db.load(`SELECT LOAI.TenLoai, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
                 FROM LOAI LEFT JOIN SANPHAM SP ON LOAI.ID = SP.IDLoai
                 LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-                WHERE LOAI.ID = ${id}
+                WHERE LOAI.ID = '${id}'
                 ORDER BY SP.NgayDang DESC`),      
     getCategories: () => db.load('SELECT * FROM LOAI'),
  
