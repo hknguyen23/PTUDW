@@ -35,6 +35,9 @@ app.use('/lists/acc', require('./routes/lists/personal.lists.route'));
 app.use('/lists/category', require('./routes/lists/category.lists.route'));
 
 app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
+app.use('/user', require('./routes/home/home.route'));
+app.use('/:userID/productView', require('./routes/productView/productView.route'));
+app.use('/:sellerID/postProduct', require('./routes/seller/postProduct.seller.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));

@@ -5,9 +5,17 @@
                 <div class="float-left w-65" style="color: royalblue;"> Danh mục: {{details.TENLOAI}} >>
                     {{details.TENSANPHAM}}
                 </div>
+                {{#if userId}}
+                {{#if isFav}}
+                <button type="button" class="btn btn-warning addToFav float-right w-35">
+                    <i class="heart fa fa-heart" aria-hidden="true"></i> Đã thêm Watch List
+                </button>
+                {{else}}
                 <button type="button" class="btn btn-outline-warning addToFav float-right w-35">
                     <i class="heart fa fa-heart" aria-hidden="true"></i> Thêm Watch List
                 </button>
+                {{/if}}
+                {{/if}}
                 <div class="clearfix"></div>
             </div>
 
@@ -15,7 +23,7 @@
                 <div class="row mt-3">
                     <div class="left" style="width: 35%;">
                         <img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg" src={{image.0.imgurl}}
-                            name="main_window" id="main_window" height="300" width="300" />
+                            name="main_window" id="main_window" height=300 width=300 />
                         <div class="row gallery justify-content-center mt-2">
                             {{!-- <div>
                                 <img class="dotted_grey m-1" name="pic_01" id="pic_01" src="assets/images/S10_1.jpg"
@@ -110,7 +118,7 @@
                         </div>
 
                         <!-- bid fields -->
-                        {{#if isUser}}
+                        {{#if userId}}
                         <div>
                             <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
                                 Đặt giá của bạn:
@@ -121,8 +129,7 @@
                                         name="price" onmouseover="checkInput()" onkeypress="return checkInput(event)" />
                                     <div class="dropdown-menu text-danger"
                                         style="top: 20px; left: 20%; padding:10px 10px;" id="dropdown1"
-                                        name="dropdown1">Giá
-                                        đặt phải lớn hơn giá hiện tại</div>
+                                        name="dropdown1">Giá đặt phải lớn hơn giá hiện tại</div>
                                 </div>
                                 <span class="float-right col-md-5 text-muted">
                                     Giá đề nghị:
@@ -177,24 +184,25 @@
                     <div class="carousel-inner" role="listbox">
                         {{#each this.relationProduct}}
                         {{#if @index}}
-                            <div class="carousel-item">
-                        {{else}}
+                        <div class="carousel-item">
+                            {{else}}
                             <div class="carousel-item active">
-                        {{/if}}
-                            <div class="col-md-4">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="{{avatar}}">
-                                    <h6>{{tensanpham}}</h6>
-                                    <p>Giá: {{formatMoney gia}}</p>
-                                    <p>Thời gian còn lại: {{ thoigianconlai}}</p>
-                                    <p>Số lần đấu giá: {{solan}}</p>
-                                    <p><a class="btn btn-lg btn-primary" href="/productView/{{id}}" role="button">Xem
-                                            chi tiết</a></p>
+                                {{/if}}
+                                <div class="col-md-4">
+                                    <div class="card card-body">
+                                        <img class="img-fluid" src="{{avatar}}">
+                                        <h6>{{tensanpham}}</h6>
+                                        <p>Giá: {{formatMoney gia}}</p>
+                                        <p>Thời gian còn lại: {{ thoigianconlai}}</p>
+                                        <p>Số lần đấu giá: {{solan}}</p>
+                                        <p><a class="btn btn-lg btn-primary" href="/productView/{{id}}"
+                                                role="button">Xem
+                                                chi tiết</a></p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {{/each}}
-                        {{!-- <div class="carousel-item active">
+                            {{/each}}
+                            {{!-- <div class="carousel-item active">
                             <div class="col-md-4">
                                 <div class="card card-body">
                                     <img class="img-fluid" src="assets/images/A8+_1.jpg">
@@ -259,18 +267,19 @@
                                 </div>
                             </div> 
                         </div>--}}
-                    </div>
+                        </div>
 
-                    <a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
-                        <i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;"
-                            aria-hidden="true"></i>
-                    </a>
-                    <a class="right carousel-control-next w-auto" href="#myCarousel" role="button" data-slide="next">
-                        <i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;"
-                            aria-hidden="true"></i>
-                    </a>
+                        <a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
+                            <i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;"
+                                aria-hidden="true"></i>
+                        </a>
+                        <a class="right carousel-control-next w-auto" href="#myCarousel" role="button"
+                            data-slide="next">
+                            <i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;"
+                                aria-hidden="true"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </main>
