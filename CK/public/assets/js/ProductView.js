@@ -8,12 +8,11 @@ function checkInput(event) {
     return (event.charCode != 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))
 }
 
-function checkPrice() {
-
-    var current_price = +document.getElementById("current_price").innerHTML;
+function checkPrice(current_price, bidder_score) {
     var input_price = +frmain.price.value;
-    if (input_price <= current_price) {
-        document.getElementById("dropdown1").style.display = "block";
+    if (input_price <= current_price || +bidder_score < 8.0) {
+        // document.getElementById("dropdown1").style.display = "block";
+        alert("Kiểm tra lại giá hoặc bạn không đủ nhân phẩm");
         return false;
     }
     return true;
@@ -24,12 +23,20 @@ function show(img_id) {
     document.getElementById('main_window').src = new_src
 }
 
+function maskHalf(id) {
+    var str = document.getElementById(id).innerHTML;
+    var pos = str.lastIndexOf(" ");
+
+    var mask = "****" + str.substring(pos);
+    document.getElementById(id).innerHTML = mask;
+}
+
 // bật tắt chức năng add to watch list
-$(".btn.addToFav").click(function () {
+$(".btn.addToFav").click(function() {
     $(this).toggleClass("btn-warning btn-outline-warning");
 });
 
-$("a.history_expand").click(function () {
+$("a.history_expand").click(function() {
     $(this).find('i').toggleClass("fa-angle-double-up fa-angle-double-down");
 
 });

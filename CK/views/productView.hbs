@@ -44,7 +44,7 @@
                             {{#each this.image}}
                             <div>
                                 <img class="dotted_grey m-1" id={{@index}} src={{imgurl}} height="100" width="100"
-                                    onmouseover="show({{@index}})" />
+                                    onmouseover="show(this.id)" />
                             </div>
                             {{/each}}
 
@@ -60,7 +60,7 @@
                             </div>
                             <div class="text-left col-md-8" style="color:tomato;" id="current_price"
                                 name="current_price">
-                                {{formatMoney details.GIA}}
+                                {{formatMoney biddingHistory.0.gia}}
                             </div>
                         </div>
 
@@ -98,7 +98,9 @@
                                 Thời điểm kết thúc:
                             </div>
                             <div class="col-md-8 text-left" id="exp_date" name="exp_date">
-                                {{details.THOIGIANCONLAI}}
+                                <div datetime="{{details.THOIGIANCONLAI}}">
+                                    {{details.THOIGIANCONLAI}}
+                                </div>
                             </div>
                         </div>
 
@@ -123,19 +125,20 @@
                             <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
                                 Đặt giá của bạn:
                             </div>
-                            <form method="post" id="frmain" onsubmit="return checkPrice()">
+
+                            <form method="POST"  id="frmain" onsubmit="return checkPrice({{biddingHistory.0.gia}},{{userScore.diem}})">
                                 <div class="dropdown bg-info">
                                     <input type="text" class="float-left col-md-3 font-weight-bold" id="price"
                                         name="price" onmouseover="checkInput()" onkeypress="return checkInput(event)" />
-                                    <div class="dropdown-menu text-danger"
+                                    {{!-- <div class="dropdown-menu text-danger"
                                         style="top: 20px; left: 20%; padding:10px 10px;" id="dropdown1"
-                                        name="dropdown1">Giá đặt phải lớn hơn giá hiện tại</div>
+                                        name="dropdown1">Giá đặt phải lớn hơn giá hiện tại</div> --}}
                                 </div>
                                 <span class="float-right col-md-5 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
                                     <script>
-                                        var x = {{ details.GIA }} + 100000;
+                                        var x = {{biddingHistory.0.gia}} + 100000;
                                         document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
                                     </script>
                                 </span>
@@ -164,8 +167,8 @@
                                     </tr>
                                     {{#each this.biddingHistory}}
                                     <tr>
-                                        <td>{{formatDate thoigian}}</td>
-                                        <td>{{tentaikhoan}}</td>
+                                        <td>{{formatDateTime thoigian}}</td>
+                                        <td id="ndg_{{id_ndg}}" onwaiting="maskHalf(this.id)">{{hoten}}</td>
                                         <td>{{formatMoney gia}}</td>
                                     </tr>
                                     {{/each}}
@@ -202,71 +205,6 @@
                                 </div>
                             </div>
                             {{/each}}
-                            {{!-- <div class="carousel-item active">
-                            <div class="col-md-4">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="assets/images/A8+_1.jpg">
-                                    <h6>Samsung Galaxy A8+ 6GB/64GB (Black)</h6>
-                                    <p>Price: $9.52</p>
-                                    <p>Time left: 01:11:30</p>
-                                    <p>Time bidded: 155</p>
-                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
-                                            details</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-4">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="assets/images/Note8_1.jpg">
-                                    <h6>Samsung Galaxy Note8 6GB/128GB New 99%</h6>
-                                    <p>Price: $77.93</p>
-                                    <p>Time left: 02:19:37</p>
-                                    <p>Time bidded: 124</p>
-                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
-                                            details</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-4">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="assets/images/Mate20pro_1.jpg">
-                                    <h6>Huawei Mate 20 Pro 8GB/256GB</h6>
-                                    <p>Price: $200.45</p>
-                                    <p>Time left: 00:05:10</p>
-                                    <p>Time bidded: 100</p>
-                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
-                                            details</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-4">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="assets/images/IpXS_1.jpg">
-                                    <h6>Iphone Xs 2018 6GB/128GB</h6>
-                                    <p>Price: $14.78</p>
-                                    <p>Time left: 00:45:56</p>
-                                    <p>Time bidded: 97</p>
-                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
-                                            details</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-4">
-                                <div class="card card-body">
-                                    <img class="img-fluid" src="assets/images/OnePlus7pro_1.jpg">
-                                    <h6>Oneplus 7 Pro 8GB/256GB New 99%</h6>
-                                    <p>Price: $299.51</p>
-                                    <p>Time left: 00:20:34</p>
-                                    <p>Time bidded: 85</p>
-                                    <p><a class="btn btn-lg btn-primary" href="ProductView.html" role="button">See
-                                            details</a></p>
-                                </div>
-                            </div> 
-                        </div>--}}
                         </div>
 
                         <a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">

@@ -11,7 +11,7 @@ module.exports = {
                 from sanpham sp join hinhanh hinh on sp.id = hinh.idsanpham
                 where sp.id = '${id}'`),
     getBiddingHistory: id =>
-        db.load(`select ndg.tentaikhoan,ndg.tongdiemdanhgia as diemndg, ctdg.thoigiandaugia as thoigian, ctdg.gia
+        db.load(`select ndg.id as id_ndg,ndg.tentaikhoan, ndg.hoten,ndg.tongdiemdanhgia as diemndg, ctdg.thoigiandaugia as thoigian, ctdg.gia
                   from chitietdaugia ctdg join nguoidung ndg on ctdg.idnguoidaugia = ndg.id
                   where idsanpham = '${id}'
                   order by ctdg.gia desc , ctdg.thoigiandaugia asc`),
@@ -30,8 +30,14 @@ module.exports = {
                  order by rand() limit 5;`),
 
     getFavorite: (idUser, isProduct) =>
-        db.load(`select count(*) as isfavorite
+        db.load(`select *
                  from sanphamyeuthich spyt
-                 where spyt.idsanpham = '${isProduct}' and spyt.idnguoidung = '${idUser}'`)
+                 where spyt.idsanpham = '${isProduct}' and spyt.idnguoidung = '${idUser}'`),
 
+    getScore: (idUser) =>
+        db.load(`select tongdiemdanhgia as diem
+                 from nguoidung 
+                 where id = '${idUser}'`),
+
+    add: entity => db.add('chitietdaugia', entity),
 };

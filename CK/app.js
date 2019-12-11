@@ -9,6 +9,11 @@ require('express-async-errors');
 const app = express();
 
 app.use(express.static("public"));
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
 
 //2. Set up handlebars: tell our app to actually use handlebars as our template engine.
 app.engine(
@@ -18,6 +23,7 @@ app.engine(
         layoutsDir: "views/_layouts",
         helpers: {
             formatDate: val => date.format(val, 'YYYY/MM/DD'),
+            formatDateTime: val => date.format(val, 'YYYY/MM/DD HH:mm:ss'),
             formatMoney: val => numeral(val).format('0,0[.]00') + 'VNĐ',
         }
     })
