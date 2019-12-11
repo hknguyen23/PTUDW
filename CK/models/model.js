@@ -29,29 +29,26 @@ module.exports = {
                 WHERE YT.IDNguoiDung = ${id}
                 ORDER BY SP.NgayDang DESC`),
     getOngoingListbyID: id =>
-    db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM CHITIETDAUGIA CT LEFT JOIN SANPHAM SP ON CT.IDSanPham = SP.ID
             LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE CT.IDNguoiDauGia = ${id} AND SP.ThoiGianConLai > 0
             ORDER BY SP.NgayDang DESC`),
     getWonListbyID: id =>
-    db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiThangDauGia = ${id}
-            ORDER BY SP.NgayDang DESC`),            
+            ORDER BY SP.NgayDang DESC`),
     getUploadListbyID: id =>
-    db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiBan = ${id}
-            ORDER BY SP.NgayDang DESC`),            
+            ORDER BY SP.NgayDang DESC`),
     getSoldloadListbyID: id =>
-    db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiBan = ${id} AND SP.ThoiGianConLai = 0
-            ORDER BY SP.NgayDang DESC`),            
-
-
-
+            ORDER BY SP.NgayDang DESC`),
 
     getCategories: () => db.load('SELECT * FROM LOAI'),
 
@@ -66,7 +63,7 @@ module.exports = {
                  from sanphamyeuthich spyt
                  where spyt.idsanpham = '${isProduct}' and spyt.idnguoidung = '${idUser}'`),
 
-    getScore: (idUser) =>
+    getScore: idUser =>
         db.load(`select tongdiemdanhgia as diem
                  from nguoidung 
                  where id = '${idUser}'`),
