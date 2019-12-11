@@ -5,7 +5,6 @@ const router = express.Router();
 router.use(express.static("public"));
 
 router.get('/:id', async (req, res) => {
-
     const rows = await productModel.getProductByCat(req.params.id);
     const category = await productModel.getCategories();
     if (rows.length === 0){
@@ -20,6 +19,7 @@ router.get('/:id', async (req, res) => {
         js: ["List.js"],
         products: rows,
         categories: category,
+        empty: rows.length === 0,
         pageTitle: pTitle,
     });
 })

@@ -16,11 +16,18 @@ module.exports = {
                   where idsanpham = ${id}
                   order by ctdg.gia desc , ctdg.thoigiandaugia asc`),
     getProductByCat: id =>
-        db.load(`SELECT LOAI.TenLoai, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT LOAI.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
                 FROM LOAI LEFT JOIN SANPHAM SP ON LOAI.ID = SP.IDLoai
                 LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-                WHERE LOAI.ID = '${id}'
+                WHERE LOAI.ID = ${id}
                 ORDER BY SP.NgayDang DESC`),
+    getWatchListbyID: id =>
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                FROM SANPHAMYEUTHICH YT LEFT JOIN SANPHAM SP ON YT.IDSanPham = SP.ID
+                LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
+                WHERE YT.IDNguoiDung = ${id}
+                ORDER BY SP.NgayDang DESC`),
+                
     getCategories: () => db.load('SELECT * FROM LOAI'),
 
     getRelation: id =>
@@ -28,7 +35,7 @@ module.exports = {
                  from sanpham sp1 join sanpham sp2 on sp1.idloai = sp2.idloai
                  where sp2.id = 1 and sp2.id <> sp1.id
                  order by rand() limit 5;`)
-
+    
 
 
 };

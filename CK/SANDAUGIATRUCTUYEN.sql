@@ -336,4 +336,10 @@ WHERE LOAI.ID = 1
 ORDER BY SP.NgayDang DESC;
 
 SELECT *
-FROM LOAI;
+FROM NGUOIDUNG;
+
+SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                FROM SANPHAMYEUTHICH YT LEFT JOIN SANPHAM SP ON YT.IDSanPham = SP.ID
+                LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
+                WHERE YT.IDNguoiDung = 1
+                ORDER BY SP.NgayDang DESC
