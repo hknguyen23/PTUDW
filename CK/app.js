@@ -27,7 +27,6 @@ app.set("view engine", "hbs");
 
 
 // user route
-app.use('/bidder', require('./routes/bidder/home.bidder.route'));
 app.use('/productView', require('./routes/productView/productView.route'));
 
 app.use('/lists', require('./routes/lists/searchable.lists.route'));

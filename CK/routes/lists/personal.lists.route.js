@@ -17,7 +17,7 @@ router.get('/:id/watch', async (req, res) => {
 })
 
 router.get('/:id/ongoing', async (req, res) => {
-    const rows = await productModel.getWatchListbyID(req.params.id);
+    const rows = await productModel.getOngoingListbyID(req.params.id);
     res.render("personalList", {
         title: "Sản phẩm đang đấu giá",
         css: ["List.css"],
@@ -28,7 +28,7 @@ router.get('/:id/ongoing', async (req, res) => {
     });
 })
 router.get('/:id/won', async (req, res) => {
-    const rows = await productModel.getWatchListbyID(req.params.id);
+    const rows = await productModel.getWonListbyID(req.params.id);
     res.render("personalList", {
         title: "Sản phẩm đã thắng",
         css: ["List.css"],
@@ -40,7 +40,7 @@ router.get('/:id/won', async (req, res) => {
 })
 
 router.get('/:id/upload', async (req, res) => {
-    const rows = await productModel.getWatchListbyID(req.params.id);
+    const rows = await productModel.getUploadListbyID(req.params.id);
     res.render("personalList", {
         title: "Sản phẩm đã đăng",
         css: ["List.css"],
@@ -52,14 +52,14 @@ router.get('/:id/upload', async (req, res) => {
 })
 
 router.get('/:id/sold', async (req, res) => {
-    const rows = await productModel.getWatchListbyID(req.params.id);
+    const rows = await productModel.getSoldloadListbyID(req.params.id);
     res.render("personalList", {
         title: "Sản phẩm đã bán",
         css: ["List.css"],
         js: ["List.js"],
         products: rows,
         empty: rows.length === 0,
-        pageTitle: "Đã đăng",
+        pageTitle: "Đã bán",
     });
 })
 
