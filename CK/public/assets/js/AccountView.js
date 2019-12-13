@@ -1,6 +1,6 @@
 function upgradeRequest(){
 	var table = document.getElementById('myTable');
-	var str = table.rows[7].cells[1].innerHTML;
+	var str = table.rows[6].cells[1].innerText;
 	if (str == 'Bidder'){
 		window.alert('Yêu cầu của bạn đã được gửi đi');
 	}
