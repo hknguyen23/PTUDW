@@ -4,24 +4,26 @@ function deleteUserClick(input){
 	row.parentNode.removeChild(row);
 }
 		
-function upgradeBidderClick(input){
+function upgradeBidderClick(input){	
 	var row = input.parentNode.parentNode;
-	if (row.cells[5].innerHTML == 'Seller'){
+	//window.alert(row.cells[5].innerText);
+	if (row.cells[5].innerText == 'Seller'){
 		window.alert('Không thể nâng cấp Seller');
 	}
 	
-	if (row.cells[5].innerHTML == 'Bidder'){
-		row.cells[5].innerHTML = 'Seller';
+	if (row.cells[5].innerText == 'Bidder'){
+		row.cells[5].innerText = 'Seller';
 	}
 }
 			
 function downgradeSellerClick(input){
 	var row = input.parentNode.parentNode;
-	if (row.cells[5].innerHTML == 'Bidder'){
+	//window.alert(row.cells[5].innerText);
+	if (row.cells[5].innerText == 'Bidder'){
 		window.alert('Không thể hạ cấp Bidder');
 	}
 	
-	if (row.cells[5].innerHTML == 'Seller'){
-		row.cells[5].innerHTML = 'Bidder';
+	if (row.cells[5].innerText == 'Seller'){
+		row.cells[5].innerText = 'Bidder';
 	}
 }
