@@ -2,9 +2,11 @@ const db = require("../utils/db");
 
 module.exports = {
     getProduct: id =>
-        db.load(`SELECT SP.TENSANPHAM , SP.GIA, SP.NGAYDANG, SELLER.TENTAIKHOAN AS SELLER,SELLER.TONGDIEMDANHGIA AS DIEMSELLER, SP.THOIGIANCONLAI, SP.MOTADAI, LOAI.TENLOAI
+        db.load(`SELECT SP.TENSANPHAM , SP.GIA, SP.NGAYDANG, SELLER.TENTAIKHOAN AS SELLER,SELLER.TONGDIEMDANHGIA AS DIEMSELLER, 
+                                                SP.THOIGIANCONLAI, SP.MOTADAI, LOAICAP1.TENLOAI AS LOAI1, LOAICAP2.TENLOAI AS LOAI2
                 FROM SANPHAM SP JOIN NGUOIDUNG SELLER ON SP.IDNGUOIBAN = SELLER.ID
-                                 JOIN LOAI ON SP.IDLOAI = LOAI.ID
+                                 JOIN LOAICAP1 ON SP.IDLOAI = LOAICAP1.ID
+                                 JOIN LOAICAP2 ON LOAICAP2.IDLOAICAP1 = LOAICAP1.ID
                 WHERE SP.ID = '${id}'`),
     getImage: id =>
         db.load(`select hinh.imgurl
@@ -15,7 +17,6 @@ module.exports = {
                   from chitietdaugia ctdg join nguoidung ndg on ctdg.idnguoidaugia = ndg.id
                   where idsanpham = '${id}'
                   order by ctdg.gia desc , ctdg.thoigiandaugia asc`),
-
     getProductByCat: id =>
         db.load(`SELECT LOAI.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
                 FROM LOAI LEFT JOIN SANPHAM SP ON LOAI.ID = SP.IDLoai
@@ -49,7 +50,6 @@ module.exports = {
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiBan = ${id} AND SP.ThoiGianConLai = 0
             ORDER BY SP.NgayDang DESC`),
-
     getCategories: () => db.load('SELECT * FROM LOAI'),
 
     getRelation: id =>
@@ -69,4 +69,12 @@ module.exports = {
                  where id = '${idUser}'`),
 
     add: entity => db.add('chitietdaugia', entity),
+
+    patch: entity => {
+        const condition = { id: entity.idsanpham };
+        delete entity.idsanpham;
+
+        //console.log(`update sanpham set ? where ?`, [entity, condition]);
+        return db.patch('sanpham', entity, condition);
+    }
 };

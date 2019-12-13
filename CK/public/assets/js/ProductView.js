@@ -4,7 +4,7 @@ function suggest_price() {
 }
 
 function checkInput(event) {
-    document.getElementById("dropdown1").style.display = "none";
+    //document.getElementById("dropdown1").style.display = "none";
     return (event.charCode != 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))
 }
 
@@ -15,7 +15,7 @@ function checkPrice(current_price, bidder_score) {
         alert("Kiểm tra lại giá hoặc bạn không đủ nhân phẩm");
         return false;
     }
-    return true;
+    return confirm('Bạn chắc chắn muốn đấu giá?');
 }
 
 function show(img_id) {

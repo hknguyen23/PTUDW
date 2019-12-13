@@ -15,4 +15,7 @@ const mysql_query = util.promisify(pool.query).bind(pool);
 module.exports = {
     load: sql_string => mysql_query(sql_string),
     add: (tableName, entity) => mysql_query(`insert into ${tableName} set ?`, entity),
+    patch: (tableName, entity, condition) => {
+        mysql_query(`update ${tableName} set ? where ?`, [entity, condition])
+    },
 };

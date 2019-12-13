@@ -2,7 +2,7 @@
     <div id="page-content-wrapper">
         <div class="container pt-3">
             <div>
-                <div class="float-left w-65" style="color: royalblue;"> Danh mục: {{details.TENLOAI}} >>
+                <div class="float-left w-65" style="color: royalblue;"> Danh mục: {{details.LOAI1}} >> {{details.LOAI2}} >>
                     {{details.TENSANPHAM}}
                 </div>
                 {{#if userId}}
@@ -60,7 +60,7 @@
                             </div>
                             <div class="text-left col-md-8" style="color:tomato;" id="current_price"
                                 name="current_price">
-                                {{formatMoney biddingHistory.0.gia}}
+                                {{formatMoney details.GIA}}
                             </div>
                         </div>
 
