@@ -24,7 +24,7 @@ app.engine(
         helpers: {
             formatDate: val => date.format(val, 'YYYY/MM/DD'),
             formatDateTime: val => date.format(val, 'YYYY/MM/DD HH:mm:ss'),
-            formatMoney: val => numeral(val).format('0,0[.]00') + 'VNĐ',
+            formatMoney: val => numeral(val).format('0,0[.]00') + ' VNĐ',
         }
     })
 );
@@ -43,6 +43,13 @@ app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
 app.use('/user', require('./routes/home/home.route'));
 app.use('/:userID/productView', require('./routes/productView/productView.route'));
 app.use('/:sellerID/postProduct', require('./routes/seller/postProduct.seller.route'));
+
+app.use('/accountManagement', require('./routes/accountManagement/accountManagement.route'));
+app.use('/userView', require('./routes/admin/userView.route'));
+app.use('/yourPointAndDetail', require('./routes/accountManagement/yourPointAndDetail.route'));
+app.use('/bidderList', require('./routes/admin/bidderUpgradeRequestList.route'));
+
+
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
@@ -66,31 +73,6 @@ app.get("/", function(req, res) {
         title: "Online Auction",
         css: ["HomeStyle.css", "carousel.css"],
         js: ["carousel.js"]
-    });
-});
-
-
-app.get("/accountManagement", function(req, res) {
-    res.render("accountManagement", {
-        title: "Your account",
-        css: ["HomeStyle.css", "AccountStyle.css"],
-        js: ["AccountScript.js"]
-    });
-});
-
-app.get("/allUsers", function(req, res) {
-    res.render("allUsers", {
-        title: "All users list",
-        css: ["HomeStyle.css", "AccountStyle.css"],
-        js: ["AccountScript.js"]
-    });
-});
-
-app.get("/bidderList", function(req, res) {
-    res.render("bidderList", {
-        title: "Bidders List",
-        css: ["HomeStyle.css", "AccountStyle.css"],
-        js: ["AccountScript.js"]
     });
 });
 
@@ -183,14 +165,6 @@ app.get("/theoDoi", function(req, res) {
         title: "Danh sách theo dõi",
         css: ["List.css"],
         js: ["List.js"]
-    });
-});
-
-app.get("/yourPointAndDetail", function(req, res) {
-    res.render("yourPointAndDetail", {
-        title: "Your point and details",
-        css: ["HomeStyle.css", "AccountStyle.css"],
-        js: ["AccountScript.js"]
     });
 });
 

@@ -46,11 +46,11 @@
 
                     <!-- Submenu của Quản lý người dùng -->
                     <div id="submenu-user" class="collapse sidebar-submenu">
-                        <a href="AllUsers.html" class="list-group-item list-group-item-action bg-light">
+                        <a href="/userView" class="list-group-item list-group-item-action bg-light">
                             <!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
                             <span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
                         </a>
-                        <a href="BidderList.html" class="list-group-item list-group-item-action bg-light">
+                        <a href="/bidderList" class="list-group-item list-group-item-action bg-light">
                             <span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
                         </a>
                     </div>
@@ -70,15 +70,20 @@
 
                 <div class="card m-3">
                     <h2 class="card-header">Danh sách</h2>
+					{{#if this.empty}}
+					<div class="card-body">
+						<p class="card-text">Không có dữ liệu.</p>
+					</div>
+					{{else}}
                     <div class="card-body">
                         <table id="usersTable" class="table table-hover text-left">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%;" scope="col">#</th>
+                                    <th style="width: 5%;" scope="col">ID</th>
                                     <th style="width: 20%;" scope="col">Tên tài khoản</th>
                                     <th style="word-break: break-all; width: 25%;" scope="col">Họ và tên</th>
-                                    <th style="text-align: center; width: 10%;" scope="col">Ngày sinh</th>
-                                    <th style="text-align: center; width: 10%;" scope="col">Giới tính</th>
+                                    <th style="text-align: center; width: 15%;" scope="col">Ngày sinh</th>
+                                    <th style="text-align: center; width: 15%;" scope="col">Tổng điểm đánh giá</th>
                                     <th style="width: 5%;" scope="col">Bậc</th>
                                     <th style="text-align: center; width: 5%;" scope="col">Xóa</th>
                                     <th style="text-align: center; width: 10%;" scope="col">Nâng cấp</th>
@@ -86,15 +91,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+								{{#each this.users}}
                                 <tr>
-                                    <th style="width: 5%;" scope="row">1</th>
-                                    <td style="width: 20%;">myaccount_001</td>
-                                    <td style="word-break: break-all; width: 25%;">
-                                        ThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLongThisIsVeryLong
-                                    </td>
-                                    <td style="text-align: center; width: 10%;">01/01/1999</td>
-                                    <td style="text-align: center; width: 10%;">Nam</td>
-                                    <td name="degree" style="width: 5%;">Seller</td>
+                                    <th style="width: 5%;" scope="row">{{ID}}</th>
+                                    <td style="width: 20%;">{{TenTaiKhoan}}</td>
+                                    <td style="word-break: break-all; width: 25%;">{{HoTen}}</td>
+                                    <td style="text-align: center; width: 15%;">{{NgaySinh}}</td>
+                                    <td style="text-align: center; width: 15%;">{{TongDiemDanhGia}}</td>
+                                    <td name="degree" style="width: 5%;">
+										{{#if this.isBidder}}
+										Bidder
+										{{/if}}
+										{{#if this.isSeller}}
+										Seller
+										{{/if}}
+										{{#if this.isAdmin}}
+										Admin
+										{{/if}}
+									</td>
                                     <td style="text-align: center; width: 5%;">
                                         <button onclick="deleteUserClick(this);">Xóa</button>
                                     </td>
@@ -107,146 +121,17 @@
                                                 aria-hidden="true"></i></button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">2</th>
-                                    <td style="width: 20%;">myaccount_002</td>
-                                    <td style="word-break: break-all; width: 25%;">John</td>
-                                    <td style="text-align: center; width: 10%;">01/01/1999</td>
-                                    <td style="text-align: center; width: 10%;">Nam</td>
-                                    <td style="width: 5%;">Bidder</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="deleteUserClick(this);">Xóa</button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="downgradeSellerClick(this);"><i class="fa fa-arrow-down"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">3</th>
-                                    <td style="width: 20%;">myaccount_003</td>
-                                    <td style="word-break: break-all; width: 25%;">Jane</td>
-                                    <td style="text-align: center; width: 10%;">01/01/1999</td>
-                                    <td style="text-align: center; width: 10%;">Nữ</td>
-                                    <td style="width: 5%;">Seller</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="deleteUserClick(this);">Xóa</button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="downgradeSellerClick(this);"><i class="fa fa-arrow-down"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">4</th>
-                                    <td style="width: 20%;">myaccount_004</td>
-                                    <td style="word-break: break-all; width: 25%;">John Doe</td>
-                                    <td style="text-align: center; width: 10%;">01/01/1999</td>
-                                    <td style="text-align: center; width: 10%;">Nam</td>
-                                    <td style="width: 5%;">Seller</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="deleteUserClick(this);">Xóa</button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="downgradeSellerClick(this);"><i class="fa fa-arrow-down"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">5</th>
-                                    <td style="width: 20%;">myaccount_005</td>
-                                    <td style="word-break: break-all; width: 25%;">Jane Doe</td>
-                                    <td style="text-align: center; width: 10%;">01/01/1999</td>
-                                    <td style="text-align: center; width: 10%;">Nữ</td>
-                                    <td style="width: 5%;">Bidder</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="deleteUserClick(this);">Xóa</button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="downgradeSellerClick(this);"><i class="fa fa-arrow-down"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">6</th>
-                                    <td style="width: 20%;">myaccount_006</td>
-                                    <td style="word-break: break-all; width: 25%;">Katy</td>
-                                    <td style="text-align: center; width: 10%;">01/01/1999</td>
-                                    <td style="text-align: center; width: 10%;">Nữ</td>
-                                    <td style="width: 5%;">Bidder</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="deleteUserClick(this);">Xóa</button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="downgradeSellerClick(this);"><i class="fa fa-arrow-down"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">7</th>
-                                    <td style="width: 20%;">myaccount_007</td>
-                                    <td style="word-break: break-all; width: 25%;">Jack</td>
-                                    <td style="text-align: center; width: 10%;">01/01/1999</td>
-                                    <td style="text-align: center; width: 10%;">Nữ</td>
-                                    <td style="width: 5%;">Bidder</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="deleteUserClick(this);">Xóa</button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="downgradeSellerClick(this);"><i class="fa fa-arrow-down"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">8</th>
-                                    <td style="width: 20%;">myaccount_008</td>
-                                    <td style="word-break: break-all; width: 25%;">Jenifer</td>
-                                    <td style="text-align: center; width: 10%;">01/01/1999</td>
-                                    <td style="text-align: center; width: 10%;">Nữ</td>
-                                    <td style="width: 5%;">Bidder</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="deleteUserClick(this);">Xóa</button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <button onclick="downgradeSellerClick(this);"><i class="fa fa-arrow-down"
-                                                aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
+								{{/each}}
                             </tbody>
                         </table>
                     </div>
+					<div class="card-footer">
+						<button class="btn btn-primary" type="submit">
+							Lưu thay đổi
+						</button>
+					</div>
+					{{/if}}
                 </div>
-                <button class="btn btn-primary" type="submit">
-                    Lưu thay đổi
-                </button>
             </div>
         </div>
     </div>

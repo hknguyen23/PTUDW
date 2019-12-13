@@ -50,6 +50,7 @@ module.exports = {
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiBan = ${id} AND SP.ThoiGianConLai = 0
             ORDER BY SP.NgayDang DESC`),
+			
     getCategories: () => db.load('SELECT * FROM LOAI'),
 
     getRelation: id =>
@@ -67,6 +68,20 @@ module.exports = {
         db.load(`select tongdiemdanhgia as diem
                  from nguoidung 
                  where id = '${idUser}'`),
+				 
+	getAllUsers: () => db.load(`SELECT * FROM NGUOIDUNG`),
+	
+	getUserById: id => db.load(`SELECT * FROM NGUOIDUNG WHERE ID = '${id}'`),
+	
+	getPointByID: id => db.load(`SELECT TongDiemDanhGia FROM NGUOIDUNG WHERE ID = '${id}'`),
+	
+	getYourPointAndDetail: id => 
+		db.load(`SELECT ND1.TongDiemDanhGia, ND2.TenTaiKhoan, CTDANHGIA.*
+				FROM NGUOIDUNG ND1 JOIN CHITIETDANHGIA CTDANHGIA ON ND1.ID = CTDANHGIA.IDNguoiDuocDanhGia
+					JOIN NGUOIDUNG ND2 ON ND2.ID = CTDANHGIA.IDNguoiDanhGia
+				WHERE ND1.ID = '${id}'`),
+				
+	getBidderUpgradeRequest: () => db.load(`SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;`),
 
     add: entity => db.add('chitietdaugia', entity),
 

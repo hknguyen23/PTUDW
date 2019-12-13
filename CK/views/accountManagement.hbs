@@ -69,56 +69,69 @@
 						<form>
 							<div class="card m-3">
 								<h2 class="card-header">Hồ sơ</h2>
+								{{#if this.empty}}
+								<div class="card-body">
+									<p class="card-text">Không có dữ liệu.</p>
+								</div>
+								{{else}}
 								<div class="card-body">		
 									<table id="myTable" class="table">
+										{{#each this.info}}
 										<tr>
 											<th>Ảnh</th>
 											<td id="second-col">Một bức ảnh giúp cá nhân hóa tài khoản của bạn</td>
 											<td style="text-align: right;">
-												<img class="rounded-circle" src="assets/images/avatar.jpg" alt="Your avatar"
+												<img class="rounded-circle" src="{{AvatarURL}}" alt="Your avatar"
 													width="200" height="200">
 											</td>
 										</tr>
 										<tr>
 											<th>Họ và tên</th>
-											<td id="second-col" colspan="2">Nguyễn Văn A</td>
+											<td id="second-col" colspan="2">{{HoTen}}</td>
 										</tr>
 										<tr>
 											<th>Ngày sinh</th>
-											<td id="second-col" colspan="2">01/01/1999</td>
+											<td id="second-col" colspan="2">{{NgaySinh}}</td>
 										</tr>
 										<tr>
-											<th>Giới tính</th>
-											<td id="second-col" colspan="2">Nam</td>
-										</tr>
-										<tr>
-											<th>Mật khẩu</th>
-											<td id="second-col">
-												<input class="password" type="password" value="12345678"
-													style="border: none" readonly></input>
-											</td>
+											<th>Địa chỉ</th>
+											<td id="second-col" colspan="2">{{DiaChi}}</td>
 										</tr>
 										<tr>
 											<th>Email</th>
-											<td id="second-col" colspan="2">someone@example.com</td>
+											<td id="second-col" colspan="2">{{Email}}</td>
 										</tr>
 										<tr>
 											<th>Điện thoại</th>
-											<td id="second-col" colspan="2">0987654321</td>
+											<td id="second-col" colspan="2">{{DienThoai}}</td>
 										</tr>
 										<tr>
 											<th>Cấp bậc</th>
-											<td id="second-col" colspan="2">Bidder</td>
+											<td id="second-col" colspan="2">
+												{{#if this.isBidder}}
+												Bidder
+												{{/if}}
+												{{#if this.isSeller}}
+												Seller
+												{{/if}}
+												{{#if this.isAdmin}}
+												Admin
+												{{/if}}
+											</td>
 										</tr>
+										{{/each}}
 									</table>
 								</div>
+								<div class="card-footer">
+									<a class="btn btn-primary" href="ChangeInfo.html">
+										Thay đổi thông tin
+									</a>
+									<a class="btn btn-primary" href="#" onclick="upgradeRequest();">
+										Xin nâng cấp thành Seller
+									</a>
+								</div>
+								{{/if}}
 							</div>
-							<a class="btn btn-primary" href="ChangeInfo.html">
-								Thay đổi thông tin
-							</a>
-							<a class="btn btn-primary" href="#" onclick="upgradeRequest();">
-								Xin nâng cấp thành Seller
-							</a>
 						</form>
 					</div>
 				</div>

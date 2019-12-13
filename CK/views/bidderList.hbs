@@ -46,11 +46,11 @@
 
                     <!-- Submenu của Quản lý người dùng -->
                     <div id="submenu-user" class="collapse sidebar-submenu">
-                        <a href="AllUsers.html" class="list-group-item list-group-item-action bg-light">
+                        <a href="/userView" class="list-group-item list-group-item-action bg-light">
                             <!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
                             <span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
                         </a>
-                        <a href="BidderList.html" class="list-group-item list-group-item-action bg-light">
+                        <a href="/bidderList" class="list-group-item list-group-item-action bg-light">
                             <span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
                         </a>
                     </div>
@@ -66,28 +66,34 @@
 
             <div class="text-center mt-3" id="page-content-wrapper">
                 <h1>Danh sách các bidder xin nâng cấp tài khoản</h1>
-                <div>Hiển thị thông tin: tên tài khoản, họ và tên, ngày sinh, giới tính, bậc (bidder/seller)</div>
+                <div>Hiển thị thông tin: tên tài khoản, họ và tên, tổng điểm đánh giá</div>
 
                 <div class="card m-3">
                     <h2 class="card-header">Danh sách</h2>
+					{{#if this.empty}}
+					<div class="card-body">
+						<p class="card-text">Không có dữ liệu.</p>
+					</div>
+					{{else}}
                     <div class="card-body">
                         <table class="table table-hover text-left">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%;" scope="col">#</th>
+                                    <th style="width: 5%;" scope="col">ID</th>
                                     <th style="width: 15%;" scope="col">Tên tài khoản</th>
                                     <th style="word-break: break-all; width: 20%;" scope="col">Họ và tên</th>
-                                    <th style="text-align: center; width: 5%;" scope="col">Điểm</th>
+                                    <th style="text-align: center; width: 15%;" scope="col">Tổng điểm đánh giá</th>
                                     <th style="text-align: center; width: 5%;" scope="col">Đồng ý</th>
                                     <th style="text-align: center; width: 10%;" scope="col">Không đồng ý</th>
                                 </tr>
                             </thead>
                             <tbody>
+								{{#each this.list}}
                                 <tr>
-                                    <th style="width: 5%;" scope="row">1</th>
-                                    <td style="width: 15%;">myaccount_002</td>
-                                    <td style="word-break: break-all; width: 20%;">John</td>
-                                    <td style="text-align: center; width: 5%;">9</td>
+                                    <th style="width: 5%;" scope="row">{{ID}}</th>
+                                    <td style="width: 15%;">{{TenTaiKhoan}}</td>
+                                    <td style="word-break: break-all; width: 20%;">{{HoTen}}</td>
+                                    <td style="text-align: center; width: 15%;">{{TongDiemDanhGia}}</td>
                                     <td style="text-align: center; width: 5%;">
                                         <input type="checkbox"></input>
                                     </td>
@@ -95,61 +101,17 @@
                                         <input type="checkbox"></input>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">2</th>
-                                    <td style="width: 15%;">myaccount_005</td>
-                                    <td style="word-break: break-all; width: 20%;">Jane Doe</td>
-                                    <td style="text-align: center; width: 5%;">8</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                    <td style="text-align: center; width: 10%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">3</th>
-                                    <td style="width: 15%;">myaccount_006</td>
-                                    <td style="word-break: break-all; width: 20%;">Katy</td>
-                                    <td style="text-align: center; width: 5%;">9</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                    <td style="text-align: center; width: 10%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">4</th>
-                                    <td style="width: 15%;">myaccount_007</td>
-                                    <td style="word-break: break-all; width: 20%;">Jack</td>
-                                    <td style="text-align: center; width: 5%;">9</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                    <td style="text-align: center; width: 10%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width: 5%;" scope="row">5</th>
-                                    <td style="width: 15%;">myaccount_008</td>
-                                    <td style="word-break: break-all; width: 20%;">Jenifer</td>
-                                    <td style="text-align: center; width: 5%;">9</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                    <td style="text-align: center; width: 10%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                </tr>
+								{{/each}}
                             </tbody>
                         </table>
                     </div>
+					<div class="card-footer">
+						<button class="btn btn-primary" type="submit">
+							OK
+						</button>
+					</div>
+					{{/if}}
                 </div>
-                <button class="btn btn-primary" type="submit">
-                    OK
-                </button>
             </div>
         </div>
     </div>
