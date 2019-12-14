@@ -1,0 +1,32 @@
+{
+  "name": "ptudw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hknguyen23/PTUDW.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hknguyen23/PTUDW/issues"
+  },
+  "homepage": "https://github.com/hknguyen23/PTUDW#readme",
+  "dependencies": {
+    "date-and-time": "^0.11.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-handlebars": "^3.1.0",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
+    "numeral": "^2.0.6",
+    "path": "^0.12.7"
+  }
+}
