@@ -1,33 +1,21 @@
 <div class="row" id="body-row">
     <!--sidebar-->
+    
     <div class="sidebar-container">
         <div class="sidebar-logo">
             Danh mục
         </div>
         <ul class="sidebar-navigation">
-            <li class="header">Hàng điện tử</li>
-            <li>
-                <a href="/lists/category/1">
-                    <i class="fa fa-home" aria-hidden="true"></i> Laptop
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-tachometer" aria-hidden="true"></i> Điện thoại
-                </a>
-            </li>
-            <li class="header">Quần áo</li>
-            <li>
-                <a href="/lists/category/2">
-                    <i class="fa fa-users" aria-hidden="true"></i> Quần
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-cog" aria-hidden="true"></i> Áo
-                </a>
-            </li>
-            <li class="header">Thực phẩm</li>
+            {{#each catLV1}}
+                <li class="header">{{TenLoai}}</li>
+                {{#each ../catLV2}}
+                    {{#if_eq ../ID IDLoaiCap1}}
+                        <li>
+                            <a href="/lists/category/{{ID}}"> {{TenLoai}} </a>
+                        </li>
+                    {{/if_eq}}
+                {{/each}}
+            {{/each}}
         </ul>
     </div>
     <!--Content-->
@@ -41,39 +29,39 @@
             <h1 class="my-4">{{this.pageTitle}}</h1>
             <div class="row">
                 {{#each this.products}}
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <!-- Shop card -->
-                    <div class="card h-100">
-                        <div class="ribbon-wrapper">
-                            <div class="ribbon">NEW</div>
-                        </div>
-                        <div class="img-wrap">
-                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg align-top"
-                                    aria-hidden="true"></i></button>
-                            <a href="/productView/{{ID}}"><img class="img-fluid mx-auto d-block"
-                                    src="{{MainImg}}" alt=""></a>
-                        </div>
-                        <div class="card-body d-flex flex-column justify-content-between">
-                            <h4 class="card-title align-self-center ellipsis">
-                                <a href="/productView/{{ID}}">{{TenSanPham}}</a>
-                            </h4>
-                            <div class="d-flex justify-content-between">
-                                <span>Mua ngay:</span>
-                                <span>{{formatMoney GiaMuaNgay}}</span>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Shop card -->
+                        <div class="card h-100">
+                            <div class="ribbon-wrapper">
+                                <div class="ribbon">NEW</div>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Giá hiện tại: </span>
-                                <span class="font-weight-bold">{{formatMoney Gia}}</span>
+                            <div class="img-wrap">
+                                <button class="asText bookmark"><i class="fa fa-bookmark fa-lg align-top"
+                                        aria-hidden="true"></i></button>
+                                <a href="/productView/{{ID}}"><img class="img-fluid mx-auto d-block"
+                                        src="{{MainImg}}" alt=""></a>
                             </div>
-                            <span class="d-flex justify-content-end">({{TenTaiKhoan}})</span>
-                            <h3 class="mt-auto align-self-center">{{ThoiGianConLai}}</h3>
-                            <div class="d-flex justify-content-between small">
-                                <span> {{SoLanDuocDauGia}} Lượt</span>
-                                <span>{{formatDate NgayDang}}</span>
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h4 class="card-title align-self-center ellipsis">
+                                    <a href="/productView/{{ID}}">{{TenSanPham}}</a>
+                                </h4>
+                                <div class="d-flex justify-content-between">
+                                    <span>Mua ngay:</span>
+                                    <span>{{formatMoney GiaMuaNgay}}</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Giá hiện tại: </span>
+                                    <span class="font-weight-bold">{{formatMoney Gia}}</span>
+                                </div>
+                                <span class="d-flex justify-content-end">({{TenTaiKhoan}})</span>
+                                <h3 class="mt-auto align-self-center">{{formatDate NgayHetHan}}</h3>
+                                <div class="d-flex justify-content-between small">
+                                    <span> {{SoLanDuocDauGia}} Lượt</span>
+                                    <span>{{formatDate NgayDang}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 {{/each}}
             </div>
             {{/if}}

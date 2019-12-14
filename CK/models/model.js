@@ -18,40 +18,40 @@ module.exports = {
                   where idsanpham = '${id}'
                   order by ctdg.gia desc , ctdg.thoigiandaugia asc`),
     getProductByCat: id =>
-        db.load(`SELECT LOAI.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
-                FROM LOAI LEFT JOIN SANPHAM SP ON LOAI.ID = SP.IDLoai
+        db.load(`SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
                 LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-                WHERE LOAI.ID = ${id}
+                WHERE L2.ID = ${id}
                 ORDER BY SP.NgayDang DESC`),
     getWatchListbyID: id =>
-        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
                 FROM SANPHAMYEUTHICH YT LEFT JOIN SANPHAM SP ON YT.IDSanPham = SP.ID
                 LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
                 WHERE YT.IDNguoiDung = ${id}
                 ORDER BY SP.NgayDang DESC`),
     getOngoingListbyID: id =>
-        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM CHITIETDAUGIA CT LEFT JOIN SANPHAM SP ON CT.IDSanPham = SP.ID
             LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-            WHERE CT.IDNguoiDauGia = ${id} AND SP.ThoiGianConLai > 0
+            WHERE CT.IDNguoiDauGia = ${id} AND SP.NgayHetHan > NOW()
             ORDER BY SP.NgayDang DESC`),
     getWonListbyID: id =>
-        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiThangDauGia = ${id}
             ORDER BY SP.NgayDang DESC`),
     getUploadListbyID: id =>
-        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiBan = ${id}
             ORDER BY SP.NgayDang DESC`),
     getSoldloadListbyID: id =>
-        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.ThoiGianConLai, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-            WHERE SP.IDNguoiBan = ${id} AND SP.ThoiGianConLai = 0
+            WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW()
             ORDER BY SP.NgayDang DESC`),
-			
-    getCategories: () => db.load('SELECT * FROM LOAI'),
+    getCategoriesLV1: () => db.load(`SELECT * FROM LOAICAP1`),
+    getCategoriesLV2: () => db.load(`SELECT * FROM LOAICAP2`),
 
     getRelation: id =>
         db.load(`select sp1.id, sp1.tensanpham, sp1.gia, sp1.thoigianconlai, sp1.solanduocdaugia as solan, sp1.mainimg as avatar

@@ -5,8 +5,12 @@ const router = express.Router();
 router.use(express.static("public"));
 
 router.get('/:id', async (req, res) => {
-    const rows = await productModel.getProductByCat(req.params.id);
-    const category = await productModel.getCategories();
+    
+    const [rows, catLV1, catLV2] = await Promise.all([
+        productModel.getProductByCat(req.params.id),
+        productModel.getCategoriesLV1(),
+        productModel.getCategoriesLV2(),
+    ]);
     if (rows.length === 0){
         pTitle = 'Not Found'
     }
@@ -18,7 +22,8 @@ router.get('/:id', async (req, res) => {
         css: ["List.css"],
         js: ["List.js"],
         products: rows,
-        categories: category,
+        catLV1,
+        catLV2,
         empty: rows.length === 0,
         pageTitle: pTitle,
     });

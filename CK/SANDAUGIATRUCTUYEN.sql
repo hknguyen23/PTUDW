@@ -145,29 +145,29 @@ INSERT INTO NGUOIDUNG(ID, TenTaiKhoan, MatKhau, HoTen, NgaySinh, Email, DiaChi, 
 (null, 'seller7', '123', 'Lâm Lê Bảo Nam', '1999-01-01', 'someone@example.com', '227 Nguyễn Văn Cừ, Q5, TPHCM', '0987654321', 2, false, 'assets/images/avatar/14.jpg', 9);
 
 INSERT INTO SANPHAM(ID, TenSanPham, Gia, GiaMuaNgay, NgayDang, NgayHetHan, BuocGia, TuDongGiaHan, LuonDuocDauGia, MoTaNgan, MoTaDai, MainImg, SoLanDuocDauGia, IDLoai, IDNguoiBan, IDNguoiThangDauGia) VALUES
-(null, 'sp', 100000, 2000000, '2019-11-29 20:20:20', '2019-12-19 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/1/main.jpg', 10, 1, 2, null),
+(null, 'sp', 100000, 2000000, '2019-11-29 20:20:20', '2019-12-01 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/1/main.jpg', 10, 1, 2, null),
 (null, 'sp', 700000, 2000000, '2019-11-29 20:20:20', '2019-12-19 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/2/main.jpg', 10, 2, 12, null),
 (null, 'sp', 250000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/3/main.jpg', 100, 3, 4, null),
-(null, 'sp', 360000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/4/main.jpg', 10, 4, 4, null),
+(null, 'sp', 360000, null, '2019-11-29 20:20:20', '2019-12-02 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/4/main.jpg', 10, 4, 4, null),
 (null, 'sp', 800000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/5/main.jpg', 10, 5, 10, null),
-(null, 'sp', 400000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/6/main.jpg', 10, 6, 6, null),
+(null, 'sp', 400000, null, '2019-11-29 20:20:20', '2019-12-03 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/6/main.jpg', 10, 6, 6, null),
 (null, 'sp', 410000, null, '2019-11-29 20:20:20', '2019-12-15 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/7/main.jpg', 200, 7, 8, null),
 (null, 'sp', 500000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/8/main.jpg', 10, 8, 8, null),
 (null, 'sp', 300000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/9/main.jpg', 10, 9, 14, null),
 (null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-18 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/10/main.jpg', 10, 10, 6, null),
 (null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-14 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/11/main.jpg', 10, 1, 4, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-15 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/12/main.jpg', 300, 1, 4, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-05 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/12/main.jpg', 300, 1, 4, null),
 (null, 'sp', 350000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/13/main.jpg', 10, 2, 4, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-18 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/14/main.jpg', 10, 3, 2, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-07 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/14/main.jpg', 10, 3, 2, null),
 (null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/15/main.jpg', 10, 4, 12, null),
-(null, 'sp', 400000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/16/main.jpg', 10, 3, 2, null),
+(null, 'sp', 400000, null, '2019-11-29 20:20:20', '2019-12-06 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/16/main.jpg', 10, 3, 2, null),
 (null, 'sp', 510000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/17/main.jpg', 400, 2, 8, null),
 (null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/18/main.jpg', 10, 6, 6, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-17 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/19/main.jpg', 10, 7, 4, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-05 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/19/main.jpg', 10, 7, 4, null),
 (null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/20/main.jpg', 10, 9, 2, null),
 (null, 'sp', 190000, null, '2019-11-29 20:20:20', '2019-12-17 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/21/main.jpg', 10, 10, 10, null),
 (null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-16 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/22/main.jpg', 500, 8, 14, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/23/main.jpg', 10, 1, 6, null);
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-03 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/23/main.jpg', 10, 1, 6, null);
 
 -- Folder product gồm các folder là ID của product, trong đó chứa 3-4 tấm hình của product đó
 -- Tên đường dẫn: assets/images/product/{{IDSanPham}}/{{IDHinh}}.jpg
@@ -385,3 +385,6 @@ WHERE ND1.ID = 3;
 
 -- Danh sách các bidder xin nâng cấp tài khoản
 SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;
+
+SELECT L1.*, L2.IDLoaiCap1, L2.TenLoai AS TenLoai2
+FROM LOAICAP1 L1 LEFT JOIN LOAICAP2 L2 ON L1.ID = L2.IDLoaiCap1;

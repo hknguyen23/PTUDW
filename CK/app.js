@@ -25,6 +25,12 @@ app.engine(
             formatDate: val => date.format(val, 'YYYY/MM/DD'),
             formatDateTime: val => date.format(val, 'YYYY/MM/DD HH:mm:ss'),
             formatMoney: val => numeral(val).format('0,0[.]00') + ' VNĐ',
+            if_eq: function(a, b, opts) {
+                if(a == b) // Or === depending on your needs
+                    return opts.fn(this);
+                else
+                    return opts.inverse(this);
+            }
         }
     })
 );

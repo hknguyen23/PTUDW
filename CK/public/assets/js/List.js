@@ -1,4 +1,4 @@
-function checkOffset() {
+/*function checkOffset() {
     if($('.sidebar-container').offset().top + $('.sidebar-container').height() 
                                            >= $('.footer').offset().top - 10)
         $('.sidebar-container').css('position', 'absolute');
@@ -7,7 +7,7 @@ function checkOffset() {
 }
 $(document).scroll(function() {
     checkOffset();
-});
+});*/
 
 
 $(document).ready(function() {
