@@ -1,4 +1,5 @@
 const db = require("../utils/db");
+const config = require('../config/default.json');
 
 module.exports = {
     getProduct: id =>
@@ -17,39 +18,84 @@ module.exports = {
                   from chitietdaugia ctdg join nguoidung ndg on ctdg.idnguoidaugia = ndg.id
                   where idsanpham = '${id}'
                   order by ctdg.gia desc , ctdg.thoigiandaugia asc`),
-    getProductByCat: id =>
+
+    // route list                  
+    countProductByCat: async id => {
+        const rows = await db.load(`SELECT count(*) AS total FROM SANPHAM SP 
+                                    WHERE SP.IDLoai = ${id}`);
+        return rows[0].total;
+    },
+    getProductByCat: (id, offset) =>
         db.load(`SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
                 FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
                 LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-                WHERE L2.ID = ${id}
-                ORDER BY SP.NgayDang DESC`),
-    getWatchListbyID: id =>
+                WHERE L2.ID = ${id} 
+                ORDER BY SP.NgayDang 
+                LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+    
+    countWatchListbyID: async id => {
+        const rows = await db.load(`SELECT count(*) AS total FROM SANPHAMYEUTHICH YT 
+                                    WHERE YT.IDNguoiDung = ${id}`);
+        return rows[0].total;
+    },
+    getWatchListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
                 FROM SANPHAMYEUTHICH YT LEFT JOIN SANPHAM SP ON YT.IDSanPham = SP.ID
                 LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
                 WHERE YT.IDNguoiDung = ${id}
-                ORDER BY SP.NgayDang DESC`),
-    getOngoingListbyID: id =>
+                ORDER BY SP.NgayDang DESC
+                LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+
+    countOngoingListbyID: async id => {
+        const rows = await db.load(`SELECT count(*) AS total 
+                                    FROM CHITIETDAUGIA CT LEFT JOIN SANPHAM SP ON CT.IDSanPham = SP.ID
+                                    WHERE CT.IDNguoiDauGia = ${id} AND SP.NgayHetHan > NOW()`);
+        return rows[0].total;
+    },
+    getOngoingListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM CHITIETDAUGIA CT LEFT JOIN SANPHAM SP ON CT.IDSanPham = SP.ID
             LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE CT.IDNguoiDauGia = ${id} AND SP.NgayHetHan > NOW()
-            ORDER BY SP.NgayDang DESC`),
-    getWonListbyID: id =>
+            ORDER BY SP.NgayDang DESC
+            LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+
+    countWonListbyID: async id => {
+        const rows = await db.load(`SELECT count(*) AS total FROM SANPHAM SP 
+                                    WHERE SP.IDNguoiThangDauGia = ${id}`);
+        return rows[0].total;
+    },            
+    getWonListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiThangDauGia = ${id}
-            ORDER BY SP.NgayDang DESC`),
-    getUploadListbyID: id =>
+            ORDER BY SP.NgayDang DESC
+            LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+
+    countUploadListbyID: async id => {
+        const rows = await db.load(`SELECT count(*) AS total FROM SANPHAM SP 
+                                    WHERE SP.IDNguoiBan = ${id}`);
+        return rows[0].total;
+    },
+    getUploadListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiBan = ${id}
-            ORDER BY SP.NgayDang DESC`),
-    getSoldloadListbyID: id =>
+            ORDER BY SP.NgayDang DESC
+            LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+
+    countSoldListbyID: async id => {
+        const rows = await db.load(`SELECT count(*) AS total FROM SANPHAM SP 
+                                    WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW()`);
+        return rows[0].total;
+    },
+    getSoldListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW()
-            ORDER BY SP.NgayDang DESC`),
+            ORDER BY SP.NgayDang DESC
+            LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+
     getCategoriesLV1: () => db.load(`SELECT * FROM LOAICAP1`),
     getCategoriesLV2: () => db.load(`SELECT * FROM LOAICAP2`),
 

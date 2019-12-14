@@ -386,5 +386,4 @@ WHERE ND1.ID = 3;
 -- Danh sách các bidder xin nâng cấp tài khoản
 SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;
 
-SELECT L1.*, L2.IDLoaiCap1, L2.TenLoai AS TenLoai2
-FROM LOAICAP1 L1 LEFT JOIN LOAICAP2 L2 ON L1.ID = L2.IDLoaiCap1;
+SELECT count(*) as total FROM SANPHAM SP WHERE SP.IDLoai = 1
