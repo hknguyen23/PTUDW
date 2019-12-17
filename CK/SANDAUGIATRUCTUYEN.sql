@@ -145,8 +145,8 @@ INSERT INTO NGUOIDUNG(ID, TenTaiKhoan, MatKhau, HoTen, NgaySinh, Email, DiaChi, 
 (null, 'seller7', '123', 'Lâm Lê Bảo Nam', '1999-01-01', 'someone@example.com', '227 Nguyễn Văn Cừ, Q5, TPHCM', '0987654321', 2, false, 'assets/images/avatar/14.jpg', 9);
 
 INSERT INTO SANPHAM(ID, TenSanPham, Gia, GiaMuaNgay, NgayDang, NgayHetHan, BuocGia, TuDongGiaHan, LuonDuocDauGia, MoTaNgan, MoTaDai, MainImg, SoLanDuocDauGia, IDLoai, IDNguoiBan, IDNguoiThangDauGia) VALUES
-(null, 'sp', 100000, 2000000, '2019-11-29 20:20:20', '2019-12-01 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/1/main.jpg', 10, 1, 2, null),
-(null, 'sp', 700000, 2000000, '2019-11-29 20:20:20', '2019-12-19 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/2/main.jpg', 10, 2, 12, null),
+(null, 'iphone 6S', 100000, 2000000, '2019-11-29 20:20:20', '2019-12-01 23:59:59', 20000, true, true, 'Điện thoại IPHONE', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/1/main.jpg', 10, 1, 2, null),
+(null, 'iphone XX', 700000, 2000000, '2019-11-29 20:20:20', '2019-12-19 23:59:59', 20000, true, true, 'IPHONE hot mới', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/2/main.jpg', 10, 1, 1, null),
 (null, 'sp', 250000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/3/main.jpg', 100, 3, 4, null),
 (null, 'sp', 360000, null, '2019-11-29 20:20:20', '2019-12-02 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/4/main.jpg', 10, 4, 4, null),
 (null, 'sp', 800000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/5/main.jpg', 10, 5, 10, null),
@@ -345,6 +345,13 @@ INSERT INTO CHITIETDANHGIA(IDNguoiDuocDanhGia, IDNguoiDanhGia, ThoiGianDanhGia, 
 (3, 6, '2019-12-07 20:20:20', -1, 'Comment'),
 (5, 2, '2019-12-07 20:20:20', 1, 'Comment');
 
+-- Add index for full text search
+ALTER TABLE SANPHAM ADD FULLTEXT (TenSanPham, MoTaNgan);
+
+SELECT * FROM SANPHAM WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ("ngắn")
+ORDER BY NgayHetHan DESC;
+
+
 -- 5 sản phẩm giá cao nhất
 SELECT * FROM SANPHAM ORDER BY Gia DESC LIMIT 5;
 
@@ -385,5 +392,3 @@ WHERE ND1.ID = 3;
 
 -- Danh sách các bidder xin nâng cấp tài khoản
 SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;
-
-SELECT count(*) as total FROM SANPHAM SP WHERE SP.IDLoai = 1

@@ -8,6 +8,6 @@
         "database": "sandaugiatructuyen"
     },
     "paginate": {
-      "limit": 2
+      "limit": 6
     }
   }

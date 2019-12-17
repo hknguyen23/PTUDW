@@ -78,9 +78,9 @@
                                 </li>
                                 <!-- Add more item here -->
                             </ul>
-
-                            <input class="form-control col-md-3 mr-2 pl-3" type="text" placeholder="Search">
-
+                            <form class="form-group col-md-3 mr-2 pl-3 mb-0" method="POST" action="/lists/search" novalidate="novalidate">
+                                <input class="form-control" type="text" name="key" placeholder="Search">
+                            </form>
                             {{#if isUser}}
                             <a class="btn btn-primary mr-2 pl-3" href="AccountManagement.html">
                                 <i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>

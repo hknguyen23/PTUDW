@@ -95,9 +95,22 @@ module.exports = {
             WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW()
             ORDER BY SP.NgayDang DESC
             LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+            
 
     getCategoriesLV1: () => db.load(`SELECT * FROM LOAICAP1`),
     getCategoriesLV2: () => db.load(`SELECT * FROM LOAICAP2`),
+
+    countSearchListbyKey: async (key, idLoai) => {
+        const rows = await db.load(`SELECT count(*) as total FROM SANPHAM SP
+                                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai}`);
+        return rows[0].total;
+    },
+    getSearchListbyKey: (key, idLoai, by, order, offset) => 
+        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg 
+            FROM SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
+            WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai}
+            ORDER BY ${by} ${order}
+            LIMIT ${config.paginate.limit} OFFSET ${offset}`),
 
     getRelation: id =>
         db.load(`select sp1.id, sp1.tensanpham, sp1.gia, sp1.thoigianconlai, sp1.solanduocdaugia as solan, sp1.mainimg as avatar

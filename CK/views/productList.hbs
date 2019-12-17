@@ -68,6 +68,7 @@
             <!-- /.row -->
 
             <!-- Pagination -->
+            {{#if maxPages}}
             <ul class="pagination justify-content-center">
                 <li class="page-item {{#if_eq page 1}}disabled{{/if_eq}}">
                     <a class="page-link" href="?page={{prev_value}}" aria-label="Previous">
@@ -93,6 +94,7 @@
                     </a>
                 </li>
             </ul>
+            {{/if}}
         </div>
     </div>
 </div>

@@ -21,7 +21,6 @@ router.get('/:id/watch', async (req, res) => {
 
     // calculate page number
     var maxPages = Math.floor(total / limit);
-    console.log(total);
 
     if (total % limit > 0) maxPages++;
     const page_numbers = [];
@@ -62,7 +61,6 @@ router.get('/:id/ongoing', async (req, res) => {
 
     // calculate page number
     var maxPages = Math.floor(total / limit);
-    console.log(total);
 
     if (total % limit > 0) maxPages++;
     const page_numbers = [];
@@ -102,7 +100,6 @@ router.get('/:id/won', async (req, res) => {
 
     // calculate page number
     var maxPages = Math.floor(total / limit);
-    console.log(total);
 
     if (total % limit > 0) maxPages++;
     const page_numbers = [];
@@ -143,7 +140,6 @@ router.get('/:id/upload', async (req, res) => {
 
     // calculate page number
     var maxPages = Math.floor(total / limit);
-    console.log(total);
 
     if (total % limit > 0) maxPages++;
     const page_numbers = [];
@@ -184,7 +180,6 @@ router.get('/:id/sold', async (req, res) => {
 
     // calculate page number
     var maxPages = Math.floor(total / limit);
-    console.log(total);
 
     if (total % limit > 0) maxPages++;
     const page_numbers = [];

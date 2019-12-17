@@ -44,6 +44,7 @@ app.use('/productView', require('./routes/productView/productView.route'));
 app.use('/lists', require('./routes/lists/searchable.lists.route'));
 app.use('/lists/acc', require('./routes/lists/personal.lists.route'));
 app.use('/lists/category', require('./routes/lists/category.lists.route'));
+app.use('/lists/search', require('./routes/lists/searchable.lists.route'));
 
 app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
 app.use('/user', require('./routes/home/home.route'));
