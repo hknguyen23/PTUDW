@@ -10,9 +10,7 @@
                 <li class="header">{{TenLoai}}</li>
                 {{#each ../catLV2}}
                     {{#if_eq ../ID IDLoaiCap1}}
-                        <li>
-                            <a href="/lists/category/{{ID}}"> {{TenLoai}} </a>
-                        </li>
+                        <li><a href="/lists/category/{{ID}}"> {{TenLoai}} </a></li>
                     {{/if_eq}}
                 {{/each}}
             {{/each}}

@@ -1,5 +1,5 @@
 const express = require('express');
-const productModel = require('../../models/model');
+const model = require('../../models/model');
 const config = require('../../config/default.json');
 
 const router = express.Router();
@@ -24,9 +24,9 @@ router.post('/', async (req, res) => {
   
     // get data
     const [total, rows, catLV2] = await Promise.all([
-        productModel.countSearchListbyKey(key, idLoai),
-        productModel.getSearchListbyKey(key, idLoai, by, order, offset),
-        productModel.getCategoriesLV2(),
+        model.countSearchListbyKey(key, idLoai),
+        model.getSearchListbyKey(key, idLoai, by, order, offset),
+        model.getCategoriesLV2(),
     ]);
 
     console.log(total);

@@ -1,21 +1,25 @@
 
 <div id="logreg-forms">
-    {{#if errors }}
+    {{#if errors}}
         <p class="alert alert-danger">
         {{#each errors }}
-            {{ this.msg}} <br>
+            {{this.msg}} <br>
         {{/each}}
         </p>
     {{/if}}
-    <form class="form-signin">
+    {{#if err_message}}
+        <p class="alert alert-danger">{{err_message}}</p>
+    {{/if}}   
+
+    <form class="form-signin" method="POST">
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
         <div class="social-login">
             <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook-f"></i> With Facebook</span> </button>
             <button class="btn google-btn social-btn" type="button"><span><i class="fa fa-google"></i> With Gmail</span> </button>
         </div>
         <p style="text-align:center"> OR  </p>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <input type="text"     id="inputName"     name="TenTaiKhoan" class="form-control" placeholder="Tên đăng nhập" required=""  value="{{saveForm.TenTaiKhoan}}" autofocus="">
+        <input type="password" id="inputPassword" name="fPass"   class="form-control" placeholder="Mật khẩu" required="">
         
         <button href="#sign-up" class="btn btn-success btn-block" type="submit"><i class="fa fa-sign-in"></i> Sign in</button>
         <a href="#" id="forgot_pswd">Forgot password?</a>
@@ -24,13 +28,13 @@
         <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fa fa-user-plus"></i> Sign up New Account</button>
     </form>
 
-    <form action="/reset/password/" class="form-reset">
+    <form class="form-reset" method="POST">
         <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
         <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
         <a href="#" id="cancel_reset"><i class="fa fa-angle-left"></i> Back</a>
     </form>
 
-    <form action="/signup/" class="form-signup" method="POST" >
+    <form class="form-signup" method="POST" >
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign up</h1>
         <div class="social-login">
             <button class="btn facebook-btn social-btn" type="button"><span><i class="fa fa-facebook-f"></i> With Facebook</span> </button>
@@ -39,12 +43,12 @@
         
         <p style="text-align:center">OR</p>
 
-        <input type="text" id="user-name"      name="TenTaiKhoan" class="form-control" placeholder="Tên đăng nhập" required=""  value="{{saveForm.TenTaiKhoan}}" autofocus="">
-        <input type="text" id="user-email"     name="Email" class="form-control" placeholder="Email" required="" value="{{saveForm.Email}}">
-        <input type="password" id="user-pass"  name="fPass" class="form-control" placeholder="Mật khẩu" required="">
-        <input type="password" id="user-rpass" name="fRPass" class="form-control" placeholder="Nhập lại mật khẩu" required="">
-        <input type="text" id="user-firstname" name="fFirstName" class="form-control" placeholder="Họ" required="" value="{{saveForm.fFirstName}}">
-        <input type="text" id="user-lastname"  name="fLastName"class="form-control" placeholder="Tên" required="" value="{{saveForm.fLastName}}">
+        <input type="text"     id="user-name"      name="TenTaiKhoan" class="form-control" placeholder="Tên đăng nhập" required=""  value="{{saveForm.TenTaiKhoan}}" autofocus="">
+        <input type="text"     id="user-email"     name="Email" class="form-control" placeholder="Email" required="" value="{{saveForm.Email}}">
+        <input type="password" id="user-pass"      name="fPass" class="form-control" placeholder="Mật khẩu" required="">
+        <input type="password" id="user-rpass"     name="fRPass" class="form-control" placeholder="Nhập lại mật khẩu" required="">
+        <input type="text"     id="user-firstname" name="fFirstName" class="form-control" placeholder="Họ" required="" value="{{saveForm.fFirstName}}">
+        <input type="text"     id="user-lastname"  name="fLastName"class="form-control" placeholder="Tên" required="" value="{{saveForm.fLastName}}">
 
         <button class="btn btn-primary btn-block" type="submit" formaction="login/register"><i class="fa fa-user-plus"></i> Sign Up</button>
         <a href="#" id="cancel_signup"><i class="fa fa-angle-left"></i> Back</a>

@@ -1,11 +1,13 @@
 function toggleResetPswd(e){
     e.preventDefault();
+    $('.alert-danger').toggle();
     $('#logreg-forms .form-signin').toggle() // display:block or none
     $('#logreg-forms .form-reset').toggle() // display:block or none
 }
 
 function toggleSignUp(e){
     e.preventDefault();
+    $('.alert-danger').toggle();
     $('#logreg-forms .form-signin').toggle(); // display:block or none
     $('#logreg-forms .form-signup').toggle(); // display:block or none
 }

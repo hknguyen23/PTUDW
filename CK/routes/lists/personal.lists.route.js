@@ -1,5 +1,5 @@
 const express = require('express');
-const productModel = require('../../models/model');
+const model = require('../../models/model');
 const config = require('../../config/default.json');
 
 const router = express.Router();
@@ -15,8 +15,8 @@ router.get('/:id/watch', async (req, res) => {
 
     // get data
     const [total, rows] = await Promise.all([
-        productModel.countWatchListbyID(req.params.id),
-        productModel.getWatchListbyID(req.params.id, offset),
+        model.countWatchListbyID(req.params.id),
+        model.getWatchListbyID(req.params.id, offset),
     ]);
 
     // calculate page number
@@ -55,8 +55,8 @@ router.get('/:id/ongoing', async (req, res) => {
 
     // get data
     const [total, rows] = await Promise.all([
-        productModel.countOngoingListbyID(req.params.id),
-        productModel.getOngoingListbyID(req.params.id, offset),
+        model.countOngoingListbyID(req.params.id),
+        model.getOngoingListbyID(req.params.id, offset),
     ]);
 
     // calculate page number
@@ -94,8 +94,8 @@ router.get('/:id/won', async (req, res) => {
 
     // get data
     const [total, rows] = await Promise.all([
-        productModel.countWonListbyID(req.params.id),
-        productModel.getWonListbyID(req.params.id, offset),
+        model.countWonListbyID(req.params.id),
+        model.getWonListbyID(req.params.id, offset),
     ]);
 
     // calculate page number
@@ -134,8 +134,8 @@ router.get('/:id/upload', async (req, res) => {
 
     // get data
     const [total, rows] = await Promise.all([
-        productModel.countUploadListbyID(req.params.id),
-        productModel.getUploadListbyID(req.params.id, offset),
+        model.countUploadListbyID(req.params.id),
+        model.getUploadListbyID(req.params.id, offset),
     ]);
 
     // calculate page number
@@ -174,8 +174,8 @@ router.get('/:id/sold', async (req, res) => {
 
     // get data
     const [total, rows] = await Promise.all([
-        productModel.countSoldListbyID(req.params.id),
-        productModel.getSoldListbyID(req.params.id, offset),
+        model.countSoldListbyID(req.params.id),
+        model.getSoldListbyID(req.params.id, offset),
     ]);
 
     // calculate page number

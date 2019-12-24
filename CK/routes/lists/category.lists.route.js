@@ -1,5 +1,5 @@
 const express = require('express');
-const productModel = require('../../models/model');
+const model = require('../../models/model');
 const config = require('../../config/default.json');
 
 const router = express.Router();
@@ -15,10 +15,10 @@ router.get('/:id', async (req, res) => {
   
     // get data
     const [total, rows, catLV1, catLV2] = await Promise.all([
-        productModel.countProductByCat(req.params.id),
-        productModel.getProductByCat(req.params.id, offset),
-        productModel.getCategoriesLV1(),
-        productModel.getCategoriesLV2(),
+        model.countProductByCat(req.params.id),
+        model.getProductByCat(req.params.id, offset),
+        model.getCategoriesLV1(),
+        model.getCategoriesLV2(),
     ]);
 
     // calculate page number

@@ -30,21 +30,21 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="active">
-                                    <a class="navbar-brand" href="HomeNotSignIn.html">
+                                    <a class="navbar-brand" href="/">
                                         <i class="fa fa-gavel fa-lg" aria-hidden="true"></i>
                                         Sàn đấu giá trực tuyến
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a class="pl-2 pr-2" href="HomeNotSignIn.html">
+                                    <a class="pl-2 pr-2" href="/">
                                         <i class="fa fa-home fa-lg" aria-hidden="true"></i>
                                         Trang chủ
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a class="pl-2 pr-3" href="#about">
+                                    <a class="pl-2 pr-3" href="/about">
                                         <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
                                         Thông tin
                                     </a>
@@ -58,22 +58,23 @@
                                         <i class="fa fa-caret-down fa-lg" aria-hidden="true"></i>
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a href="Product list.html">Quần áo</a></li>
-                                        <li class="dropright">
-                                            <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                Điện tử
-                                                <i class="fa fa-caret-right" style="float: right;"
-                                                    aria-hidden="true"></i>
-                                            </a>
-                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <li><a href="Product list.html">Điện thoại thông minh</a></li>
-                                                <li><a href="Product list.html">Máy tính xách tay</a></li>
-                                                <!-- Add more item here -->
-                                            </ul>
-                                        </li>
-                                        <li><a href="Product list.html">Thực phẩm</a></li>
-                                        <!-- Add more item here -->
+                                        {{#each catLV1}}
+                                            <li class="dropright">
+                                                <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    {{TenLoai}}
+                                                    <i class="fa fa-caret-right" style="float: right;"
+                                                        aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                    {{#each ../catLV2}}
+                                                        {{#if_eq ../ID IDLoaiCap1}}
+                                                            <li><a href="/lists/category/{{ID}}"> {{TenLoai}} </a></li>
+                                                        {{/if_eq}}
+                                                    {{/each}}
+                                                </ul>
+                                            </li>
+                                        {{/each}}   
                                     </ul>
                                 </li>
                                 <!-- Add more item here -->
@@ -81,23 +82,23 @@
                             <form class="form-group col-md-3 mr-2 pl-3 mb-0" method="POST" action="/lists/search" novalidate="novalidate">
                                 <input class="form-control" type="text" name="key" placeholder="Search">
                             </form>
-                            {{#if isUser}}
-                            <a class="btn btn-primary mr-2 pl-3" href="AccountManagement.html">
+                            {{#if isAuthenticated}}
+                            <a class="btn btn-primary mr-2 pl-3" href="/accountManagement/{{authUser.ID}}">
                                 <i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
                                 Tài khoản
                             </a>
-
-                            <a class="btn btn-primary pl-3" href="HomeNotSignIn.html">
+                            
+                            <a class="btn btn-primary pl-3" method="POST" href="/logout">
                                 <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>
                                 Thoát
                             </a>
                             {{else}}
-                            <a class="btn btn-primary mr-2 pl-3" id="navbarSignupButton" href="login#sign-up">
+                            <a class="btn btn-primary mr-2 pl-3" id="navbarSignupButton" href="/login#sign-up">
                                 <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>
                                 Đăng ký
                             </a>
-
-                            <a class="btn btn-primary pl-3" href="login">
+                            
+                            <a class="btn btn-primary pl-3" href="/login">
                                 <i class="fa fa-sign-in fa-lg" aria-hidden="true"></i>
                                 Đăng nhập
                             </a>

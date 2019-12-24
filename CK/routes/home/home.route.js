@@ -2,10 +2,10 @@ const express = require("express");
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const model = require("../../models/model");
+const GuestOnly = require('../../middlewares/GuestOnly.mdw');
 const { check, validationResult } = require('express-validator');
 
 const router = express.Router();
-const isUser = false;
 
 router.use(express.static("public"));
 
@@ -14,11 +14,11 @@ router.get("/", (req, res) => {
     title: "Online Auction",
     css: ["HomeStyle.css", "carousel.css"],
     js: ["carousel.js"],
-    isUser
   });
+  console.log(res.locals);
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", GuestOnly, (req, res) => {
   res.render("login", {
     title: "Đăng nhập",
     css: ["Login.css"],
@@ -30,13 +30,49 @@ router.get("/login", (req, res) => {
   req.session.saveForm = null;
 });
 
+router.post('/login', async (req, res) => {
+  const user = await model.getIdByUsername(req.body.TenTaiKhoan);
+  if (user.length == 0) {
+    return res.render("login", {
+      title: "Đăng nhập",
+      css: ["Login.css"],
+      js: ["Login.js"],
+      err_message: 'Tài khoản không tồn tại'
+    });
+  }
+  const rs = bcrypt.compareSync(req.body.fPass, user[0].MatKhau);
+  if (rs === false) {
+    return res.render("login", {
+      title: "Đăng nhập",
+      css: ["Login.css"],
+      js: ["Login.js"],
+      err_message: 'Sai mật khẩu'
+    });
+  }
+
+  delete user[0].MatKhau;
+  req.session.isAuthenticated = true;
+  req.session.authUser = user[0];
+
+  const url = req.query.retUrl || '/';
+  res.redirect(url);
+})
+
+router.get('/logout', (req, res) => {
+  req.session.isAuthenticated = false;
+  req.session.authUser = null;
+  res.locals.isAuthenticated = false;
+  res.locals.authUser = null;
+  res.redirect("/");
+});
+
 router.post('/login/register', [
   check('TenTaiKhoan', "Tên tài khoản không hợp lệ")
       .not().isEmpty()
       .trim()
       .isLength({ min: 6 }).withMessage("Tên tài khoản phải có ít nhất 6 ký tự")
-      .custom(value => {
-        return id = model.getIdByUsername(value).then(result => {
+      .custom(async value => {
+        return id = await model.getIdByUsername(value).then(result => {
           if (result.length > 0) {
             return Promise.reject('Tên tài khoản đã tồn tại');
           }
@@ -45,9 +81,9 @@ router.post('/login/register', [
   check('Email', "Email không hợp lệ")
       .isEmail()
       .normalizeEmail()
-      .custom(value => {
+      .custom(async value => {
         console.log(value);
-        return id = model.getIdByEmail(value).then(result => {
+        return id = await model.getIdByEmail(value).then(result => {
           if (result.length > 0) {
             return Promise.reject('E-mail đã tồn tại');
           }
@@ -95,5 +131,6 @@ router.post('/login/register', [
     res.redirect('/login');
   }
 });
+
 
 module.exports = router;

@@ -43,6 +43,8 @@ app.engine(
 
 app.set("view engine", "hbs");
 
+//middlewares
+require('./middlewares/locals.mdw')(app);
 
 // user route
 app.use('/', require('./routes/home/home.route'));
@@ -82,14 +84,6 @@ app.use('/bidderList', require('./routes/admin/bidderUpgradeRequestList.route'))
 
 
 //4. Use HANDLEBARS TEMPLATE
-app.get("/", function(req, res) {
-    // dấu / yêu cầu hiển thị trang chủ
-    res.render("home", {
-        title: "Online Auction",
-        css: ["HomeStyle.css", "carousel.css"],
-        js: ["carousel.js"]
-    });
-});
 
 app.get("/changeInfo", function(req, res) {
     // res.render("changeInfo", {
@@ -102,60 +96,12 @@ app.get("/changeInfo", function(req, res) {
     //chưa có
 });
 
-app.get("/daBan", function(req, res) {
-    res.render("đãBán", {
-        title: "Danh sách đã bán",
-        css: ["List.css"],
-        js: ["List.js"]
-    });
-});
-
-app.get("/daDang", function(req, res) {
-    res.render("đãĐăng", {
-        title: "Danh Sách Đã Đăng",
-        css: ["List.css"],
-        js: ["List.js"]
-    });
-});
-
-app.get("/daThang", function(req, res) {
-    res.render("đãThắng", {
-        title: "Danh Sách Đã Thắng",
-        css: ["List.css"],
-        js: ["List.js"]
-    });
-});
-
-app.get("/dangDauGia", function(req, res) {
-    res.render("đangĐấuGiá", {
-        title: "Danh Sách Đang Đấu Giá",
-        css: ["List.css"],
-        js: ["List.js"]
-    });
-});
-
-
-app.get("/login", function(req, res) {
-
-    // chưa có
-
-});
-
 app.get("/postProduct", function(req, res) {
     res.render("postProduct", {
         title: "Online Auction | Đăng sản phẩm",
         css: ["HomeStyle.css", "PostProduct.css"],
         js: ["PostProduct.js"]
     });
-});
-
-app.get("/productList", function(req, res) {
-    res.render("productList", {
-        title: "Product list",
-        css: ["List.css"],
-        js: ["List.js"]
-    });
-
 });
 
 app.get("/productView", function(req, res) {
@@ -166,22 +112,6 @@ app.get("/productView", function(req, res) {
     });
 });
 
-app.get("/search", function(req, res) {
-    res.render("search", {
-        title: "Tìm kiếm",
-        css: ["List.css"],
-        js: ["List.js"]
-    });
-
-});
-
-app.get("/theoDoi", function(req, res) {
-    res.render("theoDõi", {
-        title: "Danh sách theo dõi",
-        css: ["List.css"],
-        js: ["List.js"]
-    });
-});
 
 // ERROR HANDLER
 app.use((req, res, next) => {
