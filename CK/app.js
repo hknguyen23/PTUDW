@@ -4,6 +4,8 @@ const path = require("path");
 const morgan = require('morgan');
 const date = require("date-and-time");
 const numeral = require('numeral');
+const session = require('express-session');
+
 require('express-async-errors');
 
 const app = express();
@@ -14,7 +16,11 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-
+app.use(session({
+    secret: 'secret text abcdef',
+    saveUninitialized: false,
+    resave: false
+}));
 //2. Set up handlebars: tell our app to actually use handlebars as our template engine.
 app.engine(
     "hbs",
@@ -39,6 +45,8 @@ app.set("view engine", "hbs");
 
 
 // user route
+app.use('/', require('./routes/home/home.route'));
+
 app.use('/productView', require('./routes/productView/productView.route'));
 
 app.use('/lists', require('./routes/lists/searchable.lists.route'));

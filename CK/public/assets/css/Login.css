@@ -132,7 +132,9 @@ body {
     width: 100%;
     max-width: 410px;
     padding: 15px;
-    margin: auto;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
 }
 #logreg-forms .form-control {
     position: relative;
@@ -141,6 +143,7 @@ body {
     padding: 10px;
     font-size: 16px;
 }
+
 #logreg-forms .form-control:focus { z-index: 2; }
 #logreg-forms .form-signin input[type="email"] {
     margin-bottom: -1px;
@@ -184,13 +187,16 @@ body {
 
 #logreg-forms .form-reset, #logreg-forms .form-signup{ display: none; }
 
-#logreg-forms .form-signup .social-btn{ width:210px; }
-
 #logreg-forms .form-signup input { margin-bottom: 2px;}
 
-.form-signup .social-login{
-    width:210px !important;
-    margin: 0 auto;
+#user-firstname {
+	display: inline-block;
+	width: 55%;
+	margin-right: auto;
+}
+#user-lastname {
+	width: 40%;
+	float: right;
 }
 
 /* Mobile */

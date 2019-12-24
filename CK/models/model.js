@@ -142,7 +142,13 @@ module.exports = {
 				
 	getBidderUpgradeRequest: () => db.load(`SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;`),
 
+
+    getIdByEmail: email => db.loadSafe(`SELECT ID FROM NGUOIDUNG WHERE Email = ?`, email),
+    getIdByUsername: username => db.loadSafe(`SELECT ID FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
+
     add: entity => db.add('chitietdaugia', entity),
+
+    addUser: entity => db.add('NGUOIDUNG', entity),
 
     patch: entity => {
         const condition = { id: entity.idsanpham };
