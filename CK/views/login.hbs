@@ -1,9 +1,12 @@
-{{#if errors }}
-    {{#each errors }}
-    <p class="alert alert-danger">{{ this.msg }}</p>
-    {{/each}}
-{{/if}}
+
 <div id="logreg-forms">
+    {{#if errors }}
+        <p class="alert alert-danger">
+        {{#each errors }}
+            {{ this.msg}} <br>
+        {{/each}}
+        </p>
+    {{/if}}
     <form class="form-signin">
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
         <div class="social-login">

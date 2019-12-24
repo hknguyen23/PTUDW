@@ -5,7 +5,7 @@ const model = require("../../models/model");
 const { check, validationResult } = require('express-validator');
 
 const router = express.Router();
-const isUser = true;
+const isUser = false;
 
 router.use(express.static("public"));
 

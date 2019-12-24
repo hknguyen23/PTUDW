@@ -16,6 +16,7 @@ $(()=>{
     $('#logreg-forms #cancel_reset').click(toggleResetPswd);
     $('#logreg-forms #btn-signup').click(toggleSignUp);
     $('#logreg-forms #cancel_signup').click(toggleSignUp);
+    $('#navbarSignupButton').click(toggleSignUp);
 })
 
 // Open sign-up from link
@@ -28,3 +29,4 @@ if(window.location.hash) {
 } else {
     // No hash found
 }
+
