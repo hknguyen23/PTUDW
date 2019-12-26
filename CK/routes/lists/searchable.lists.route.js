@@ -23,9 +23,13 @@ router.post('/', async (req, res) => {
     const offset = (page - 1) * config.paginate.limit;
   
     // get data
+    var idND = -1;
+    if (res.locals.isAuthenticated){
+        idND = res.locals.authUser.ID;
+    }
     const [total, rows, catLV2] = await Promise.all([
         model.countSearchListbyKey(key, idLoai),
-        model.getSearchListbyKey(key, idLoai, by, order, offset),
+        model.getSearchListbyKey(key, idLoai, by, order, idND, offset),
         model.getCategoriesLV2(),
     ]);
 

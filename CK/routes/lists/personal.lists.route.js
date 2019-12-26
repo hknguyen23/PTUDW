@@ -3,9 +3,9 @@ const model = require('../../models/model');
 const config = require('../../config/default.json');
 
 const router = express.Router();
-router.use('/:id', express.static('public'));
+router.use(express.static('public'));
 
-router.get('/:id/watch', async (req, res) => {
+router.get('/watch', async (req, res) => {
     // page
     const limit = config.paginate.limit;
 
@@ -14,9 +14,13 @@ router.get('/:id/watch', async (req, res) => {
     const offset = (page - 1) * config.paginate.limit;
 
     // get data
+    var idND = -1;
+    if (res.locals.isAuthenticated){
+        idND = res.locals.authUser.ID;
+    }
     const [total, rows] = await Promise.all([
-        model.countWatchListbyID(req.params.id),
-        model.getWatchListbyID(req.params.id, offset),
+        model.countWatchListbyID(idND),
+        model.getWatchListbyID(idND, offset),
     ]);
 
     // calculate page number
@@ -45,7 +49,7 @@ router.get('/:id/watch', async (req, res) => {
     });
 })
 
-router.get('/:id/ongoing', async (req, res) => {
+router.get('/ongoing', async (req, res) => {
     // page
     const limit = config.paginate.limit;
 
@@ -54,9 +58,13 @@ router.get('/:id/ongoing', async (req, res) => {
     const offset = (page - 1) * config.paginate.limit;
 
     // get data
+    var idND = -1;
+    if (res.locals.isAuthenticated){
+        idND = res.locals.authUser.ID;
+    }
     const [total, rows] = await Promise.all([
-        model.countOngoingListbyID(req.params.id),
-        model.getOngoingListbyID(req.params.id, offset),
+        model.countOngoingListbyID(idND),
+        model.getOngoingListbyID(idND, offset),
     ]);
 
     // calculate page number
@@ -84,7 +92,7 @@ router.get('/:id/ongoing', async (req, res) => {
         maxPages,
     });
 })
-router.get('/:id/won', async (req, res) => {
+router.get('/won', async (req, res) => {
     // page
     const limit = config.paginate.limit;
 
@@ -93,9 +101,13 @@ router.get('/:id/won', async (req, res) => {
     const offset = (page - 1) * config.paginate.limit;
 
     // get data
+    var idND = -1;
+    if (res.locals.isAuthenticated){
+        idND = res.locals.authUser.ID;
+    }
     const [total, rows] = await Promise.all([
-        model.countWonListbyID(req.params.id),
-        model.getWonListbyID(req.params.id, offset),
+        model.countWonListbyID(idND),
+        model.getWonListbyID(idND, offset),
     ]);
 
     // calculate page number
@@ -124,7 +136,7 @@ router.get('/:id/won', async (req, res) => {
     });
 })
 
-router.get('/:id/upload', async (req, res) => {
+router.get('/upload', async (req, res) => {
     // page
     const limit = config.paginate.limit;
 
@@ -133,9 +145,13 @@ router.get('/:id/upload', async (req, res) => {
     const offset = (page - 1) * config.paginate.limit;
 
     // get data
+    var idND = -1;
+    if (res.locals.isAuthenticated){
+        idND = res.locals.authUser.ID;
+    }
     const [total, rows] = await Promise.all([
-        model.countUploadListbyID(req.params.id),
-        model.getUploadListbyID(req.params.id, offset),
+        model.countUploadListbyID(idND),
+        model.getUploadListbyID(idND, offset),
     ]);
 
     // calculate page number
@@ -164,7 +180,7 @@ router.get('/:id/upload', async (req, res) => {
     });
 })
 
-router.get('/:id/sold', async (req, res) => {
+router.get('/sold', async (req, res) => {
     // page
     const limit = config.paginate.limit;
 
@@ -173,9 +189,12 @@ router.get('/:id/sold', async (req, res) => {
     const offset = (page - 1) * config.paginate.limit;
 
     // get data
+    if (res.locals.isAuthenticated){
+        idND = res.locals.authUser.ID;
+    }
     const [total, rows] = await Promise.all([
-        model.countSoldListbyID(req.params.id),
-        model.getSoldListbyID(req.params.id, offset),
+        model.countSoldListbyID(idND),
+        model.getSoldListbyID(idND, offset),
     ]);
 
     // calculate page number

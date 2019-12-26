@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const date = require("date-and-time");
 const numeral = require('numeral');
 const session = require('express-session');
+const UserOnly = require('./middlewares/UserOnly.mdw');
 
 require('express-async-errors');
 
@@ -48,11 +49,12 @@ require('./middlewares/locals.mdw')(app);
 
 // user route
 app.use('/', require('./routes/home/home.route'));
+app.use('/', require('./routes/changeFav.route'));
 
 app.use('/productView', require('./routes/productView/productView.route'));
 
 app.use('/lists', require('./routes/lists/searchable.lists.route'));
-app.use('/lists/acc', require('./routes/lists/personal.lists.route'));
+app.use('/lists/acc', UserOnly,  require('./routes/lists/personal.lists.route'));
 app.use('/lists/category', require('./routes/lists/category.lists.route'));
 app.use('/lists/search', require('./routes/lists/searchable.lists.route'));
 

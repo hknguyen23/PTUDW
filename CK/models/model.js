@@ -25,13 +25,39 @@ module.exports = {
                                     WHERE SP.IDLoai = ${id}`);
         return rows[0].total;
     },
-    getProductByCat: (id, offset) =>
-        db.load(`SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
-                FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
-                LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-                WHERE L2.ID = ${id} 
-                ORDER BY SP.NgayDang 
-                LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+    getProductByCat: (id, idND, offset) =>{
+
+        const guest = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                    FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
+                    LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
+                    WHERE L2.ID = ?
+                    ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
+                    LIMIT ? OFFSET ?`;
+        const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                            ,(
+                                CASE
+                                    WHEN EXISTS
+                                    (
+                                        SELECT *
+                                        FROM SANPHAMYEUTHICH SPYT
+                                        WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
+                                    ) THEN 1
+                                    ELSE 0
+                                END
+                            ) AS isFavorite
+                    FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
+                    LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
+                    CROSS JOIN NGUOIDUNG ND2
+                    WHERE L2.ID = ? AND ND2.ID = ?
+                    ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
+                    LIMIT ? OFFSET ?`;
+        if (idND == -1){
+            return db.loadSafe(guest,[id, config.paginate.limit, offset]);
+        }
+        else{
+            return db.loadSafe(user,[id, idND, config.paginate.limit, offset]);
+        }       
+    },
     
     countWatchListbyID: async id => {
         const rows = await db.load(`SELECT count(*) AS total FROM SANPHAMYEUTHICH YT 
@@ -40,9 +66,21 @@ module.exports = {
     },
     getWatchListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                        ,(
+                            CASE
+                                WHEN EXISTS
+                                (
+                                    SELECT *
+                                    FROM SANPHAMYEUTHICH SPYT
+                                    WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
+                                ) THEN 1
+                                ELSE 0
+                            END
+                        ) AS isFavorite
                 FROM SANPHAMYEUTHICH YT LEFT JOIN SANPHAM SP ON YT.IDSanPham = SP.ID
                 LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-                WHERE YT.IDNguoiDung = ${id}
+                CROSS JOIN NGUOIDUNG ND2
+                WHERE YT.IDNguoiDung = ${id} AND ND2.ID = ${id}
                 ORDER BY SP.NgayDang DESC
                 LIMIT ${config.paginate.limit} OFFSET ${offset}`),
 
@@ -54,9 +92,21 @@ module.exports = {
     },
     getOngoingListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                        ,(
+                            CASE
+                                WHEN EXISTS
+                                (
+                                    SELECT *
+                                    FROM SANPHAMYEUTHICH SPYT
+                                    WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
+                                ) THEN 1
+                                ELSE 0
+                            END
+                        ) AS isFavorite
             FROM CHITIETDAUGIA CT LEFT JOIN SANPHAM SP ON CT.IDSanPham = SP.ID
             LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-            WHERE CT.IDNguoiDauGia = ${id} AND SP.NgayHetHan > NOW()
+            CROSS JOIN NGUOIDUNG ND2
+            WHERE CT.IDNguoiDauGia = ${id} AND SP.NgayHetHan > NOW() AND ND2.ID = ${id}
             ORDER BY SP.NgayDang DESC
             LIMIT ${config.paginate.limit} OFFSET ${offset}`),
 
@@ -67,8 +117,20 @@ module.exports = {
     },            
     getWonListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                        ,(
+                            CASE
+                                WHEN EXISTS
+                                (
+                                    SELECT *
+                                    FROM SANPHAMYEUTHICH SPYT
+                                    WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
+                                ) THEN 1
+                                ELSE 0
+                            END
+                        ) AS isFavorite
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-            WHERE SP.IDNguoiThangDauGia = ${id}
+            CROSS JOIN NGUOIDUNG ND2
+            WHERE SP.IDNguoiThangDauGia = ${id} AND ND2.ID = ${id}
             ORDER BY SP.NgayDang DESC
             LIMIT ${config.paginate.limit} OFFSET ${offset}`),
 
@@ -79,8 +141,20 @@ module.exports = {
     },
     getUploadListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                        ,(
+                            CASE
+                                WHEN EXISTS
+                                (
+                                    SELECT *
+                                    FROM SANPHAMYEUTHICH SPYT
+                                    WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
+                                ) THEN 1
+                                ELSE 0
+                            END
+                        ) AS isFavorite
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-            WHERE SP.IDNguoiBan = ${id}
+            CROSS JOIN NGUOIDUNG ND2
+            WHERE SP.IDNguoiBan = ${id} AND ND2.ID = ${id}
             ORDER BY SP.NgayDang DESC
             LIMIT ${config.paginate.limit} OFFSET ${offset}`),
 
@@ -91,8 +165,20 @@ module.exports = {
     },
     getSoldListbyID: (id, offset) =>
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                        ,(
+                            CASE
+                                WHEN EXISTS
+                                (
+                                    SELECT *
+                                    FROM SANPHAMYEUTHICH SPYT
+                                    WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
+                                ) THEN 1
+                                ELSE 0
+                            END
+                        ) AS isFavorite
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-            WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW()
+            CROSS JOIN NGUOIDUNG ND2
+            WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW() AND ND2.ID = ${id}
             ORDER BY SP.NgayDang DESC
             LIMIT ${config.paginate.limit} OFFSET ${offset}`),
             
@@ -105,10 +191,22 @@ module.exports = {
                                     WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai}`);
         return rows[0].total;
     },
-    getSearchListbyKey: (key, idLoai, by, order, offset) => 
+    getSearchListbyKey: (key, idLoai, by, order, idND, offset) => 
         db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg 
+                        ,(
+                            CASE
+                                WHEN EXISTS
+                                (
+                                    SELECT *
+                                    FROM SANPHAMYEUTHICH SPYT
+                                    WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
+                                ) THEN 1
+                                ELSE 0
+                            END
+                        ) AS isFavorite
             FROM SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-            WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai}
+            CROSS JOIN NGUOIDUNG ND2
+            WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND ND2.ID = ${idND}
             ORDER BY ${by} ${order}
             LIMIT ${config.paginate.limit} OFFSET ${offset}`),
 
@@ -149,6 +247,10 @@ module.exports = {
     add: entity => db.add('chitietdaugia', entity),
 
     addUser: entity => db.add('NGUOIDUNG', entity),
+
+    addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
+
+    delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
 
     patch: entity => {
         const condition = { id: entity.idsanpham };

@@ -42,10 +42,23 @@
                             <div class="ribbon">NEW</div>
                         </div>
                         <div class="img-wrap">
-                            <button class="asText bookmark"><i class="fa fa-bookmark fa-lg align-top"
-                                    aria-hidden="true"></i></button>
+                            {{#if ../isAuthenticated}}
+                            <button class="asText bookmark" name="{{ID}}" value="{{isFavorite}}" onclick="mySubmit(this);">
+                                <i class="fa fa-bookmark fa-lg align-top {{#if isFavorite}}green-color{{/if}}" aria-hidden="true"></i></button>
+                            <script>
+                                function mySubmit(e) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        data: {isFavorite: e.value, IDSanPham: e.name },
+                                        url: '/changeFav',
+                                        dataType: 'text',
+                                    });
+                                    e.value = 1 - e.value;
+                                }
+                            </script>
+                            {{/if}}  
                             <a href="/productView/{{ID}}"><img class="img-fluid mx-auto d-block"
-                                    src="{{MainImg}}" alt=""></a>
+                                src="{{MainImg}}" alt=""></a>
                         </div>
                         <div class="card-body d-flex flex-column justify-content-between">
                             <h4 class="card-title align-self-center ellipsis">

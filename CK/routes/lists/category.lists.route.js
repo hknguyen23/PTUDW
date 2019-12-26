@@ -14,16 +14,20 @@ router.get('/:id', async (req, res) => {
     const offset = (page - 1) * config.paginate.limit;
   
     // get data
+    var idND = -1;
+    if (res.locals.isAuthenticated){
+        idND = res.locals.authUser.ID;
+    }
     const [total, rows, catLV1, catLV2] = await Promise.all([
         model.countProductByCat(req.params.id),
-        model.getProductByCat(req.params.id, offset),
+        model.getProductByCat(req.params.id, idND, offset),
         model.getCategoriesLV1(),
         model.getCategoriesLV2(),
     ]);
+    console.log(rows);
 
     // calculate page number
     var maxPages = Math.floor(total / limit);
-    console.log(total);
 
     if (total % limit > 0) maxPages++;
     const page_numbers = [];
