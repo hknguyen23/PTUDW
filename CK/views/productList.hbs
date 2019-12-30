@@ -30,9 +30,11 @@
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <!-- Shop card -->
                         <div class="card h-100">
+                            {{#if isNew}}
                             <div class="ribbon-wrapper">
                                 <div class="ribbon">NEW</div>
                             </div>
+                            {{/if}}
                             <div class="img-wrap">
                                 {{#if ../isAuthenticated}}
                                 <button class="asText bookmark" name="{{ID}}" value="{{isFavorite}}" onclick="mySubmit(this);">
@@ -56,15 +58,19 @@
                                 <h4 class="card-title align-self-center ellipsis">
                                     <a href="/productView/{{ID}}">{{TenSanPham}}</a>
                                 </h4>
-                                <div class="d-flex justify-content-between">
+                                <div>
                                     <span>Mua ngay:</span>
+                                </div>
+                                <div class="align-self-end">
                                     <span>{{formatMoney GiaMuaNgay}}</span>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div>
                                     <span>Giá hiện tại: </span>
+                                </div>
+                                <div class="align-self-end">
                                     <span class="font-weight-bold">{{formatMoney Gia}}</span>
                                 </div>
-                                <span class="d-flex justify-content-end">({{TenTaiKhoan}})</span>
+                                <span class="maskHalf d-flex justify-content-end {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">({{HoTen}})</span>
                                 <h3 class="mt-auto align-self-center">{{formatDate NgayHetHan}}</h3>
                                 <div class="d-flex justify-content-between small">
                                     <span> {{SoLanDuocDauGia}} Lượt</span>

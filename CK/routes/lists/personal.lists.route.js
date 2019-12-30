@@ -20,7 +20,7 @@ router.get('/watch', async (req, res) => {
     }
     const [total, rows] = await Promise.all([
         model.countWatchListbyID(idND),
-        model.getWatchListbyID(idND, offset),
+        model.getPersonalListByID(0, idND, offset),
     ]);
 
     // calculate page number
@@ -64,7 +64,7 @@ router.get('/ongoing', async (req, res) => {
     }
     const [total, rows] = await Promise.all([
         model.countOngoingListbyID(idND),
-        model.getOngoingListbyID(idND, offset),
+        model.getPersonalListByID(1, idND, offset),
     ]);
 
     // calculate page number
@@ -107,7 +107,7 @@ router.get('/won', async (req, res) => {
     }
     const [total, rows] = await Promise.all([
         model.countWonListbyID(idND),
-        model.getWonListbyID(idND, offset),
+        model.getPersonalListByID(2, idND, offset),
     ]);
 
     // calculate page number
@@ -151,7 +151,7 @@ router.get('/upload', async (req, res) => {
     }
     const [total, rows] = await Promise.all([
         model.countUploadListbyID(idND),
-        model.getUploadListbyID(idND, offset),
+        model.getPersonalListByID(3, idND, offset),
     ]);
 
     // calculate page number
@@ -194,7 +194,7 @@ router.get('/sold', async (req, res) => {
     }
     const [total, rows] = await Promise.all([
         model.countSoldListbyID(idND),
-        model.getSoldListbyID(idND, offset),
+        model.getPersonalListByID(4, idND, offset),
     ]);
 
     // calculate page number

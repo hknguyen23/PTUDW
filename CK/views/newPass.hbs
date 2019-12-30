@@ -1,0 +1,18 @@
+
+<div id="logreg-forms">
+    {{#if errors}}
+        <p class="alert alert-danger">
+        {{#each errors }}
+            {{this.msg}} <br>
+        {{/each}}
+        </p>
+    {{/if}}
+    <form class="form-newpass" method="POST" >
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Change Password</h1>
+        <input type="password" id="user-pass"      name="fPass" class="form-control" placeholder="Mật khẩu" required="">
+        <input type="password" id="user-rpass"     name="fRPass" class="form-control" placeholder="Nhập lại mật khẩu" required="">
+        <input type="hidden" id="custId" name="token" value="{{token}}">
+        <button class="btn btn-primary btn-block" type="submit" formaction="/newPass">Change Password</button>
+    </form>
+    <br>
+</div>
