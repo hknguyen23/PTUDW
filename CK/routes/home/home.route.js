@@ -4,10 +4,14 @@ const session = require('express-session');
 const model = require("../../models/model");
 const GuestOnly = require('../../middlewares/GuestOnly.mdw');
 const { check, validationResult } = require('express-validator');
+const emailserver = require('../../middlewares/email.mdw');
+const crypto = require('crypto');
 
 const router = express.Router();
 
 router.use(express.static("public"));
+router.use('/login', express.static('public'));
+router.use('/newPass', express.static('public'));
 
 router.get("/", (req, res) => {
   res.render("home", {
@@ -85,7 +89,7 @@ router.post('/login/register', [
         console.log(value);
         return id = await model.getIdByEmail(value).then(result => {
           if (result.length > 0) {
-            return Promise.reject('E-mail đã tồn tại');
+            return Promise.reject('Email đã tồn tại');
           }
         })
       }),
@@ -132,5 +136,81 @@ router.post('/login/register', [
   }
 });
 
+router.post('/forgot', async (req, res) => {
+  const user = await model.getIdByEmail(req.body.Email);
+  if (user.length == 0) {
+    req.session.errors = [{msg: 'Email không tồn tại'}];
+    res.redirect('/login#forgot');
+  }
+  else{
+
+    var buf = crypto.randomBytes(48);
+    var token = buf.toString('hex');
+
+    var entity = {
+      token: token,
+      id: user[0].ID
+    }
+    var result = await model.updateToken(entity);
+    result = await model.updateTokenExpire(user[0].ID);
+
+    var string = 'http://localhost:3000/newPass/' + token;
+    emailserver.send(req.body.Email, string)
+
+    delete user;
+    res.redirect('/login');
+  }
+})
+
+router.get("/newPass/:token", GuestOnly, (req, res) => {
+  res.render("newPass", {
+    title: "Reset Password",
+    css: ["Login.css"],
+    errors: req.session.errors,
+    token: req.params.token
+  });
+  req.session.errors = null;
+});
+
+router.post('/newPass', [
+  check('token', "Timeout")
+      .not().isEmpty()
+      .custom(async value => {
+        return await model.checkTimeoutToken(value).then(result => {
+          if (result.length == 0) {
+            return Promise.reject('Unauthorized access');
+          }
+          if (result[0].isExpire == 1){
+            return Promise.reject('Timeout, please return to Forgot Password page to try again');
+          }
+        })
+      }),
+  check('fPass')
+      .not().isEmpty()
+      .isLength({ min: 6 }).withMessage("Mật khẩu phải có ít nhất 6 ký tự")
+      .custom((val, { req }) => {
+        if (val !== req.body.fRPass) {
+            throw new Error("Mật khẩu nhập lại không đúng");
+        } else {
+            return val;
+        }
+      }),
+],async (req, res) => {
+  var errors = validationResult(req).array();
+  if (errors.length > 0) {
+    req.session.errors = errors;
+    res.redirect('/newPass/'+req.body.token);
+  } else {  
+    const N = 10;
+    const hash = bcrypt.hashSync(req.body.fPass, N);
+
+    const entity = {
+      MatKhau: hash,
+      token: req.body.token
+    }
+    const result = await model.changePass(entity);
+    res.redirect('/login');
+  }
+});
 
 module.exports = router;

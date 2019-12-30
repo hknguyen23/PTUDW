@@ -38,9 +38,11 @@
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <!-- Shop card -->
                     <div class="card h-100">
+                        {{#if isNew}}
                         <div class="ribbon-wrapper">
                             <div class="ribbon">NEW</div>
                         </div>
+                        {{/if}}
                         <div class="img-wrap">
                             {{#if ../isAuthenticated}}
                             <button class="asText bookmark" name="{{ID}}" value="{{isFavorite}}" onclick="mySubmit(this);">

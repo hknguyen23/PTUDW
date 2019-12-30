@@ -15,6 +15,8 @@ CREATE TABLE NGUOIDUNG(
 	XinNangCap BOOL NOT NULL,
 	AvatarURL VARCHAR(100),
 	TongDiemDanhGia INT NOT NULL,
+	token VARCHAR(100),
+	token_expire DATETIME,
 	PRIMARY KEY(ID)
 );
 

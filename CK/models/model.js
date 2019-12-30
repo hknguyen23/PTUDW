@@ -28,6 +28,12 @@ module.exports = {
     getProductByCat: (id, idND, offset) =>{
 
         const guest = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg
+                                ,(
+                                    CASE
+                                        WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                        ELSE 0
+                                    END
+                                ) AS isNew
                     FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
                     LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
                     WHERE L2.ID = ?
@@ -45,6 +51,12 @@ module.exports = {
                                     ELSE 0
                                 END
                             ) AS isFavorite
+                            ,(
+                                CASE
+                                    WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                    ELSE 0
+                                END
+                            ) AS isNew
                     FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
                     LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
                     CROSS JOIN NGUOIDUNG ND2
@@ -77,6 +89,12 @@ module.exports = {
                                 ELSE 0
                             END
                         ) AS isFavorite
+                        ,(
+                            CASE
+                                WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                ELSE 0
+                            END
+                        ) AS isNew
                 FROM SANPHAMYEUTHICH YT LEFT JOIN SANPHAM SP ON YT.IDSanPham = SP.ID
                 LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
                 CROSS JOIN NGUOIDUNG ND2
@@ -103,6 +121,12 @@ module.exports = {
                                 ELSE 0
                             END
                         ) AS isFavorite
+                        ,(
+                            CASE
+                                WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                ELSE 0
+                            END
+                        ) AS isNew
             FROM CHITIETDAUGIA CT LEFT JOIN SANPHAM SP ON CT.IDSanPham = SP.ID
             LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             CROSS JOIN NGUOIDUNG ND2
@@ -128,6 +152,12 @@ module.exports = {
                                 ELSE 0
                             END
                         ) AS isFavorite
+                        ,(
+                            CASE
+                                WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                ELSE 0
+                            END
+                        ) AS isNew
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             CROSS JOIN NGUOIDUNG ND2
             WHERE SP.IDNguoiThangDauGia = ${id} AND ND2.ID = ${id}
@@ -152,6 +182,12 @@ module.exports = {
                                 ELSE 0
                             END
                         ) AS isFavorite
+                        ,(
+                            CASE
+                                WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                ELSE 0
+                            END
+                        ) AS isNew
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             CROSS JOIN NGUOIDUNG ND2
             WHERE SP.IDNguoiBan = ${id} AND ND2.ID = ${id}
@@ -176,6 +212,12 @@ module.exports = {
                                 ELSE 0
                             END
                         ) AS isFavorite
+                        ,(
+                            CASE
+                                WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                ELSE 0
+                            END
+                        ) AS isNew
             FROM  SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
             CROSS JOIN NGUOIDUNG ND2
             WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW() AND ND2.ID = ${id}
@@ -191,24 +233,49 @@ module.exports = {
                                     WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai}`);
         return rows[0].total;
     },
-    getSearchListbyKey: (key, idLoai, by, order, idND, offset) => 
-        db.load(`SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg 
-                        ,(
-                            CASE
-                                WHEN EXISTS
-                                (
-                                    SELECT *
-                                    FROM SANPHAMYEUTHICH SPYT
-                                    WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
-                                ) THEN 1
-                                ELSE 0
-                            END
-                        ) AS isFavorite
-            FROM SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
-            CROSS JOIN NGUOIDUNG ND2
-            WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND ND2.ID = ${idND}
-            ORDER BY ${by} ${order}
-            LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+    getSearchListbyKey: (key, idLoai, by, order, idND, offset) => {
+
+        const guest = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg 
+                                ,(
+                                    CASE
+                                        WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                        ELSE 0
+                                    END
+                                ) AS isNew
+                    FROM SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
+                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai}
+                    ORDER BY ${by} ${order}
+                    LIMIT ${config.paginate.limit} OFFSET ${offset}`;
+        const user = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, ND.TenTaiKhoan, SP.MainImg 
+                            ,(
+                                CASE
+                                    WHEN EXISTS
+                                    (
+                                        SELECT *
+                                        FROM SANPHAMYEUTHICH SPYT
+                                        WHERE SP.ID = SPYT.IDSanPham AND ND2.ID = SPYT.IDNguoiDung
+                                    ) THEN 1
+                                    ELSE 0
+                                END
+                            ) AS isFavorite
+                            ,(
+                                CASE
+                                    WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
+                                    ELSE 0
+                                END
+                            ) AS isNew
+                    FROM SANPHAM SP LEFT JOIN NGUOIDUNG ND ON SP.IDNguoiBan = ND.ID
+                    CROSS JOIN NGUOIDUNG ND2
+                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND ND2.ID = ${idND}
+                    ORDER BY ${by} ${order}
+                    LIMIT ${config.paginate.limit} OFFSET ${offset}`;
+        if (idND == -1){
+            return db.load(guest);
+        }
+        else{
+            return db.load(user);
+        }       
+    },
 
     getRelation: id =>
         db.load(`select sp1.id, sp1.tensanpham, sp1.gia, sp1.thoigianconlai, sp1.solanduocdaugia as solan, sp1.mainimg as avatar
@@ -241,8 +308,32 @@ module.exports = {
 	getBidderUpgradeRequest: () => db.load(`SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;`),
 
 
-    getIdByEmail: email => db.loadSafe(`SELECT * FROM NGUOIDUNG WHERE Email = ?`, email),
-    getIdByUsername: username => db.loadSafe(`SELECT * FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
+    getIdByEmail: email => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE Email = ?`, email),
+    getIdByUsername: username => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
+    checkTimeoutToken: token => 
+    db.loadSafe(`SELECT token_expire, (
+                                        CASE
+                                            WHEN token_expire < NOW() THEN 1
+                                            ELSE 0
+                                        END
+                                      ) AS isExpire
+                FROM NGUOIDUNG WHERE token = ?	`, token),
+
+    updateToken: entity => {
+        const condition = { ID: entity.id };
+        delete entity.id;
+
+        return db.patch('NGUOIDUNG', entity, condition)
+    },
+    updateTokenExpire: id => 
+        db.loadSafe('update nguoidung set token_expire = (NOW() + INTERVAL 5 MINUTE) where ID = ?', id),
+
+    changePass: entity => {
+        const condition = { token: entity.token };
+        delete entity.token;
+
+        return db.patch('NGUOIDUNG', entity, condition)
+    },
 
     add: entity => db.add('chitietdaugia', entity),
 
