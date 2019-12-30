@@ -17,6 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+app.use(morgan('common'))
+
 app.use(session({
     secret: 'secret text abcdef',
     saveUninitialized: false,
@@ -46,6 +48,7 @@ app.set("view engine", "hbs");
 
 //middlewares
 require('./middlewares/locals.mdw')(app);
+require('./middlewares/cron.mdw')(app);
 
 // user route
 app.use('/', require('./routes/home/home.route'));
