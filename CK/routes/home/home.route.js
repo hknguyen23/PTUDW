@@ -201,14 +201,22 @@ router.post('/newPass', [
     req.session.errors = errors;
     res.redirect('/newPass/'+req.body.token);
   } else {  
+    const user = await model.checkTimeoutToken(req.body.token)
     const N = 10;
     const hash = bcrypt.hashSync(req.body.fPass, N);
 
-    const entity = {
+    var entity = {
       MatKhau: hash,
       token: req.body.token
     }
-    const result = await model.changePass(entity);
+    await model.changePass(entity);
+    
+    entity = {
+      token: 0,
+      id: user[0].ID
+    }
+    await model.updateToken(entity);
+
     res.redirect('/login');
   }
 });

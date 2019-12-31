@@ -275,7 +275,7 @@ module.exports = {
     
     // reset password
     checkTimeoutToken: token => 
-    db.loadSafe(`SELECT token_expire, (
+    db.loadSafe(`SELECT ID, token_expire, (
                                         CASE
                                             WHEN token_expire < NOW() THEN 1
                                             ELSE 0
@@ -300,7 +300,7 @@ module.exports = {
 
     // finish auction (cron)
     checkExpireAuction: () => 
-        db.load(`SELECT SP.ID, CT.IDNguoiDauGia AS winner, ND.Email AS emailWinner, CT.Gia AS bid, SP.IDNguoiBan as seller, ND2.Email AS emailSeller
+        db.load(`SELECT SP.ID, SP.TenSanPham, CT.IDNguoiDauGia AS winner, ND.Email AS emailWinner, CT.Gia AS bid, SP.IDNguoiBan as seller, ND2.Email AS emailSeller
                 FROM SANPHAM SP 
                 LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                 LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID

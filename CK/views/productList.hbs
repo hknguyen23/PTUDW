@@ -70,8 +70,8 @@
                                 <div class="align-self-end">
                                     <span class="font-weight-bold">{{formatMoney Gia}}</span>
                                 </div>
-                                <span class="maskHalf d-flex justify-content-end {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">({{HoTen}})</span>
-                                <h3 class="mt-auto align-self-center">{{formatDate NgayHetHan}}</h3>
+                                <span class="maskHalf d-flex justify-content-end hidden {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">({{HoTen}})</span>
+                                <h3 class="mt-auto align-self-center hidden countdown">{{NgayHetHan}}</h3>
                                 <div class="d-flex justify-content-between small">
                                     <span> {{SoLanDuocDauGia}} Lượt</span>
                                     <span>{{formatDate NgayDang}}</span>
