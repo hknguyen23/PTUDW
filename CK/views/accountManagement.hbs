@@ -5,12 +5,14 @@
 					<div class="bg-light border-right" id="sidebar-wrapper">
 						<div class="list-group list-group-flush">
 							<!-- Bao gồm việc sửa thông tin cá nhân -->
-							<a href="AccountManagement.html" class="list-group-item list-group-item-action bg-light">
+							<a href="/accountManagement" class="list-group-item list-group-item-action bg-light">
 								Xem thông tin cá nhân
 							</a>
-							<a href="YourPointAndDetail.html" class="list-group-item list-group-item-action bg-light">
+							<a href="/yourPointAndDetail" class="list-group-item list-group-item-action bg-light">
 								Xem điểm đánh giá và chi tiết
-							</a>							
+							</a>	
+							
+							{{#each this.list}}
 							<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
 								href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
 								Xem danh sách
@@ -28,14 +30,17 @@
 								<a href="Đã thắng.html" class="list-group-item list-group-item-action bg-light">
 									<span class="menu-collapsed">Sản phẩm đã thắng đấu giá</span>
 								</a>
+								{{#if this.isSeller}}
 								<a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
 									<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
 								</a>
 								<a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
 									<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
 								</a>
+								{{/if}}
 							</div>
 							
+							{{#if this.isAdmin}}
 							<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
 								href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
 								Quản lý người dùng
@@ -44,19 +49,23 @@
 							
 							<!-- Submenu của Quản lý người dùng -->
 							<div id="submenu-user" class="collapse sidebar-submenu">
-								<a href="AllUsers.html" class="list-group-item list-group-item-action bg-light">
+								<a href="/userView" class="list-group-item list-group-item-action bg-light">
 									<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
 									<span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
 								</a>
-								<a href="BidderList.html" class="list-group-item list-group-item-action bg-light">
+								<a href="/bidderList" class="list-group-item list-group-item-action bg-light">
 									<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
 								</a>
 							</div>
+							{{/if}}
 							
 							<!-- Đăng sản phẩm -->
+							{{#if this.isSeller}}
 							<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
 								Đăng sản phẩm đấu giá mới
 							</a>
+							{{/if}}
+							{{/each}}
 							<!-- Add more items here-->
 						</div>
 					</div>
@@ -66,7 +75,7 @@
 						<h1>Thông tin cá nhân</h1>
 						<div>Thông tin cơ bản, như tên và ảnh của bạn, mà bạn sử dụng trên trang web của chúng tôi</div>
 						
-						<form>
+						<form action="#" method="POST">
 							<div class="card m-3">
 								<h2 class="card-header">Hồ sơ</h2>
 								{{#if this.empty}}
@@ -107,17 +116,7 @@
 										</tr>
 										<tr>
 											<th>Cấp bậc</th>
-											<td id="second-col" colspan="2">
-												{{#if this.isBidder}}
-												Bidder
-												{{/if}}
-												{{#if this.isSeller}}
-												Seller
-												{{/if}}
-												{{#if this.isAdmin}}
-												Admin
-												{{/if}}
-											</td>
+											<td id="second-col" colspan="2">{{#if this.isBidder}}Bidder{{/if}}{{#if this.isSeller}}Seller{{/if}}{{#if this.isAdmin}}Admin{{/if}}</td>
 										</tr>
 										{{/each}}
 									</table>
@@ -126,9 +125,13 @@
 									<a class="btn btn-primary" href="ChangeInfo.html">
 										Thay đổi thông tin
 									</a>
-									<a class="btn btn-primary" href="#" onclick="upgradeRequest();">
+									{{#each this.info}}
+									{{#if this.isBidder}}
+									<button class="btn btn-primary" type="submit" onclick="upgradeRequest();">
 										Xin nâng cấp thành Seller
-									</a>
+									</button>
+									{{/if}}
+									{{/each}}
 								</div>
 								{{/if}}
 							</div>

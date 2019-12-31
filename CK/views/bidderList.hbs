@@ -1,68 +1,75 @@
 <main class="main" role="main">
     <div class="container-fruid mb-3">
         <div class="d-flex wrapper">
-            <!-- Sidebar -->
-            <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="list-group list-group-flush">
-                    <!-- Bao gồm việc sửa thông tin cá nhân -->
-                    <a href="AccountManagement.html" class="list-group-item list-group-item-action bg-light">
-                        Xem thông tin cá nhân
-                    </a>
-                    <a href="YourPointAndDetail.html" class="list-group-item list-group-item-action bg-light">
-                        Xem điểm đánh giá và chi tiết
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-                        href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true"
-                        aria-expanded="false">
-                        Xem danh sách
-                        <i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
-                    </a>
-
-                    <!-- Submenu của Xem danh sách -->
-                    <div id="submenu-watch" class="collapse sidebar-submenu">
-                        <a href="Theo dõi.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm yêu thích</span>
-                        </a>
-                        <a href="Đang đấu giá.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm đang đấu giá</span>
-                        </a>
-                        <a href="Đã thắng.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm đã thắng đấu giá</span>
-                        </a>
-                        <a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
-                        </a>
-                        <a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
-                        </a>
-                    </div>
-
-                    <a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-                        href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true"
-                        aria-expanded="false">
-                        Quản lý người dùng
-                        <i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
-                    </a>
-
-                    <!-- Submenu của Quản lý người dùng -->
-                    <div id="submenu-user" class="collapse sidebar-submenu">
-                        <a href="/userView" class="list-group-item list-group-item-action bg-light">
-                            <!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
-                            <span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
-                        </a>
-                        <a href="/bidderList" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
-                        </a>
-                    </div>
-
-                    <!-- Đăng sản phẩm -->
-                    <a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
-                        Đăng sản phẩm đấu giá mới
-                    </a>
-                    <!-- Add more items here-->
-                </div>
-            </div>
-            <!-- /#sidebar-wrapper -->
+				<!-- Sidebar -->
+					<div class="bg-light border-right" id="sidebar-wrapper">
+						<div class="list-group list-group-flush">
+							<!-- Bao gồm việc sửa thông tin cá nhân -->
+							<a href="/accountManagement" class="list-group-item list-group-item-action bg-light">
+								Xem thông tin cá nhân
+							</a>
+							<a href="/yourPointAndDetail" class="list-group-item list-group-item-action bg-light">
+								Xem điểm đánh giá và chi tiết
+							</a>	
+							
+							{{#each this.list}}
+							<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
+								href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+								Xem danh sách
+								<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
+							</a>
+							
+							<!-- Submenu của Xem danh sách -->
+							<div id="submenu-watch" class="collapse sidebar-submenu">
+								<a href="Theo dõi.html" class="list-group-item list-group-item-action bg-light">
+									<span class="menu-collapsed">Sản phẩm yêu thích</span>
+								</a>
+								<a href="Đang đấu giá.html" class="list-group-item list-group-item-action bg-light">
+									<span class="menu-collapsed">Sản phẩm đang đấu giá</span>
+								</a>
+								<a href="Đã thắng.html" class="list-group-item list-group-item-action bg-light">
+									<span class="menu-collapsed">Sản phẩm đã thắng đấu giá</span>
+								</a>
+								{{#if this.isSeller}}
+								<a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
+									<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
+								</a>
+								<a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
+									<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
+								</a>
+								{{/if}}
+							</div>
+							
+							{{#if this.isAdmin}}
+							<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
+								href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+								Quản lý người dùng
+								<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
+							</a>
+							
+							<!-- Submenu của Quản lý người dùng -->
+							<div id="submenu-user" class="collapse sidebar-submenu">
+								<a href="/userView" class="list-group-item list-group-item-action bg-light">
+									<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
+									<span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
+								</a>
+								<a href="/bidderList" class="list-group-item list-group-item-action bg-light">
+									<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
+								</a>
+							</div>
+							{{/if}}
+							
+							<!-- Đăng sản phẩm -->
+							{{#if this.isSeller}}
+							<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+								Đăng sản phẩm đấu giá mới
+							</a>
+							{{/if}}
+							{{/each}}
+							<!-- Add more items here-->
+						</div>
+					</div>
+					<!-- /#sidebar-wrapper -->
 
             <div class="text-center mt-3" id="page-content-wrapper">
                 <h1>Danh sách các bidder xin nâng cấp tài khoản</h1>
@@ -75,43 +82,75 @@
 						<p class="card-text">Không có dữ liệu.</p>
 					</div>
 					{{else}}
-                    <div class="card-body">
-                        <table class="table table-hover text-left">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%;" scope="col">ID</th>
-                                    <th style="width: 15%;" scope="col">Tên tài khoản</th>
-                                    <th style="word-break: break-all; width: 20%;" scope="col">Họ và tên</th>
-                                    <th style="text-align: center; width: 15%;" scope="col">Tổng điểm đánh giá</th>
-                                    <th style="text-align: center; width: 5%;" scope="col">Đồng ý</th>
-                                    <th style="text-align: center; width: 10%;" scope="col">Không đồng ý</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-								{{#each this.list}}
-                                <tr>
-                                    <th style="width: 5%;" scope="row">{{ID}}</th>
-                                    <td style="width: 15%;">{{TenTaiKhoan}}</td>
-                                    <td style="word-break: break-all; width: 20%;">{{HoTen}}</td>
-                                    <td style="text-align: center; width: 15%;">{{TongDiemDanhGia}}</td>
-                                    <td style="text-align: center; width: 5%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                    <td style="text-align: center; width: 10%;">
-                                        <input type="checkbox"></input>
-                                    </td>
-                                </tr>
-								{{/each}}
-                            </tbody>
-                        </table>
-                    </div>
-					<div class="card-footer">
-						<button class="btn btn-primary" type="submit">
-							OK
-						</button>
-					</div>
+					<form action="#" method="POST">
+						<div class="card-body">
+							<table class="table table-hover text-left">
+								<thead>
+									<tr>
+										<th style="width: 5%;" scope="col">ID</th>
+										<th style="width: 15%;" scope="col">Tên tài khoản</th>
+										<th style="word-break: break-all; width: 20%;" scope="col">Họ và tên</th>
+										<th style="text-align: center; width: 15%;" scope="col">Tổng điểm đánh giá</th>
+										<th style="text-align: center; width: 10%;" scope="col">Đồng ý</th>
+									</tr>
+								</thead>
+								<tbody>
+									{{#each this.list}}
+									<tr>
+										<th style="width: 5%;" scope="row">
+											<input class="id" name="id" id="id" value="{{ID}}" style="border: none; width: 100%; font-weight: bold;" readonly>
+										</th>
+										<td style="width: 15%;">{{TenTaiKhoan}}</td>
+										<td style="word-break: break-all; width: 20%;">{{HoTen}}</td>
+										<td style="text-align: center; width: 15%;">{{TongDiemDanhGia}}</td>
+										<td style="text-align: center; width: 10%;">
+											<input type="checkbox" name="OKCheckbox" onclick="OKCheckboxClick(this);"></input>
+											<p>
+												<input name="isOK" id="isOK" value="0" hidden>
+											</p>
+										</td>
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+						</div>
+						<div class="card-footer">
+							<button class="btn btn-primary" type="submit">
+								OK
+							</button>
+						</div>
+					</form>
 					{{/if}}
                 </div>
+				
+				<!-- Pagination -->
+				{{#if maxPages}}
+				<ul class="pagination justify-content-center">
+					<li class="page-item {{#if_eq page 1}}disabled{{/if_eq}}">
+						<a class="page-link" href="?page={{prev_value}}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Previous</span>
+						</a>
+					</li>
+					{{#each page_numbers}}
+						{{#if_eq value ../page}}
+						<li class="page-item active" aria-current="page">
+							<a class="page-link" href="javascript:;">{{value}} <span class="sr-only">(current)</span></a>
+						</li>
+						{{else}}
+						<li class="page-item">
+							<a class="page-link" href="?page={{value}}">{{value}}</a>
+						</li>
+						{{/if_eq}}
+					{{/each}}
+					<li class="page-item {{#if_eq page maxPages}}disabled{{/if_eq}}">
+						<a class="page-link" href="?page={{next_value}}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Next</span>
+						</a>
+					</li>
+				</ul>
+				{{/if}}
             </div>
         </div>
     </div>

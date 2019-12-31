@@ -134,6 +134,7 @@ body {
 .navbar-default .navbar-nav > .show > a, .navbar-default .navbar-nav > .show > a:focus, .navbar-default .navbar-nav > .show > a:hover{
 	color: yellow;
 	background: #1565C0;
+	background: utline: 0;
 }
 /*==========Sub Menu=v==========*/
 .mainmenu .collapse ul > li:hover > a{
@@ -309,7 +310,3 @@ body {
     width: 100%; 
   }
 } 
-
-.hidden{
-  visibility: hidden;
-}

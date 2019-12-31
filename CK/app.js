@@ -4,7 +4,6 @@ const path = require("path");
 const morgan = require('morgan');
 const date = require("date-and-time");
 const numeral = require('numeral');
-const moment = require('moment');
 const session = require('express-session');
 const UserOnly = require('./middlewares/UserOnly.mdw');
 
@@ -18,7 +17,6 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-
 app.use(session({
     secret: 'secret text abcdef',
     saveUninitialized: false,
@@ -35,64 +33,19 @@ app.engine(
             formatDateTime: val => date.format(val, 'YYYY/MM/DD HH:mm:ss'),
             formatMoney: val => numeral(val).format('0,0[.]00') + ' VNĐ',
             if_eq: function(a, b, opts) {
-                if (a == b) // Or === depending on your needs
+                if(a == b) // Or === depending on your needs
                     return opts.fn(this);
                 else
                     return opts.inverse(this);
-            },
-            isEqual: (foo, bar) => foo === bar,
-            isLessThanOrEqual: (foo, bar) => foo <= bar,
-            isDefinedVal: val => {
-                // console.log(val);
-                // console.log(val !== null);
-                // console.log(typeof(val) !== 'undefined');
-                return (val !== null) && typeof(val) !== 'undefined';
-            },
-            isPast: val => {
-                const today = moment().format('YYYY-MM-DD');
-                const val_formated = date.format(val, 'YYYY-MM-DD');
-                //console.log(today > val_formated);
-                return (today > val_formated) ? true : false;
-            },
-            or: (foo, bar) => (foo || bar),
-            countDown: val => {
-                const today = moment(new Date()).format('YYYY/MM/DD HH:mm:ss');
-                const endDate = moment(new Date(val)).format('YYYY/MM/DD HH:mm:ss');
-
-                if (today > endDate)
-                    return endDate;
-                var duration = moment(endDate).diff(today, 'days');
-                // console.log(today);
-                // console.log(endDate);
-                // console.log(duration);
-                moment.relativeTimeThreshold('s', 60 * 60 * 24 * 30 * 12);
-
-                // Update relative time
-                moment.updateLocale('en', {
-                    relativeTime: {
-                        s: function(number, withoutSuffix, key, isFuture) {
-                            return moment.duration(number, 's').format('d [day] h [hour]');
-                        },
-                    }
-                });
-
-                moment.updateLocale('de', {
-                    relativeTime: {
-                        s: function(number, withoutSuffix, key, isFuture) {
-                            return moment.duration(number, 's').format('d [Tag] h [Uhr]');
-                        },
-                    }
-                });
-                return (duration <= 3) ? moment(new Date(val)).locale('VI').fromNow() : endDate;
-            },
-        },
-    }));
+            }
+        }
+    })
+);
 
 app.set("view engine", "hbs");
 
 //middlewares
 require('./middlewares/locals.mdw')(app);
-require('./middlewares/cron.mdw')(app);
 
 // user route
 app.use('/', require('./routes/home/home.route'));
@@ -101,14 +54,14 @@ app.use('/', require('./routes/changeFav.route'));
 app.use('/productView', require('./routes/productView/productView.route'));
 
 app.use('/lists', require('./routes/lists/searchable.lists.route'));
-app.use('/lists/acc', UserOnly, require('./routes/lists/personal.lists.route'));
+app.use('/lists/acc', UserOnly,  require('./routes/lists/personal.lists.route'));
 app.use('/lists/category', require('./routes/lists/category.lists.route'));
 app.use('/lists/search', require('./routes/lists/searchable.lists.route'));
 
 app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
 app.use('/user', require('./routes/home/home.route'));
-app.use('/productView', require('./routes/productView/productView.route'));
-app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
+app.use('/:userID/productView', require('./routes/productView/productView.route'));
+app.use('/:sellerID/postProduct', require('./routes/seller/postProduct.seller.route'));
 
 app.use('/accountManagement', require('./routes/accountManagement/accountManagement.route'));
 app.use('/userView', require('./routes/admin/userView.route'));

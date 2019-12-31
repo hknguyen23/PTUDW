@@ -28,10 +28,6 @@ if(window.location.hash) {
         $('#logreg-forms .form-signin').toggle(); // display:block or none
         $('#logreg-forms .form-signup').toggle(); // display:block or none
     }
-    if(hash == "forgot") {
-        $('#logreg-forms .form-signin').toggle(); // display:block or none
-        $('#logreg-forms .form-reset').toggle(); // display:block or none
-    }
 } else {
     // No hash found
 }
