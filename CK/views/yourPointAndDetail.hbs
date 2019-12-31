@@ -2,67 +2,74 @@
     <div class="container-fruid mb-3">
         <div class="d-flex wrapper">
             <!-- Sidebar -->
-            <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="list-group list-group-flush">
-                    <!-- Bao gồm việc sửa thông tin cá nhân -->
-                    <a href="AccountManagement.html" class="list-group-item list-group-item-action bg-light">
-                        Xem thông tin cá nhân
-                    </a>
-                    <a href="YourPointAndDetail.html" class="list-group-item list-group-item-action bg-light">
-                        Xem điểm đánh giá và chi tiết
-                    </a>
-                    <a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-                        href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true"
-                        aria-expanded="false">
-                        Xem danh sách
-                        <i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
-                    </a>
-
-                    <!-- Submenu của Xem danh sách -->
-                    <div id="submenu-watch" class="collapse sidebar-submenu">
-                        <a href="Theo dõi.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm yêu thích</span>
-                        </a>
-                        <a href="Đang đấu giá.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm đang đấu giá</span>
-                        </a>
-                        <a href="Đã thắng.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm đã thắng đấu giá</span>
-                        </a>
-                        <a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
-                        </a>
-                        <a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
-                        </a>
-                    </div>
-
-                    <a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-                        href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true"
-                        aria-expanded="false">
-                        Quản lý người dùng
-                        <i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
-                    </a>
-
-                    <!-- Submenu của Quản lý người dùng -->
-                    <div id="submenu-user" class="collapse sidebar-submenu">
-                        <a href="AllUsers.html" class="list-group-item list-group-item-action bg-light">
-                            <!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
-                            <span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
-                        </a>
-                        <a href="BidderList.html" class="list-group-item list-group-item-action bg-light">
-                            <span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
-                        </a>
-                    </div>
-
-                    <!-- Đăng sản phẩm -->
-                    <a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
-                        Đăng sản phẩm đấu giá mới
-                    </a>
-                    <!-- Add more items here-->
-                </div>
-            </div>
-            <!-- /#sidebar-wrapper -->
+			<div class="bg-light border-right" id="sidebar-wrapper">
+				<div class="list-group list-group-flush">
+					<!-- Bao gồm việc sửa thông tin cá nhân -->
+					<a href="/accountManagement" class="list-group-item list-group-item-action bg-light">
+						Xem thông tin cá nhân
+					</a>
+					<a href="/yourPointAndDetail" class="list-group-item list-group-item-action bg-light">
+						Xem điểm đánh giá và chi tiết
+					</a>	
+					
+					{{#each this.info}}
+					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
+						href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						Xem danh sách
+						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
+					</a>
+					
+					<!-- Submenu của Xem danh sách -->
+					<div id="submenu-watch" class="collapse sidebar-submenu">
+						<a href="Theo dõi.html" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm yêu thích</span>
+						</a>
+						<a href="Đang đấu giá.html" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm đang đấu giá</span>
+						</a>
+						<a href="Đã thắng.html" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm đã thắng đấu giá</span>
+						</a>
+						{{#if this.isSeller}}
+						<a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
+						</a>
+						<a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
+						</a>
+						{{/if}}
+					</div>
+					
+					{{#if this.isAdmin}}
+					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
+						href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						Quản lý người dùng
+						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
+					</a>
+					
+					<!-- Submenu của Quản lý người dùng -->
+					<div id="submenu-user" class="collapse sidebar-submenu">
+						<a href="/userView" class="list-group-item list-group-item-action bg-light">
+							<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
+							<span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
+						</a>
+						<a href="/bidderList" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
+						</a>
+					</div>
+					{{/if}}
+					
+					<!-- Đăng sản phẩm -->
+					{{#if this.isSeller}}
+					<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+						Đăng sản phẩm đấu giá mới
+					</a>
+					{{/if}}
+					{{/each}}
+					<!-- Add more items here-->
+				</div>
+			</div>
+			<!-- /#sidebar-wrapper -->
 
             <div class="text-center mt-3" id="page-content-wrapper">
                 <h1>Điểm đánh giá và chi tiết</h1>

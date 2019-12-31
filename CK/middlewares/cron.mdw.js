@@ -6,11 +6,9 @@ module.exports = function (app) {
   new cron.schedule("*/5 * * * * *", async function() {
     console.log("running a task every 5 second");
     const check = await model.checkExpireAuction();
-    console.log(check);
 
     for (i = 0; i < check.length; i++){
       console.log("finish: " + check[i].ID);
-
       if (check[i].winner == undefined){
         const status = {
           id: check[i].ID,
@@ -18,10 +16,9 @@ module.exports = function (app) {
         }
         await model.setStatusSold(status);
 
-        var string = 'No one buy your product. Please upload your product again if you want to try again' + check[i].ID;
+        var string = 'No one bidded your' + check[i].TenSanPham + '. Please upload your product one more if you want to try again' + check[i].ID;
         var title = 'Your auction has run out of time'
         emailserver.send(check[i].emailSeller, string, title)
-
       }
       else{
         const status = {
@@ -35,10 +32,10 @@ module.exports = function (app) {
         await model.setStatusSold(status);
         await model.setWinner(winner);
 
-        var string = 'you\'r winner, bought: ' + check[i].ID + ' at ' + check[i].bid + 'VND. Please go to product page to contact the seller';
+        var string = 'You bought ' + check[i].TenSanPham + ' at ' + check[i].bid + 'VND. Please go to product page to contact your seller';
         var title = 'Congratulation! You won an auction'
         emailserver.send(check[i].emailWinner, string, title)
-        string = 'Product was sold. Sold: ' + check[i].ID + ' at ' + check[i].bid + 'VND. Please go to product page to contact the buyer.';
+        string = 'Your ' + check[i].TenSanPham + ' was sold at ' + check[i].bid + 'VND. Please go to product page to contact your buyer';
         title = 'Congratulation! Your auction has finished'
         emailserver.send(check[i].emailSeller, string, title)
 

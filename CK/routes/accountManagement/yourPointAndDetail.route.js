@@ -3,13 +3,24 @@ const model = require("../../models/model");
 const router = express.Router();
 router.use(express.static("public"));
 
-router.get("/:id", async(req, res) => {
-	const userID = +req.params.id;
+router.get("/", async(req, res) => {
+	const userID = res.locals.authUser.ID;	
 	
-    const [rows, point] = await Promise.all([
+    const [rows, point, info] = await Promise.all([
 		model.getYourPointAndDetail(userID),
-		model.getPointByID(userID)
+		model.getPointByID(userID),
+		model.getUserById(userID)
 	]);
+	
+	for (const row of info) {
+		if (row.Loai === 1) {
+			row.isBidder = true;
+		}
+		else if (row.Loai === 2) {
+			row.isSeller = true;
+		}
+		else row.isAdmin = true;
+	}
 	
     res.render("yourPointAndDetail", {
         title: "Tổng điểm đánh giá và chi tiết các lần được đánh giá",
@@ -17,7 +28,8 @@ router.get("/:id", async(req, res) => {
         js: ["AccountScript.js"],
 		empty: rows.length === 0,
         details: rows,
-		point
+		point,
+		info
     });
 });
 

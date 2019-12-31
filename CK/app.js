@@ -18,7 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(morgan('common'))
 
 app.use(session({
     secret: 'secret text abcdef',
