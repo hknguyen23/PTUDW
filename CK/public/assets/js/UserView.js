@@ -1,29 +1,35 @@
-// Delete a selected row in a table
-function deleteUserClick(input){
-	var row = input.parentNode.parentNode;
-	row.parentNode.removeChild(row);
-}
-		
 function upgradeBidderClick(input){	
 	var row = input.parentNode.parentNode;
-	//window.alert(row.cells[5].innerText);
-	if (row.cells[5].innerText == 'Seller'){
+	var link = $(row).find("td").find("input");
+	if (link.val() == 'Seller'){
 		window.alert('Không thể nâng cấp Seller');
 	}
 	
-	if (row.cells[5].innerText == 'Bidder'){
-		row.cells[5].innerText = 'Seller';
+	if (link.val() == 'Bidder'){
+		link.val('Seller');
 	}
 }
 			
 function downgradeSellerClick(input){
 	var row = input.parentNode.parentNode;
-	//window.alert(row.cells[5].innerText);
-	if (row.cells[5].innerText == 'Bidder'){
+	var link = $(row).find("td").find("input");
+	if (link.val() == 'Bidder'){
 		window.alert('Không thể hạ cấp Bidder');
 	}
 	
-	if (row.cells[5].innerText == 'Seller'){
-		row.cells[5].innerText = 'Bidder';
+	if (link.val() == 'Seller'){
+		link.val('Bidder');
+	}
+}
+
+function deleteUserClick(input){
+	var row = input.parentNode.parentNode;
+	var deleteCheckbox = $(row).find("p").find("input").val();
+	var isDelete = $(row).find("h6").find("input");
+	if (deleteCheckbox == "on"){
+		isDelete.val(1);
+	}
+	else {
+		isDelete.val(0);
 	}
 }
