@@ -256,19 +256,37 @@ module.exports = {
                  from nguoidung 
                  where id = '${idUser}'`),
 
-    getAllUsers: () => db.load(`SELECT * FROM NGUOIDUNG`),
-
-    getUserById: id => db.load(`SELECT * FROM NGUOIDUNG WHERE ID = '${id}'`),
-
-    getPointByID: id => db.load(`SELECT TongDiemDanhGia FROM NGUOIDUNG WHERE ID = '${id}'`),
-
-    getYourPointAndDetail: id =>
-        db.load(`SELECT ND1.TongDiemDanhGia, ND2.TenTaiKhoan, CTDANHGIA.*
+	getAllUsers: offset => db.load(`SELECT * FROM NGUOIDUNG LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+	
+	countAllUsers: async () => {
+		const rows = await db.load(`SELECT COUNT(*) AS total FROM NGUOIDUNG`);
+        return rows[0].total;
+	},	
+	
+	getUserById: id => db.load(`SELECT * FROM NGUOIDUNG WHERE ID = '${id}'`),
+	
+	getPointByID: id => db.load(`SELECT TongDiemDanhGia FROM NGUOIDUNG WHERE ID = '${id}'`),
+	
+	getYourPointAndDetail: id => 
+		db.load(`SELECT ND1.TongDiemDanhGia, ND2.TenTaiKhoan, CTDANHGIA.*
 				FROM NGUOIDUNG ND1 JOIN CHITIETDANHGIA CTDANHGIA ON ND1.ID = CTDANHGIA.IDNguoiDuocDanhGia
 					JOIN NGUOIDUNG ND2 ON ND2.ID = CTDANHGIA.IDNguoiDanhGia
 				WHERE ND1.ID = '${id}'`),
+	
+	deleteUser: entity => db.delete('DELETE FROM NGUOIDUNG WHERE ID = ?', [entity.ID]),
+	
+	changeUserInfoById: entity => {
+		const condition = { ID: entity.ID };
+		delete entity.ID;
+		return db.patch('NGUOIDUNG', entity, condition);
+	},
+	
+	getBidderUpgradeRequest: () => db.load(`SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;`),
 
-    getBidderUpgradeRequest: () => db.load(`SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;`),
+	countAllBidderRequest: async () => {
+		const rows = await db.load(`SELECT COUNT(*) AS total FROM NGUOIDUNG WHERE XinNangCap = true`);
+        return rows[0].total;
+	},
 
     // register/login
     getIdByEmail: email => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE Email = ?`, email),
