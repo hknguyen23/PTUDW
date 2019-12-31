@@ -3,23 +3,16 @@ function suggest_price() {
     document.getElementById("suggest").innerHTML = current_price + 100000;
 }
 
-function parseInt() {
-    var x = document.getElementById('price');
-    // alert(x);
-    var parseInt = (x.value.replace(/\D/g, ''));
-    x.value = parseInt;
+function checkInput(event) {
+    //document.getElementById("dropdown1").style.display = "none";
+    return (event.charCode != 8 && event.charCode == 0 || (event.charCode >= 48 && event.charCode <= 57))
 }
 
-function formatMoney() {
-    var x = +document.getElementById('price').value;
-    // alert(x);
-    document.getElementById('price').value = x.toLocaleString();
-}
-
-function checkPrice(current_price) {
+function checkPrice(current_price, bidder_score) {
     var input_price = +frmain.price.value;
-    if (input_price <= current_price) {
-        alert("Giá nhập phải lớn hơn giá hiện tại của sản phẩm!");
+    if (input_price <= current_price || +bidder_score < 8.0) {
+        // document.getElementById("dropdown1").style.display = "block";
+        alert("Kiểm tra lại giá hoặc bạn không đủ nhân phẩm");
         return false;
     }
     return confirm('Bạn chắc chắn muốn đấu giá?');
@@ -28,6 +21,14 @@ function checkPrice(current_price) {
 function show(img_id) {
     var new_src = document.getElementById(img_id).src;
     document.getElementById('main_window').src = new_src
+}
+
+function maskHalf(id) {
+    var str = document.getElementById(id).innerHTML;
+    var pos = str.lastIndexOf(" ");
+
+    var mask = "****" + str.substring(pos);
+    document.getElementById(id).innerHTML = mask;
 }
 
 // bật tắt chức năng add to watch list

@@ -16,7 +16,9 @@ router.get("/:id", async(req, res) => {
 			row.isSeller = true;
 		}
 		else row.isAdmin = true;
-    }
+		
+		row.NgaySinh = moment(row.NgaySinh).format('DD/MM/YYYY');
+	}
 
     res.render("accountManagement", {
         title: "Quản lý thông tin cá nhân",
