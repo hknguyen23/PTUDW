@@ -37,29 +37,24 @@ router.get("/login", GuestOnly, (req, res) => {
 router.post('/login', async(req, res) => {
     const user = await model.getIdByUsername(req.body.TenTaiKhoan);
     if (user.length == 0) {
-        return res.render("login", {
-            title: "Đăng nhập",
-            css: ["Login.css"],
-            js: ["Login.js"],
-            err_message: 'Tài khoản không tồn tại'
-        });
-    }
-    const rs = bcrypt.compareSync(req.body.fPass, user[0].MatKhau);
-    if (rs === false) {
-        return res.render("login", {
-            title: "Đăng nhập",
-            css: ["Login.css"],
-            js: ["Login.js"],
-            err_message: 'Sai mật khẩu'
-        });
-    }
+        req.session.errors = [{ msg: 'Tài khoản không tồn tại' }];
+        res.redirect('/login');
+    } 
+    else {
 
-    delete user[0].MatKhau;
-    req.session.isAuthenticated = true;
-    req.session.authUser = user[0];
+        const rs = bcrypt.compareSync(req.body.fPass, user[0].MatKhau);
+        if (rs === false) {
+            req.session.errors = [{ msg: 'Sai mật khẩu' }];
+            res.redirect('/login');
+        } else {
+            delete user[0].MatKhau;
+            req.session.isAuthenticated = true;
+            req.session.authUser = user[0];
 
-    const url = req.query.retUrl || '/';
-    res.redirect(url);
+            const url = req.query.retUrl || '/';
+            res.redirect(url);
+        }
+    }
 })
 
 router.get('/logout', (req, res) => {
@@ -76,6 +71,7 @@ router.post('/login/register', [
     .not().isEmpty()
     .trim()
     .isLength({ min: 6 }).withMessage("Tên tài khoản phải có ít nhất 6 ký tự")
+    .isLength({ max:20 }).withMessage("Tên tài khoản tối đa 20 ký tự")
     .custom(async value => {
         return id = await model.getIdByUsername(value).then(result => {
             if (result.length > 0) {
@@ -84,8 +80,10 @@ router.post('/login/register', [
         })
     }),
     check('Email', "Email không hợp lệ")
+    .not().isEmpty()
     .isEmail()
     .normalizeEmail()
+    .isLength({ max:50 }).withMessage("Email tối đa 50 ký tự")
     .custom(async value => {
         console.log(value);
         return id = await model.getIdByEmail(value).then(result => {
@@ -97,6 +95,7 @@ router.post('/login/register', [
     check('fPass')
     .not().isEmpty()
     .isLength({ min: 6 }).withMessage("Mật khẩu phải có ít nhất 6 ký tự")
+    .isLength({ max: 100 }).withMessage("Mật khẩu tối đa 100 ký tự")
     .custom((val, { req }) => {
         if (val !== req.body.fRPass) {
             throw new Error("Mật khẩu nhập lại không đúng");
@@ -106,10 +105,12 @@ router.post('/login/register', [
     }),
     check('fFirstName', "")
     .not().isEmpty()
-    .trim(),
+    .trim()
+    .isLength({ max:20 }).withMessage("Họ tối đa 20 ký tự"),
     check('fLastName')
     .not().isEmpty()
-    .trim(),
+    .trim()
+    .isLength({ max:10 }).withMessage("Tên tối đa 10 ký tự"),
 ], async(req, res) => {
     var errors = validationResult(req).array();
     if (errors.length > 0) {
@@ -123,7 +124,7 @@ router.post('/login/register', [
         const entity = req.body;
         entity.MatKhau = hash;
         entity.HoTen = req.body.fFirstName + " " + req.body.fLastName;
-        entity.Loai = 3;
+        entity.Loai = 1;
         entity.XinNangCap = false;
         entity.TongDiemDanhGia = 0;
 
@@ -188,6 +189,7 @@ router.post('/newPass', [
     check('fPass')
     .not().isEmpty()
     .isLength({ min: 6 }).withMessage("Mật khẩu phải có ít nhất 6 ký tự")
+    .isLength({ max:100 }).withMessage("Mật khẩu tối đa 100 ký tự")
     .custom((val, { req }) => {
         if (val !== req.body.fRPass) {
             throw new Error("Mật khẩu nhập lại không đúng");

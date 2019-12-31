@@ -270,7 +270,7 @@ module.exports = {
 
     getBidderUpgradeRequest: () => db.load(`SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;`),
 
-    // register
+    // register/login
     getIdByEmail: email => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE Email = ?`, email),
     getIdByUsername: username => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
 
@@ -306,11 +306,15 @@ module.exports = {
                 LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                 LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
                 LEFT JOIN NGUOIDUNG ND2 ON SP.IDNguoiBan = ND2.ID
-                WHERE SP.TrangThai = 1  AND SP.NgayHetHan <= NOW() AND (CT.Gia IS NULL OR
+                WHERE SP.TrangThai = 1  AND ((SP.NgayHetHan <= NOW() AND (CT.Gia IS NULL OR
                                                                         CT.Gia = (
                                                                                     SELECT MAX(CT2.Gia) 
                                                                                     FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                                        ) )`),
+                                                                        ) ))
+                                        OR (SP.GiaMuaNgay <= CT.Gia AND CT.ThoiGianDauGia = (
+                                                                                    SELECT MIN(CT2.ThoiGianDauGia) 
+                                                                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                                        )) )`),
     setStatusSold: entity => {
         const condition = { ID: entity.id };
         delete entity.id;
