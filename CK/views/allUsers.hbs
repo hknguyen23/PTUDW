@@ -67,7 +67,7 @@
             <div class="text-center mt-3" id="page-content-wrapper">
                 <h1>Danh sách các người dùng</h1>
                 <div>Hiển thị thông tin: tên tài khoản, họ và tên, ngày sinh, giới tính, bậc (bidder/seller)</div>
-				
+
                 <div class="card m-3">
                     <h2 class="card-header">Danh sách</h2>
 					{{#if this.empty}}
@@ -75,7 +75,6 @@
 						<p class="card-text">Không có dữ liệu.</p>
 					</div>
 					{{else}}
-					<form action="#" method="POST" name="AllUsersForm">
                     <div class="card-body">
                         <table id="usersTable" class="table table-hover text-left">
                             <thead>
@@ -85,35 +84,41 @@
                                     <th style="word-break: break-all; width: 25%;" scope="col">Họ và tên</th>
                                     <th style="text-align: center; width: 15%;" scope="col">Ngày sinh</th>
                                     <th style="text-align: center; width: 15%;" scope="col">Tổng điểm đánh giá</th>
-                                    <th style="width: 10%;" scope="col">Bậc</th>
-                                    <th style="text-align: center; width: 5%;" scope="col">Nâng cấp</th>
-                                    <th style="text-align: center; width: 5%;" scope="col">Hạ cấp</th>
-									<th style="text-align: center; width: 5%;" scope="col">Xóa</th>
+                                    <th style="width: 5%;" scope="col">Bậc</th>
+                                    <th style="text-align: center; width: 5%;" scope="col">Xóa</th>
+                                    <th style="text-align: center; width: 10%;" scope="col">Nâng cấp</th>
+                                    <th style="text-align: center; width: 10%;" scope="col">Hạ cấp</th>
                                 </tr>
                             </thead>
                             <tbody>
 								{{#each this.users}}
                                 <tr>
-                                    <th style="width: 5%;" scope="row">
-										<input name="id" id="id" value="{{ID}}" style="border: none; width: 100%; font-weight: bold;" readonly>
-									</th>
+                                    <th style="width: 5%;" scope="row">{{ID}}</th>
                                     <td style="width: 20%;">{{TenTaiKhoan}}</td>
                                     <td style="word-break: break-all; width: 25%;">{{HoTen}}</td>
                                     <td style="text-align: center; width: 15%;">{{NgaySinh}}</td>
                                     <td style="text-align: center; width: 15%;">{{TongDiemDanhGia}}</td>
-                                    <td style="width: 10%;">
-										<input name="type" id="type" value="{{#if this.isBidder}}Bidder{{/if}}{{#if this.isSeller}}Seller{{/if}}{{#if this.isAdmin}}Admin{{/if}}" style="border: none; width: 100%" readonly>
+                                    <td name="degree" style="width: 5%;">
+										{{#if this.isBidder}}
+										Bidder
+										{{/if}}
+										{{#if this.isSeller}}
+										Seller
+										{{/if}}
+										{{#if this.isAdmin}}
+										Admin
+										{{/if}}
 									</td>
-                                    <td style="text-align: center; width: 10%;">
+                                    <td style="text-align: center; width: 5%;">
+                                        <button onclick="deleteUserClick(this);">Xóa</button>
+                                    </td>
+                                    <td style="text-align: center; width: 5%;">
                                         <button onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
                                                 aria-hidden="true"></i></button>
                                     </td>
-                                    <td style="text-align: center; width: 10%;">
+                                    <td style="text-align: center; width: 5%;">
                                         <button onclick="downgradeSellerClick(this);"><i class="fa fa-arrow-down"
                                                 aria-hidden="true"></i></button>
-                                    </td>
-									<td style="text-align: center; width: 5%;">
-                                        <input type="checkbox" name="isDelete" id="isDelete">
                                     </td>
                                 </tr>
 								{{/each}}
@@ -125,37 +130,8 @@
 							Lưu thay đổi
 						</button>
 					</div>
-					</form>
 					{{/if}}
                 </div>
-				<!-- Pagination -->
-				{{#if maxPages}}
-				<ul class="pagination justify-content-center">
-					<li class="page-item {{#if_eq page 1}}disabled{{/if_eq}}">
-						<a class="page-link" href="?page={{prev_value}}" aria-label="Previous">
-							<span aria-hidden="true">&laquo;</span>
-							<span class="sr-only">Previous</span>
-						</a>
-					</li>
-					{{#each page_numbers}}
-						{{#if_eq value ../page}}
-						<li class="page-item active" aria-current="page">
-							<a class="page-link" href="javascript:;">{{value}} <span class="sr-only">(current)</span></a>
-						</li>
-						{{else}}
-						<li class="page-item">
-							<a class="page-link" href="?page={{value}}">{{value}}</a>
-						</li>
-						{{/if_eq}}
-					{{/each}}
-					<li class="page-item {{#if_eq page maxPages}}disabled{{/if_eq}}">
-						<a class="page-link" href="?page={{next_value}}" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-							<span class="sr-only">Next</span>
-						</a>
-					</li>
-				</ul>
-				{{/if}}
             </div>
         </div>
     </div>

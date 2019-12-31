@@ -14,7 +14,17 @@ $(document).ready(function() {
 	$(".ellipsis").dotdotdot({
 		height: 100,
 		watch: true,
-	});
+    });
+    
+    $(".maskHalf").each (
+        function maskHalf() {
+            var str = this.innerHTML;
+            var pos = str.lastIndexOf(" ");
+        
+            var mask = "(" +"****" + str.substring(pos);
+            this.innerHTML = mask;
+        }
+    );
 });
 
 
