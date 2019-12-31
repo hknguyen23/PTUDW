@@ -2,30 +2,19 @@
     <div id="page-content-wrapper">
         <div class="container pt-3">
             <div>
-                <div class="float-left w-65" style="color: royalblue;"> Danh mục: {{details.LOAI1}} <i
-                        class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>
-                    {{details.LOAI2}}
-                    <i class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>
+                <div class="float-left w-65" style="color: royalblue;"> Danh mục: {{details.LOAI1}} >> {{details.LOAI2}} >>
                     {{details.TENSANPHAM}}
                 </div>
-                {{#if (isDefinedVal userId)}}
-                <button
-                    class="btn {{#if isFav}} btn-warning {{else}} btn-outline-warning {{/if}} addToFav float-right w-35"
-                    name="{{details.ID}}" value="{{isFav}}" onclick="mySubmit(this);">
-                    <i class="fa fa-heart" aria-hidden="true"></i>
-                    Thêm vào Watch List
+                {{#if userId}}
+                {{#if isFav}}
+                <button type="button" class="btn btn-warning addToFav float-right w-35">
+                    <i class="heart fa fa-heart" aria-hidden="true"></i> Đã thêm Watch List
                 </button>
-                <script>
-                    function mySubmit(e) {
-                        $.ajax({
-                            type: 'POST',
-                            data: { isFavorite: e.value, IDSanPham: e.name },
-                            url: '/changeFav',
-                            dataType: 'text',
-                        });
-                        e.value = 1 - e.value;
-                    }
-                </script>
+                {{else}}
+                <button type="button" class="btn btn-outline-warning addToFav float-right w-35">
+                    <i class="heart fa fa-heart" aria-hidden="true"></i> Thêm Watch List
+                </button>
+                {{/if}}
                 {{/if}}
                 <div class="clearfix"></div>
             </div>
@@ -36,6 +25,22 @@
                         <img style="display: block;" class="shadow ml-auto mr-md-auto rounded-lg" src={{image.0.imgurl}}
                             name="main_window" id="main_window" height=300 width=300 />
                         <div class="row gallery justify-content-center mt-2">
+                            {{!-- <div>
+                                <img class="dotted_grey m-1" name="pic_01" id="pic_01" src="assets/images/S10_1.jpg"
+                                    height="100" width="100" onmouseover="show('pic_01')" />
+                            </div>
+                            <div>
+                                <img class="dotted_grey m-1" name="pic_02" id="pic_02" src="assets/images/S10_2.jpg"
+                                    height="100" width="100" onmouseover="show('pic_02')" />
+                            </div>
+                            <div>
+                                <img class="dotted_grey m-1" name="pic_03" id="pic_03" src="assets/images/S10_3.jpg"
+                                    height="100" width="100" onmouseover="show('pic_03')" />
+                            </div>
+                            <div>
+                                <img class="dotted_grey m-1" name="pic_04" id="pic_04" src="assets/images/S10_4.jpg"
+                                    height="100" width="100" onmouseover="show('pic_04')" />
+                            </div> --}}
                             {{#each this.image}}
                             <div>
                                 <img class="dotted_grey m-1" id={{@index}} src={{imgurl}} height="100" width="100"
@@ -48,13 +53,6 @@
 
                     <div class="right p-4 shadow-lg" style="width: 65%;" id="product_detail">
                         <h3 class="" style="color: royalblue;">{{details.TENSANPHAM}}</h3>
-                        {{#if (isPast details.NGAYHETHAN)}}
-                        <h4 class="text-danger">(Đã hết hạn đấu giá)</h4>
-                        {{else}}
-                        {{#if (isDefinedVal details.ID_NG_THANG)}}
-                        <h4 class="text-danger">(Đã có người thắng đấu giá)</h4>
-                        {{/if}}
-                        {{/if}}
 
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
@@ -65,54 +63,47 @@
                                 {{formatMoney details.GIA}}
                             </div>
                         </div>
-                        {{#if (isDefinedVal details.GIAMUANGAY)}}
-                        <div class="row my-4">
-                            <div class="col-md-4 text-right">
-                                Giá mua ngay (đ):
-                            </div>
-                            <div class="text-left col-md-8" style="color:tomato;" id="current_price"
-                                name="current_price">
-                                {{formatMoney details.GIAMUANGAY}}
-                            </div>
-                        </div>
-                        {{/if}}
 
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
                                 Tên người bán:
                             </div>
                             <div class="col-md-8 text-left" id="seller" name="seller">
-                                {{details.SELLER}} <span name="seller-score" id="seller-score">(Điểm:
-                                    {{details.DIEMSELLER}})</span>
+                                {{details.SELLER}} <span name="seller-score"
+                                    id="seller-score">({{details.DIEMSELLER}})</span>
                             </div>
                         </div>
+
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
                                 Người ra giá cao nhất:
                             </div>
                             <div class="col-md-8 text-left" id="bidder" name="bidder">
-                                {{biddingHistory.0.tentaikhoan}} <span name="bidder-score" id="bidder-score">(Điểm:
-                                    {{biddingHistory.0.diemndg}})</span>
+                                {{biddingHistory.0.tentaikhoan}} <span name="bidder-score"
+                                    id="bidder-score">({{biddingHistory.0.diemndg}})</span>
                             </div>
                         </div>
+
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
                                 Thời điểm đăng bán:
                             </div>
                             <div class="col-md-8 text-left" id="post_date" name="post_date">
-                                {{formatDateTime details.NGAYDANG}}
+                                {{formatDate details.NGAYDANG}}
                             </div>
                         </div>
+
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
                                 Thời điểm kết thúc:
                             </div>
                             <div class="col-md-8 text-left" id="exp_date" name="exp_date">
-                                <div datetime="{{details.NGAYHETHAN}}">
-                                    {{countDown (formatDateTime details.NGAYHETHAN)}}
+                                <div datetime="{{details.THOIGIANCONLAI}}">
+                                    {{details.THOIGIANCONLAI}}
                                 </div>
                             </div>
                         </div>
+
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
                                 Mô tả sản phẩm:
@@ -127,69 +118,30 @@
                                 {{details.MOTADAI}}
                             </div>
                         </div>
-                        {{!-- userid {{isDefinedVal userId}}
-                        luondcdaugia {{details.LUONDUOCDAUGIA}}
-                        nhỏ hơn 8 : {{isLessThanOrEqual userScore.diem 8}} --}}
 
                         <!-- bid fields -->
-                        {{!-- {{or (isPast details.NGAYHETHAN) (isDefinedVal details.ID_NG_THANG)}} --}}
-                        {{#if (or (isPast details.NGAYHETHAN) (isDefinedVal details.ID_NG_THANG))}}
-                        {{!-- khóa đấu giá nếu hết hạn --}}
-                        {{else}}
-                        {{!-- {{#if (isDefinedVal userId)}} --}}
-                        {{#if details.LUONDUOCDAUGIA}}
+                        {{#if userId}}
                         <div>
                             <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
                                 Đặt giá của bạn:
                             </div>
 
-                            <form method="POST" id="frmain" onsubmit="return checkPrice({{biddingHistory.0.gia}})">
+                            <form method="POST"  id="frmain" onsubmit="return checkPrice({{biddingHistory.0.gia}},{{userScore.diem}})">
                                 <div class="dropdown bg-info">
-                                    <input type="number" class="float-left col-md-7" id="price" name="price"
-                                        step="{{details.BUOCGIA}}"
-                                        placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
+                                    <input type="text" class="float-left col-md-3 font-weight-bold" id="price"
+                                        name="price" onmouseover="checkInput()" onkeypress="return checkInput(event)" />
+                                    {{!-- <div class="dropdown-menu text-danger"
+                                        style="top: 20px; left: 20%; padding:10px 10px;" id="dropdown1"
+                                        name="dropdown1">Giá đặt phải lớn hơn giá hiện tại</div> --}}
                                 </div>
-                                <div class="float-right mt-3 col-md-8 text-muted">
+                                <span class="float-right col-md-5 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
                                     <script>
-                                        var x = {{ biddingHistory.0.gia }} + {{ details.BUOCGIA }};
+                                        var x = {{biddingHistory.0.gia}} + 100000;
                                         document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
                                     </script>
-                                </div>
-
-                                <div class="clearfix"></div>
-                                <div class="mt-4 text-center">
-                                    <button type="submit" class="btn btn-danger">
-                                        Xác nhận
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        {{else}}
-
-                        {{#if (isLessThanOrEqual userScore.diem 8)}}
-                        <div><b class="text-danger">Bạn không đủ điểm để đấu giá sản phầm này</b></div>
-                        {{else}}
-                        <div>
-                            <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
-                                Đặt giá của bạn:
-                            </div>
-
-                            <form method="POST" id="frmain" onsubmit="return checkPrice({{biddingHistory.0.gia}})">
-                                <div class="dropdown bg-info">
-                                    <input type="number" class="float-left col-md-7" id="price" name="price"
-                                        step="{{details.BUOCGIA}}"
-                                        placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
-                                </div>
-                                <div class="float-right mt-3 col-md-8 text-muted">
-                                    Giá đề nghị:
-                                    <span id="suggest" name="suggest"></span>
-                                    <script>
-                                        var x = {{ biddingHistory.0.gia }} + {{ details.BUOCGIA }};
-                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
-                                    </script>
-                                </div>
+                                </span>
 
                                 <div class="clearfix"></div>
                                 <div class="mt-4 text-center">
@@ -200,17 +152,14 @@
                             </form>
                         </div>
                         {{/if}}
-                        {{/if}}
-                        {{!-- {{/if}} --}}
 
-                        {{/if}}
-                        {{!-- lịch sử đấu giá --}}
+                        <!-- lịch sử đấu giá -->
                         <div class="mt-3">
                             <a href="#history" class="history_expand" data-toggle="collapse">Xem lịch sử đấu giá
                                 <i class="fa fa-angle-double-down"></i></a>
                             <div name="history" id="history" class="collapse">
-                                <table name="bidding_history" id="table" class="bidding_history mt-3 table-hover"
-                                    align="center" border="1">
+                                <table name="bidding_history" id="table" class="bidding_history mt-3" align="center"
+                                    border="1">
                                     <tr>
                                         <th>Thời điểm</th>
                                         <th>Người mua</th>
@@ -247,7 +196,7 @@
                                         <img class="img-fluid" src="{{avatar}}">
                                         <h6>{{tensanpham}}</h6>
                                         <p>Giá: {{formatMoney gia}}</p>
-                                        <p>Thời gian còn lại: {{formatDate ngayhethan}}</p>
+                                        <p>Thời gian còn lại: {{ thoigianconlai}}</p>
                                         <p>Số lần đấu giá: {{solan}}</p>
                                         <p><a class="btn btn-lg btn-primary" href="/productView/{{id}}"
                                                 role="button">Xem
