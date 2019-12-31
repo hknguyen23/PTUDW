@@ -3,8 +3,8 @@ const model = require("../../models/model");
 const router = express.Router();
 router.use(express.static("public"));
 
-router.get("/", async(req, res) => {
-	const userID = res.locals.authUser.ID;	
+router.get("/:id", async(req, res) => {
+	const userID = +req.params.id;
 	
     const [rows, point] = await Promise.all([
 		model.getYourPointAndDetail(userID),

@@ -15,6 +15,8 @@ CREATE TABLE NGUOIDUNG(
 	XinNangCap BOOL NOT NULL,
 	AvatarURL VARCHAR(100),
 	TongDiemDanhGia INT NOT NULL,
+	token VARCHAR(100),
+	token_expire DATETIME,
 	PRIMARY KEY(ID)
 );
 
@@ -35,6 +37,7 @@ CREATE TABLE SANPHAM(
 	IDLoai INT NOT NULL,
 	IDNguoiBan INT NOT NULL,
 	IDNguoiThangDauGia INT,
+	TrangThai BOOL DEFAULT 1,
 	PRIMARY KEY(ID)
 );
 
@@ -93,19 +96,19 @@ CREATE TABLE THAMSO(
 	PRIMARY KEY(ID)
 );
 
-ALTER TABLE SANPHAM ADD CONSTRAINT FK_SANPHAM_NGUOIDUNGBAN FOREIGN KEY(IDNguoiBan) REFERENCES NGUOIDUNG(ID) ON DELETE CASCADE;
-ALTER TABLE SANPHAM ADD CONSTRAINT FK_SANPHAM_LOAI FOREIGN KEY(IDLoai) REFERENCES LOAICAP2(ID) ON DELETE CASCADE;
-ALTER TABLE LOAICAP2 ADD CONSTRAINT FK_LOAICAP2_LOAICAP1 FOREIGN KEY(IDLoaiCap1) REFERENCES LOAICAP1(ID) ON DELETE CASCADE;
-ALTER TABLE SANPHAM ADD CONSTRAINT FK_SANPHAM_NGUOIDUNGTHANG FOREIGN KEY(IDNguoiThangDauGia) REFERENCES NGUOIDUNG(ID) ON DELETE CASCADE;
-ALTER TABLE HINHANH ADD CONSTRAINT FK_HINHANH_SANPHAM FOREIGN KEY(IDSanPham) REFERENCES SANPHAM(ID) ON DELETE CASCADE;
-ALTER TABLE CHITIETDAUGIA ADD CONSTRAINT FK_CHITIETDAUGIA_NGUOIDUNGDAUGIA FOREIGN KEY(IDNguoiDauGia) REFERENCES NGUOIDUNG(ID) ON DELETE CASCADE;
-ALTER TABLE CHITIETDAUGIA ADD CONSTRAINT FK_CHITIETDAUGIA_SANPHAM FOREIGN KEY(IDSanPham) REFERENCES SANPHAM(ID) ON DELETE CASCADE;
-ALTER TABLE CHITIETDANHGIA ADD CONSTRAINT FK_CHITIETDANHGIA_NGUOIDUNGDUOCDANHGIA FOREIGN KEY(IDNguoiDuocDanhGia) REFERENCES NGUOIDUNG(ID) ON DELETE CASCADE;
-ALTER TABLE CHITIETDANHGIA ADD CONSTRAINT FK_CHITIETDANHGIA_NGUOIDUNGDANHGIA FOREIGN KEY(IDNguoiDanhGia) REFERENCES NGUOIDUNG(ID) ON DELETE CASCADE;
-ALTER TABLE SANPHAMYEUTHICH ADD CONSTRAINT FK_SANPHAMYEUTHICH_NGUOIDUNG FOREIGN KEY(IDNguoiDung) REFERENCES NGUOIDUNG(ID) ON DELETE CASCADE;
-ALTER TABLE SANPHAMYEUTHICH ADD CONSTRAINT FK_SANPHAMYEUTHICH_SANPHAM FOREIGN KEY(IDSanPham) REFERENCES SANPHAM(ID) ON DELETE CASCADE;
-ALTER TABLE DANHSACHCAM ADD CONSTRAINT FK_DANHSACHCAM_SANPHAM FOREIGN KEY(IDSanPham) REFERENCES SANPHAM(ID) ON DELETE CASCADE;
-ALTER TABLE DANHSACHCAM ADD CONSTRAINT FK_DANHSACHCAM_NGUOIDUNG FOREIGN KEY(IDNguoiDung) REFERENCES NGUOIDUNG(ID) ON DELETE CASCADE;
+ALTER TABLE SANPHAM ADD CONSTRAINT FK_SANPHAM_NGUOIDUNGBAN FOREIGN KEY(IDNguoiBan) REFERENCES NGUOIDUNG(ID);
+ALTER TABLE SANPHAM ADD CONSTRAINT FK_SANPHAM_LOAI FOREIGN KEY(IDLoai) REFERENCES LOAICAP2(ID);
+ALTER TABLE LOAICAP2 ADD CONSTRAINT FK_LOAICAP2_LOAICAP1 FOREIGN KEY(IDLoaiCap1) REFERENCES LOAICAP1(ID);
+ALTER TABLE SANPHAM ADD CONSTRAINT FK_SANPHAM_NGUOIDUNGTHANG FOREIGN KEY(IDNguoiThangDauGia) REFERENCES NGUOIDUNG(ID);
+ALTER TABLE HINHANH ADD CONSTRAINT FK_HINHANH_SANPHAM FOREIGN KEY(IDSanPham) REFERENCES SANPHAM(ID);
+ALTER TABLE CHITIETDAUGIA ADD CONSTRAINT FK_CHITIETDAUGIA_NGUOIDUNGDAUGIA FOREIGN KEY(IDNguoiDauGia) REFERENCES NGUOIDUNG(ID);
+ALTER TABLE CHITIETDAUGIA ADD CONSTRAINT FK_CHITIETDAUGIA_SANPHAM FOREIGN KEY(IDSanPham) REFERENCES SANPHAM(ID);
+ALTER TABLE CHITIETDANHGIA ADD CONSTRAINT FK_CHITIETDANHGIA_NGUOIDUNGDUOCDANHGIA FOREIGN KEY(IDNguoiDuocDanhGia) REFERENCES NGUOIDUNG(ID);
+ALTER TABLE CHITIETDANHGIA ADD CONSTRAINT FK_CHITIETDANHGIA_NGUOIDUNGDANHGIA FOREIGN KEY(IDNguoiDanhGia) REFERENCES NGUOIDUNG(ID);
+ALTER TABLE SANPHAMYEUTHICH ADD CONSTRAINT FK_SANPHAMYEUTHICH_NGUOIDUNG FOREIGN KEY(IDNguoiDung) REFERENCES NGUOIDUNG(ID);
+ALTER TABLE SANPHAMYEUTHICH ADD CONSTRAINT FK_SANPHAMYEUTHICH_SANPHAM FOREIGN KEY(IDSanPham) REFERENCES SANPHAM(ID);
+ALTER TABLE DANHSACHCAM ADD CONSTRAINT FK_DANHSACHCAM_SANPHAM FOREIGN KEY(IDSanPham) REFERENCES SANPHAM(ID);
+ALTER TABLE DANHSACHCAM ADD CONSTRAINT FK_DANHSACHCAM_NGUOIDUNG FOREIGN KEY(IDNguoiDung) REFERENCES NGUOIDUNG(ID);
 
 INSERT INTO LOAICAP1(ID, TenLoai) VALUES
 (null, 'Điện tử'),
@@ -145,29 +148,29 @@ INSERT INTO NGUOIDUNG(ID, TenTaiKhoan, MatKhau, HoTen, NgaySinh, Email, DiaChi, 
 (null, 'seller7', '123', 'Lâm Lê Bảo Nam', '1999-01-01', 'someone@example.com', '227 Nguyễn Văn Cừ, Q5, TPHCM', '0987654321', 2, false, 'assets/images/avatar/14.jpg', 9);
 
 INSERT INTO SANPHAM(ID, TenSanPham, Gia, GiaMuaNgay, NgayDang, NgayHetHan, BuocGia, TuDongGiaHan, LuonDuocDauGia, MoTaNgan, MoTaDai, MainImg, SoLanDuocDauGia, IDLoai, IDNguoiBan, IDNguoiThangDauGia) VALUES
-(null, 'iphone 6S', 100000, 2000000, '2019-11-29 20:20:20', '2020-01-01 23:59:59', 20000, true, true, 'Điện thoại IPHONE', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/1/main.jpg', 10, 1, 2, null),
-(null, 'iphone XX', 700000, 2000000, '2019-11-29 20:20:20', '2020-01-19 23:59:59', 20000, true, true, 'IPHONE hot mới', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/2/main.jpg', 10, 1, 1, null),
-(null, 'sp', 250000, null, '2019-11-29 20:20:20', '2020-01-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/3/main.jpg', 100, 3, 4, null),
-(null, 'sp', 360000, null, '2019-11-29 20:20:20', '2020-01-02 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/4/main.jpg', 10, 4, 4, null),
+(null, 'iphone 6S', 100000, 2000000, '2019-11-29 20:20:20', '2019-12-01 23:59:59', 20000, true, true, 'Điện thoại IPHONE', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/1/main.jpg', 10, 1, 2, null),
+(null, 'iphone XX', 700000, 2000000, '2019-11-29 20:20:20', '2019-12-19 23:59:59', 20000, true, true, 'IPHONE hot mới', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/2/main.jpg', 10, 1, 1, null),
+(null, 'sp', 250000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/3/main.jpg', 100, 3, 4, null),
+(null, 'sp', 360000, null, '2019-11-29 20:20:20', '2019-12-02 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/4/main.jpg', 10, 4, 4, null),
 (null, 'sp', 800000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/5/main.jpg', 10, 5, 10, null),
-(null, 'sp', 400000, null, '2019-11-29 20:20:20', '2020-01-03 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/6/main.jpg', 10, 6, 6, null),
-(null, 'sp', 410000, null, '2019-11-29 20:20:20', '2020-01-15 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/7/main.jpg', 200, 7, 8, null),
-(null, 'sp', 500000, null, '2019-11-29 20:20:20', '2020-01-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/8/main.jpg', 10, 8, 8, null),
-(null, 'sp', 300000, null, '2019-11-29 20:20:20', '2020-01-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/9/main.jpg', 10, 9, 14, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-18 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/10/main.jpg', 10, 10, 6, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-14 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/11/main.jpg', 10, 1, 4, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-05 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/12/main.jpg', 300, 1, 4, null),
-(null, 'sp', 350000, null, '2019-11-29 20:20:20', '2019-12-29 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/13/main.jpg', 10, 2, 4, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-07 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/14/main.jpg', 10, 3, 2, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/15/main.jpg', 10, 4, 12, null),
-(null, 'sp', 400000, null, '2019-11-29 20:20:20', '2020-01-06 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/16/main.jpg', 10, 3, 2, null),
-(null, 'sp', 510000, null, '2019-11-29 20:20:20', '2020-01-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/17/main.jpg', 400, 2, 8, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/18/main.jpg', 10, 6, 6, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-05 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/19/main.jpg', 10, 7, 4, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/20/main.jpg', 10, 9, 2, null),
-(null, 'sp', 190000, null, '2019-11-29 20:20:20', '2020-01-17 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/21/main.jpg', 10, 10, 10, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-16 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/22/main.jpg', 500, 8, 14, null),
-(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2020-01-03 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/23/main.jpg', 10, 1, 6, null);
+(null, 'sp', 400000, null, '2019-11-29 20:20:20', '2019-12-03 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/6/main.jpg', 10, 6, 6, null),
+(null, 'sp', 410000, null, '2019-11-29 20:20:20', '2019-12-15 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/7/main.jpg', 200, 7, 8, null),
+(null, 'sp', 500000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/8/main.jpg', 10, 8, 8, null),
+(null, 'sp', 300000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/9/main.jpg', 10, 9, 14, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-18 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/10/main.jpg', 10, 10, 6, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-14 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/11/main.jpg', 10, 1, 4, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-05 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/12/main.jpg', 300, 1, 4, null),
+(null, 'sp', 350000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/13/main.jpg', 10, 2, 4, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-07 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/14/main.jpg', 10, 3, 2, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/15/main.jpg', 10, 4, 12, null),
+(null, 'sp', 400000, null, '2019-11-29 20:20:20', '2019-12-06 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/16/main.jpg', 10, 3, 2, null),
+(null, 'sp', 510000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/17/main.jpg', 400, 2, 8, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/18/main.jpg', 10, 6, 6, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-05 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/19/main.jpg', 10, 7, 4, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-20 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/20/main.jpg', 10, 9, 2, null),
+(null, 'sp', 190000, null, '2019-11-29 20:20:20', '2019-12-17 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/21/main.jpg', 10, 10, 10, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-16 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/22/main.jpg', 500, 8, 14, null),
+(null, 'sp', 100000, null, '2019-11-29 20:20:20', '2019-12-03 23:59:59', 20000, true, true, 'Mô tả ngắn', 'Mô tả dàiiiiiiiiiiiiiiiiiiiiiiiii', 'assets/images/product/23/main.jpg', 10, 1, 6, null);
 
 -- Folder product gồm các folder là ID của product, trong đó chứa 3-4 tấm hình của product đó
 -- Tên đường dẫn: assets/images/product/{{IDSanPham}}/{{IDHinh}}.jpg
@@ -351,23 +354,15 @@ ALTER TABLE SANPHAM ADD FULLTEXT (TenSanPham, MoTaNgan);
 SELECT * FROM SANPHAM WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ("ngắn")
 ORDER BY NgayHetHan DESC;
 
+
 -- 5 sản phẩm giá cao nhất
-SELECT *
-FROM SANPHAM
-WHERE IDNguoiThangDauGia IS NULL AND NgayHetHan > NOW()
-ORDER BY Gia DESC LIMIT 5;
+SELECT * FROM SANPHAM ORDER BY Gia DESC LIMIT 5;
 
 -- 5 sản phẩm có lượt đấu giá nhiều nhất
-SELECT *
-FROM SANPHAM
-WHERE IDNguoiThangDauGia IS NULL AND NgayHetHan > NOW()
-ORDER BY SoLanDuocDauGia DESC LIMIT 5;
+SELECT * FROM SANPHAM ORDER BY SoLanDuocDauGia DESC LIMIT 5;
 
 -- 5 sản phẩm gần hết hạn đấu giá
-SELECT *
-FROM SANPHAM
-WHERE IDNguoiThangDauGia IS NULL AND NgayHetHan > NOW()
-ORDER BY NgayHetHan ASC LIMIT 5;
+SELECT * FROM SANPHAM ORDER BY NgayHetHan ASC LIMIT 5;
 
 -- Danh sách sản phẩm với số lượt yêu thích
 SELECT SP.ID, SP.TenSanPham, COUNT(SPYT.IDNguoiDung) AS SoLuotYeuThich
@@ -400,5 +395,3 @@ WHERE ND1.ID = 3;
 
 -- Danh sách các bidder xin nâng cấp tài khoản
 SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;
-
-SELECT * FROM NGUOIDUNG
