@@ -85,7 +85,7 @@
                             {{#if isAuthenticated}}
                             <a class="btn btn-primary mr-2 pl-3" href="/accountManagement/{{authUser.ID}}">
                                 <i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>
-                                Tài khoản
+                                Chào! <b>{{authUser.TenTaiKhoan}}</b>
                             </a>
                             
                             <a class="btn btn-primary pl-3" method="POST" href="/logout">
