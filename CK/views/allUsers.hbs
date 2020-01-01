@@ -38,6 +38,14 @@
 									<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
 								</a>
 								{{/if}}
+								{{#if this.isAdmin}}
+								<a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
+									<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
+								</a>
+								<a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
+									<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
+								</a>
+								{{/if}}
 							</div>
 							
 							{{#if this.isAdmin}}
@@ -61,6 +69,11 @@
 							
 							<!-- Đăng sản phẩm -->
 							{{#if this.isSeller}}
+							<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+								Đăng sản phẩm đấu giá mới
+							</a>
+							{{/if}}
+							{{#if this.isAdmin}}
 							<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
 								Đăng sản phẩm đấu giá mới
 							</a>
@@ -109,7 +122,9 @@
 										<td style="text-align: center; width: 15%;">{{NgaySinh}}</td>
 										<td style="text-align: center; width: 15%;">{{TongDiemDanhGia}}</td>
 										<td style="width: 10%;">
+											<h6>
 											<input name="type" id="type" value="{{#if this.isBidder}}Bidder{{/if}}{{#if this.isSeller}}Seller{{/if}}{{#if this.isAdmin}}Admin{{/if}}" style="border: none; width: 100%" readonly>
+											</h6>
 										</td>
 										<td style="text-align: center; width: 10%;">
 											<button type="button" onclick="upgradeBidderClick(this);"><i class="fa fa-arrow-up"
@@ -120,12 +135,12 @@
 													aria-hidden="true"></i></button>
 										</td>
 										<td style="text-align: center; width: 5%;">
-											<p>
+											<h5>
 												<input type="checkbox" name="deleteCheckbox" id="deleteCheckbox" onclick="deleteUserClick(this);">
-											</p>
-											<h6>
+											</h5>
+											<h4>
 												<input name="isDelete" id="isDelete" value="0" hidden>
-											</h6>
+											</h4>
 										</td>
 									</tr>
 									{{/each}}

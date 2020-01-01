@@ -7,6 +7,7 @@ const numeral = require('numeral');
 const moment = require('moment');
 const session = require('express-session');
 const UserOnly = require('./middlewares/UserOnly.mdw');
+const AdminOnly = require('./middlewares/AdminOnly.mdw');
 
 require('express-async-errors');
 
@@ -110,10 +111,10 @@ app.use('/user', require('./routes/home/home.route'));
 app.use('/productView', require('./routes/productView/productView.route'));
 app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
 
-app.use('/accountManagement', require('./routes/accountManagement/accountManagement.route'));
-app.use('/userView', require('./routes/admin/userView.route'));
-app.use('/yourPointAndDetail', require('./routes/accountManagement/yourPointAndDetail.route'));
-app.use('/bidderList', require('./routes/admin/bidderUpgradeRequestList.route'));
+app.use('/accountManagement', UserOnly, require('./routes/accountManagement/accountManagement.route'));
+app.use('/userView', AdminOnly, require('./routes/admin/userView.route'));
+app.use('/yourPointAndDetail', UserOnly, require('./routes/accountManagement/yourPointAndDetail.route'));
+app.use('/bidderList', AdminOnly, require('./routes/admin/bidderUpgradeRequestList.route'));
 
 
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));

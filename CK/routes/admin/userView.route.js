@@ -74,7 +74,6 @@ router.post("/", async(req, res) => {
 			ID: req.body.id[i],
 			Loai: type
 		}
-		console.log(req.body);
 		if (req.body.isDelete[i] == 1){
 			const result = await model.deleteUser(entity);
 		}

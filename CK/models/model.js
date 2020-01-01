@@ -290,7 +290,7 @@ module.exports = {
 
     // register/login
     getIdByEmail: email => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE Email = ?`, email),
-    getIdByUsername: username => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
+    getIdByUsername: username => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau, Loai FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
 
     // reset password
     checkTimeoutToken: token => 
