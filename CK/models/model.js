@@ -270,6 +270,18 @@ module.exports = {
 
     getBidderUpgradeRequest: () => db.load(`SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;`),
 
+    getTop5HighestBidTimes: () => db.load(`SELECT * FROM SANPHAM 
+                                           WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW()
+                                           ORDER BY SoLanDuocDauGia DESC LIMIT 5`),
+
+    getTop5HighestPrice: () => db.load(`SELECT * FROM SANPHAM 
+                                        WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW() 
+                                        ORDER BY Gia DESC LIMIT 5`),
+
+    getTop5NearlyExpired: () => db.load(`SELECT * FROM SANPHAM
+                                         WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW()
+                                         ORDER BY NGAYHETHAN ASC LIMIT 5`),
+
     // register
     getIdByEmail: email => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE Email = ?`, email),
     getIdByUsername: username => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
@@ -327,6 +339,19 @@ module.exports = {
     addUser: entity => db.add('NGUOIDUNG', entity),
 
     addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
+
+    addNewProduct: (entity) => db.add('sanpham', entity),
+
+    addProducImg: async function(proID, ImgUrlArray) {
+
+        const res = await Promise.all([
+            db.patch('sanpham', { mainimg: ImgUrlArray[0] }, { id: proID }),
+            db.add('hinhanh', { idsanpham: proID, idhinh: 1, imgurl: ImgUrlArray[0] })
+        ]);
+        for (var i = 1; i < ImgUrlArray.length; i++) {
+            await db.add('hinhanh', { idsanpham: proID, idhinh: i + 1, imgurl: ImgUrlArray[i] });
+        }
+    },
 
     delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
 

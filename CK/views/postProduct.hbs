@@ -1,118 +1,130 @@
+{{#section 'css'}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+    rel="stylesheet" type="text/css" />
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+    $('#fuMain').fileinput({
+        theme: 'fa',
+        showUpload: false,
+        dropZoneEnabled: false,
+        allowedFileExtensions: ['png', 'jpg', 'gif'],
+    });
+</script>
+{{/section}}
+
 <div class="">
-    <div class="main row mt-3 mb-3 mx-md-auto shadow-lg" style="background-color: white; width: 90%; height: 90%;" ;>
-        <div class="col-sm-6" style="padding: 0px;">
-            <img class="background" src="assets/images/bg-01.jpg" width="100%" />
-            <div class="left centered text-white">
-                <img style="display: block;" class="shadow mx-md-auto rounded-lg" src=""
-                    name="main_window" id="main_window" height="50%" width="50%" />
+    <div class="main my-4 mx-md-auto shadow-lg p-4" style="background-color: white; width: 90%; height: 90%;" ;>
+        <h3 class="text-center text-primary font-weight-bold">
+            Thông tin sản phẩm đấu giá
+        </h3>
+        {{#if errMsg}}
+        <div role="alert" class="alert alert-warning alert-dismissible fade show">
+            <button class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{#each errMsg}}
+            {{this}}
+            <br>
+            {{/each}}
+        </div>
+        {{/if}}
 
-                {{!-- <div class="row justify-content-center my-3 mx-md-auto gallery" style="width: 80%;">
+        <div class="" style="color:tomato;">Điền đầy dủ các thông tin dưới đây</div>
 
-                    <img class="dotted_grey m-md-1" name="pic-01" id="pic-01" src="assets/images/S10_1.jpg" />
-
-                    <img class="dotted_grey m-md-1 " name="pic-02" id="pic-02" src="assets/images/S10_2.jpg" />
-
-                    <img class="dotted_grey m-md-1" name="pic-03" id="pic-03" src="assets/images/S10_3.jpg" />
-
-                    <img class="dotted_grey m-md-1 " name="pic-04" id="pic-04" src="assets/images/S10_4.jpg" />
-                </div> --}}
-                <div class="gallery dotted_grey m-md-1" onchange="displaymain()">
-
-                </div>
-
-
-                <!-- click để tải hình lên (chưa có xử lý) -->
-                <div id="uploadField" >
-                    <i class="fa fa-plus-square" aria-hidden="true"></i>
-                    <label for="gallery-photo-add"> Tải ảnh lên
-                        {{!-- <input id="inputId" type="file"  multiple  class="" /> --}}
-                        <input type="file" multiple id="gallery-photo-add" class="" accept="image/*">
-                    
-                    </label>
-                    
+        <form action="/postproduct" method="POST" name="product_detail" class="p-3" enctype="multipart/form-data">
+            <div class="form-group row">
+                <label for="TenSanPham" class="col-sm-4 col-form-label">Tên sản phẩm (*): </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" name="TenSanPham" id="TenSanPham" placeholder="Tên sản phẩm"
+                        required>
                 </div>
             </div>
-        </div>
-
-        <div class="right p-4 col-sm-6">
-            <h3>
-                Thông tin sản phẩm đấu giá
-            </h3>
-            <div style="color:tomato;">*Điền đầy dủ các thông tin dưới đây</div>
-            <!-- <form action="#" method="POST" name="product_detail" class=""> -->
-            <form action="#" method="POST" name="product_detail" class="p-3">
-                <div class="form-group row">
-                    <label for="inputName" class="col-sm-4 col-form-label">Tên sản phẩm: </label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="inputName" placeholder="Tên sản phẩm" required>
-                    </div>
+            <div class="form-group row">
+                <label for="IDLoai" class="col-sm-4 col-form-label">Loại sản phẩm (*): </label>
+                <div class="col-sm-8" style="line-height: 250%;">
+                    <select id="IDLoai" name="IDLoai" style="width:100%" required>
+                        <option value="-1">Chọn loại sản phẩm</option>
+                        {{#each catList}}
+                        <option value="{{this.ID}}">{{this.TenLoai}}</option>
+                        {{/each}}
+                    </select>
                 </div>
-
-                <div class="form-group row">
-                    <label for="inputName" class="col-sm-4 col-form-label">Loại sản phẩm: </label>
-                    <div class="col-sm-8" style="line-height: 250%;">
-                        <select id="category" style="width:100%" required>
-                            <option value="-1">Chọn loại sản phẩm</option>
-                            {{!-- <option class="smartPhone" value="1">Điện thoại thông minh</option>
-                            <option class="watch" value="2">Đồng hồ</option>
-                            <option class="laptop" value="3">Laptop/PC</option>
-                            <option class="clothing" value="4">Quần áo</option>
-                            <option class="appliance" value="5">Đồ gia dụng</option>
-                            <option class="jewelry" value="6">Trang sức</option>
-                            <option class="sportingGoods" value="7">Vật dụng thể thao</option>
-                            <option class="books" value="7">Sách</option> --}}
-                            {{#each this.catList}}
-                            <option class="" value="{{this.id}}">{{this.tenloai}}</option>
-                            {{/each}}
-                        </select>
-
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label for="Gia" class="col-sm-4 col-form-label">Giá khởi điểm (VNĐ) (*): </label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" name="Gia" id="Gia" placeholder="Giá khởi điểm" min="1000"
+                        step="1000" required />
                 </div>
-
-                <div class="form-group row">
-                    <label for="startingPrice" class="col-sm-4 col-form-label">Giá khởi điểm (đ): </label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="startingPrice" placeholder="Giá khởi điểm"
-                            onkeypress="return checkInput(event)" required />
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label for="BuocGia" class="col-sm-4 col-form-label">Bước giá (VNĐ) (*): </label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" name="BuocGia" id="BuocGia" placeholder="Bước giá"
+                        requrired min="1000" step="1000">
                 </div>
-                <div class="form-group row">
-                    <label for="price_step" class="col-sm-4 col-form-label">Bước giá (đ): </label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="price_step" placeholder="Bước giá" requrired
-                            onkeypress="return checkInput(event)">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label for="GiaMuaNgay" class="col-sm-4 col-form-label">Giá mua ngay (VNĐ): </label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control" id="GiaMuaNgay" name="GiaMuaNgay" placeholder="Tùy chọn"
+                        min="0" step="1000" value="0">
                 </div>
-                <div class="form-group row">
-                    <label for="buy_now" class="col-sm-4 col-form-label">Giá mua ngay (đ): </label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="buy_now" value="0"
-                            onkeypress="return checkInput(event)">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label for="songay" class="col-sm-4 col-form-label">Số ngày đăng bán (*): </label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="songay" name="songay" value="7" min="1" required>
                 </div>
-
-                <div class="form-group row">
-                    <label for="message" class="col-sm-4 col-form-label">Mô tả sản phẩm: </label>
-                    <div class="col-sm-8">
-                        <textarea name="message" style="width: 100%;" rows="6"></textarea>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label for="MoTaDai" class="col-sm-4 col-form-label">Mô tả sản phẩm (*): </label>
+                <div class="col-sm-8">
+                    <textarea name="MoTaDai" id="txtFullDes" style="width: 100%;" rows="6"></textarea>
                 </div>
-
-
-                <div class=" wrapper">
-                    <label class="col-sm-4" for="myCheckBox">Tự động gia hạn: </label>
-                    <span class="col-sm-8"><input name="myCheckBox" id="myCheckBox" type="checkbox" /></span>
-                    <div class="clearboth"></div>
+            </div>
+            <div class="form-group wrapper">
+                <label class="col-sm-4" for="TuDongGiaHan">Tự động gia hạn: </label>
+                <span class="col-sm-8"><input name="TuDongGiaHan" id="TuDongGiaHan" type="checkbox"
+                        checked="checked" /></span>
+                <div class="clearboth"></div>
+            </div>
+            <div class="form-group wrapper">
+                <label class="col-sm-4" for="LuonDuocDauGia">Luôn được đấu giá: </label>
+                <span class="col-sm-8"><input name="LuonDuocDauGia" id="LuonDuocDauGia" type="checkbox"
+                        checked="checked" /></span>
+                <div class="clearboth"></div>
+            </div>
+            <div>Chọn hình ảnh cho sản phẩm(*):</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="file-loading">
+                        <input id="fuMain" name="fuMain" type="file" multiple required="true"></div>
                 </div>
-
-
-                <div class="row justify-content-center">
-                    <button type="submit" class="m-2 btn btn-danger">Xác nhận</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- <div class="clear-fix"></div> -->
+            </div>
+            <div class="row justify-content-center">
+                <button type="submit" class="m-2 btn btn-danger">Xác nhận</button>
+            </div>
+        </form>
 
     </div>
 </div>
+
+<script
+    src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=x2y7fn9k7dxnxh9q4xbzm4v0afd7jyn3uv8fe3ug89t1i4lu"></script>
+<script>
+    tinymce.init({
+        selector: '#txtFullDes',
+        height: 300,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright',
+            'forecolor backcolor table link image media',
+        ],
+    });
+</script>

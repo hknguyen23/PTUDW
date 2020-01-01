@@ -1,5 +1,6 @@
 const express = require("express");
 const exphbs = require("express-handlebars"); //1. Import handlebars
+const hbs_sections = require('express-handlebars-sections');
 const path = require("path");
 const morgan = require('morgan');
 const date = require("date-and-time");
@@ -7,7 +8,7 @@ const numeral = require('numeral');
 const moment = require('moment');
 const session = require('express-session');
 const UserOnly = require('./middlewares/UserOnly.mdw');
-
+const SellerOnly = require('./middlewares/SellerOnly.mdw');
 require('express-async-errors');
 
 const app = express();
@@ -32,8 +33,9 @@ app.engine(
         defaultLayout: "main.hbs",
         layoutsDir: "views/_layouts",
         helpers: {
+            section: hbs_sections(),
             formatDate: val => date.format(val, 'YYYY/MM/DD'),
-            formatDateTime: val => date.format(val, 'YYYY/MM/DD HH:mm:ss'),
+            formatDateTime: val => moment(val).format('YYYY/MM/DD HH:mm:ss'),
             formatMoney: val => numeral(val).format('0,0[.]00') + ' VNĐ',
             if_eq: function(a, b, opts) {
                 if (a == b) // Or === depending on your needs
@@ -50,15 +52,17 @@ app.engine(
                 return (val !== null) && typeof(val) !== 'undefined';
             },
             isPast: val => {
-                const today = moment().format('YYYY-MM-DD');
-                const val_formated = date.format(val, 'YYYY-MM-DD');
-                //console.log(today > val_formated);
+                const today = moment().format('YYYY-MM-DD HH:mm:ss');
+                const val_formated = moment(val).format('YYYY-MM-DD HH:mm:ss');
+                // console.log(val_formated);
                 return (today > val_formated) ? true : false;
             },
             or: (foo, bar) => (foo || bar),
+
             countDown: val => {
-                const today = moment(new Date()).format('YYYY/MM/DD HH:mm:ss');
-                const endDate = moment(new Date(val)).format('YYYY/MM/DD HH:mm:ss');
+                console.log(val);
+                const today = moment().format('YYYY/MM/DD HH:mm:ss');
+                const endDate = moment(val).format('YYYY/MM/DD HH:mm:ss');
 
                 if (today > endDate)
                     return endDate;
@@ -66,24 +70,6 @@ app.engine(
                 // console.log(today);
                 // console.log(endDate);
                 // console.log(duration);
-                moment.relativeTimeThreshold('s', 60 * 60 * 24 * 30 * 12);
-
-                // Update relative time
-                moment.updateLocale('en', {
-                    relativeTime: {
-                        s: function(number, withoutSuffix, key, isFuture) {
-                            return moment.duration(number, 's').format('d [day] h [hour]');
-                        },
-                    }
-                });
-
-                moment.updateLocale('de', {
-                    relativeTime: {
-                        s: function(number, withoutSuffix, key, isFuture) {
-                            return moment.duration(number, 's').format('d [Tag] h [Uhr]');
-                        },
-                    }
-                });
                 return (duration <= 3) ? moment(new Date(val)).locale('VI').fromNow() : endDate;
             },
         },
@@ -106,7 +92,7 @@ app.use('/lists/acc', UserOnly, require('./routes/lists/personal.lists.route'));
 app.use('/lists/category', require('./routes/lists/category.lists.route'));
 app.use('/lists/search', require('./routes/lists/searchable.lists.route'));
 
-app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
+app.use('/postProduct', SellerOnly, require('./routes/seller/postProduct.seller.route'));
 app.use('/user', require('./routes/home/home.route'));
 app.use('/productView', require('./routes/productView/productView.route'));
 app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));

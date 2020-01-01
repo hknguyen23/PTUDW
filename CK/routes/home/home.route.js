@@ -13,13 +13,22 @@ router.use(express.static("public"));
 router.use('/login', express.static('public'));
 router.use('/newPass', express.static('public'));
 
-router.get("/", (req, res) => {
+router.get("/", async(req, res) => {
+
+    const [highestPrice, highestBidTimes, nearlyExpired] = await Promise.all([
+        model.getTop5HighestPrice(),
+        model.getTop5HighestBidTimes(),
+        model.getTop5NearlyExpired(),
+    ]);
     res.render("home", {
         title: "Online Auction",
         css: ["HomeStyle.css", "carousel.css"],
         js: ["carousel.js"],
+        highestPrice,
+        highestBidTimes,
+        nearlyExpired
     });
-    console.log(res.locals);
+    //console.log(res.locals);
 });
 
 router.get("/login", GuestOnly, (req, res) => {

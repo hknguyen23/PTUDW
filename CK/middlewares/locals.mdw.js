@@ -10,14 +10,13 @@ module.exports = function(app) {
         res.locals.catLV1 = catLV1;
         res.locals.catLV2 = catLV2;
 
-
         if (typeof(req.session.isAuthenticated) === 'undefined') {
             req.session.isAuthenticated = false;
             req.session.authUser = null; //
         }
         res.locals.isAuthenticated = req.session.isAuthenticated;
         res.locals.authUser = req.session.authUser;
-        //console.log(res.locals.authUser);
+        //console.log(req.session);
         next();
     })
 };

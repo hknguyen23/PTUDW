@@ -29,7 +29,14 @@
                 {{/if}}
                 <div class="clearfix"></div>
             </div>
-
+            {{#if errMsg}}
+            <div role="alert" class="alert alert-warning alert-dismissible fade show mt-3">
+                <button class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{errMsg}}
+            </div>
+            {{/if}}
             <div class="card" style="border: none;">
                 <div class="row mt-3">
                     <div class="left" style="width: 35%;">
@@ -90,10 +97,16 @@
                             <div class="col-md-4 text-right">
                                 Người ra giá cao nhất:
                             </div>
+                            {{#if (isDefinedVal biddingHistory.0.tentaikhoan)}}
                             <div class="col-md-8 text-left" id="bidder" name="bidder">
                                 {{biddingHistory.0.tentaikhoan}} <span name="bidder-score" id="bidder-score">(Điểm:
                                     {{biddingHistory.0.diemndg}})</span>
                             </div>
+                            {{else}}
+                            <div class="col-md-8 text-left" id="bidder" name="bidder">
+                                Chưa có lượt đấu giá
+                            </div>
+                            {{/if}}
                         </div>
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
@@ -117,14 +130,14 @@
                             <div class="col-md-4 text-right">
                                 Mô tả sản phẩm:
                             </div>
-                            <div class="rounded-lg col-md-7 text-left overflow-auto"
-                                style="background-color: silver; height: 165px;" id="exp_date" name="exp_date">
+                            <div class="rounded-lg col-md-7 text-left overflow-auto p-1"
+                                style="border: 1px solid black; height: 165px;" id="exp_date" name="exp_date">
                                 {{!-- 三星 Galaxy S10 是韩国三星公司推出的新一代智能手机产品，
                                 搭载高通骁龙 855 处理器，屏幕 6.1 英寸；后置三摄，
                                 分别为 1200 像素长焦摄像头，1200 万广角摄像头和 1600万 超广角摄像头。
                                 北京时间 2019 年 2 月 21 日，三星 Galaxy S10 在旧金山正式发布；
                                 2019 年 2 月 28 日，三星在乌镇举行发布会发布国行版，2019 年 3 月 8 日正式开售。 --}}
-                                {{details.MOTADAI}}
+                                {{{details.MOTADAI}}}
                             </div>
                         </div>
                         {{!-- userid {{isDefinedVal userId}}
@@ -132,7 +145,7 @@
                         nhỏ hơn 8 : {{isLessThanOrEqual userScore.diem 8}} --}}
 
                         <!-- bid fields -->
-                        {{!-- {{or (isPast details.NGAYHETHAN) (isDefinedVal details.ID_NG_THANG)}} --}}
+                        {{!-- {{ isPast details.NGAYHETHAN}} --}}
                         {{#if (or (isPast details.NGAYHETHAN) (isDefinedVal details.ID_NG_THANG))}}
                         {{!-- khóa đấu giá nếu hết hạn --}}
                         {{else}}
@@ -143,17 +156,17 @@
                                 Đặt giá của bạn:
                             </div>
 
-                            <form method="POST" id="frmain" onsubmit="return checkPrice({{biddingHistory.0.gia}})">
+                            <form method="POST" id="frmain" onsubmit="return checkPrice({{details.GIA}})">
                                 <div class="dropdown bg-info">
                                     <input type="number" class="float-left col-md-7" id="price" name="price"
-                                        step="{{details.BUOCGIA}}"
+                                        step="{{details.BUOCGIA}}" min="{{details.GIA}}"
                                         placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
                                 </div>
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
                                     <script>
-                                        var x = {{ biddingHistory.0.gia }} + {{ details.BUOCGIA }};
+                                        var x = {{ details.GIA }} + {{ details.BUOCGIA }};
                                         document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
                                     </script>
                                 </div>
@@ -167,7 +180,6 @@
                             </form>
                         </div>
                         {{else}}
-
                         {{#if (isLessThanOrEqual userScore.diem 8)}}
                         <div><b class="text-danger">Bạn không đủ điểm để đấu giá sản phầm này</b></div>
                         {{else}}
@@ -219,7 +231,7 @@
                                     {{#each this.biddingHistory}}
                                     <tr>
                                         <td>{{formatDateTime thoigian}}</td>
-                                        <td id="ndg_{{id_ndg}}" onwaiting="maskHalf(this.id)">{{hoten}}</td>
+                                        <td id="{{id_ndg}}">{{tentaikhoan}}</td>
                                         <td>{{formatMoney gia}}</td>
                                     </tr>
                                     {{/each}}
