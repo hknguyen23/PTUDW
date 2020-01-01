@@ -8,9 +8,12 @@ const numeral = require('numeral');
 const moment = require('moment');
 const session = require('express-session');
 const UserOnly = require('./middlewares/UserOnly.mdw');
+const SellerOnly = require('./middlewares/SellerOnly.mdw');
+
 const AdminOnly = require('./middlewares/AdminOnly.mdw');
 require('express-async-errors');
 
+const app = express();
 
 app.use(express.static("public"));
 app.use(morgan('dev'));
@@ -52,7 +55,6 @@ app.engine(
             isPast: val => {
                 const today = moment().format('YYYY-MM-DD HH:mm:ss');
                 const val_formated = moment(val).format('YYYY-MM-DD HH:mm:ss');
-                // console.log(val_formated);
                 return (today > val_formated) ? true : false;
             },
             or: (foo, bar) => (foo || bar),
