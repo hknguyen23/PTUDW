@@ -256,7 +256,12 @@ module.exports = {
                  from nguoidung 
                  where id = '${idUser}'`),
 
-    getAllUsers: () => db.load(`SELECT * FROM NGUOIDUNG`),
+    getAllUsers: offset => db.load(`SELECT * FROM NGUOIDUNG LIMIT ${config.paginate.limit} OFFSET ${offset}`),
+
+    countAllUsers: async() => {
+        const rows = await db.load(`SELECT COUNT(*) AS total FROM NGUOIDUNG`);
+        return rows[0].total;
+    },
 
     getUserById: id => db.load(`SELECT * FROM NGUOIDUNG WHERE ID = '${id}'`),
 
@@ -268,7 +273,20 @@ module.exports = {
 					JOIN NGUOIDUNG ND2 ON ND2.ID = CTDANHGIA.IDNguoiDanhGia
 				WHERE ND1.ID = '${id}'`),
 
+    deleteUser: entity => db.delete('DELETE FROM NGUOIDUNG WHERE ID = ?', [entity.ID]),
+
+    changeUserInfoById: entity => {
+        const condition = { ID: entity.ID };
+        delete entity.ID;
+        return db.patch('NGUOIDUNG', entity, condition);
+    },
+
     getBidderUpgradeRequest: () => db.load(`SELECT * FROM NGUOIDUNG WHERE XinNangCap = true;`),
+
+    countAllBidderRequest: async() => {
+        const rows = await db.load(`SELECT COUNT(*) AS total FROM NGUOIDUNG WHERE XinNangCap = true`);
+        return rows[0].total;
+    },
 
     getTop5HighestBidTimes: () => db.load(`SELECT * FROM SANPHAM 
                                            WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW()
@@ -284,11 +302,11 @@ module.exports = {
 
     // register
     getIdByEmail: email => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE Email = ?`, email),
-    getIdByUsername: username => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
+    getIdByUsername: username => db.loadSafe(`SELECT ID, TenTaiKhoan, MatKhau, Loai FROM NGUOIDUNG WHERE TenTaiKhoan = ?`, username),
 
     // reset password
     checkTimeoutToken: token =>
-        db.loadSafe(`SELECT token_expire, (
+        db.loadSafe(`SELECT ID, token_expire, (
                                         CASE
                                             WHEN token_expire < NOW() THEN 1
                                             ELSE 0
@@ -313,16 +331,20 @@ module.exports = {
 
     // finish auction (cron)
     checkExpireAuction: () =>
-        db.load(`SELECT SP.ID, CT.IDNguoiDauGia AS winner, ND.Email AS emailWinner, CT.Gia AS bid, SP.IDNguoiBan as seller, ND2.Email AS emailSeller
+        db.load(`SELECT SP.ID, SP.TenSanPham, CT.IDNguoiDauGia AS winner, ND.Email AS emailWinner, CT.Gia AS bid, SP.IDNguoiBan as seller, ND2.Email AS emailSeller
                 FROM SANPHAM SP 
                 LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                 LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
                 LEFT JOIN NGUOIDUNG ND2 ON SP.IDNguoiBan = ND2.ID
-                WHERE SP.TrangThai = 1  AND SP.NgayHetHan <= NOW() AND (CT.Gia IS NULL OR
+                WHERE SP.TrangThai = 1  AND ((SP.NgayHetHan <= NOW() AND (CT.Gia IS NULL OR
                                                                         CT.Gia = (
                                                                                     SELECT MAX(CT2.Gia) 
                                                                                     FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                                        ) )`),
+                                                                        ) ))
+                                        OR (SP.GiaMuaNgay <= CT.Gia AND CT.ThoiGianDauGia = (
+                                                                                    SELECT MIN(CT2.ThoiGianDauGia) 
+                                                                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                                        )) )`),
     setStatusSold: entity => {
         const condition = { ID: entity.id };
         delete entity.id;

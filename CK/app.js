@@ -8,10 +8,9 @@ const numeral = require('numeral');
 const moment = require('moment');
 const session = require('express-session');
 const UserOnly = require('./middlewares/UserOnly.mdw');
-const SellerOnly = require('./middlewares/SellerOnly.mdw');
+const AdminOnly = require('./middlewares/AdminOnly.mdw');
 require('express-async-errors');
 
-const app = express();
 
 app.use(express.static("public"));
 app.use(morgan('dev'));
@@ -19,7 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(morgan('common'))
 
 app.use(session({
     secret: 'secret text abcdef',
@@ -97,10 +95,10 @@ app.use('/user', require('./routes/home/home.route'));
 app.use('/productView', require('./routes/productView/productView.route'));
 app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
 
-app.use('/accountManagement', require('./routes/accountManagement/accountManagement.route'));
-app.use('/userView', require('./routes/admin/userView.route'));
-app.use('/yourPointAndDetail', require('./routes/accountManagement/yourPointAndDetail.route'));
-app.use('/bidderList', require('./routes/admin/bidderUpgradeRequestList.route'));
+app.use('/accountManagement', UserOnly, require('./routes/accountManagement/accountManagement.route'));
+app.use('/userView', AdminOnly, require('./routes/admin/userView.route'));
+app.use('/yourPointAndDetail', UserOnly, require('./routes/accountManagement/yourPointAndDetail.route'));
+app.use('/bidderList', AdminOnly, require('./routes/admin/bidderUpgradeRequestList.route'));
 
 
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
