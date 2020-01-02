@@ -8,12 +8,12 @@ tr:hover {
 
 table tr th{
 	text-align: left;
-	width: 25%;
+	width: 35%;
 }
 
 #second-col{
 	text-align: left;
-	width: 70%;
+	width: 60%;
 }
 
 tr th:hover, tr td:hover{

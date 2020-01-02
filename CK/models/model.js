@@ -313,7 +313,7 @@ module.exports = {
                                         END
                                       ) AS isExpire
                 FROM NGUOIDUNG WHERE token = ?	`, token),
-    updateToken: entity => {
+    updateNguoiDung: entity => {
         const condition = { ID: entity.id };
         delete entity.id;
 
