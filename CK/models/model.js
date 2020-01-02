@@ -386,7 +386,9 @@ module.exports = {
             module.exports.getProduct(proId),
             module.exports.getBiddingHistory(proId),
         ]);
-        await db.patch('sanpham', { gia: newbiddingHistory[0].gia }, { ID: proId });
+
+        const gia = (newbiddingHistory.length > 0) ? newbiddingHistory[0].gia : 1000;
+        await db.patch('sanpham', { gia }, { ID: proId });
         if (proDetail[0].ID_NG_THANG !== null) {
             await db.patch('sanpham', { IDNguoiThangDauGia: newbiddingHistory[0].id_ndg }, { ID: proId });
         }
