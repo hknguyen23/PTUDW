@@ -133,6 +133,7 @@ router.get('/won', async (req, res) => {
         next_value: +page + 1,    
         page,
         maxPages,
+        rateable: 1
     });
 })
 
@@ -220,6 +221,7 @@ router.get('/sold', async (req, res) => {
         next_value: +page + 1,    
         page,
         maxPages,
+        rateable: 1
     });
 })
 

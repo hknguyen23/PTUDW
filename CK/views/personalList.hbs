@@ -1,3 +1,55 @@
+{{#section 'css'}}
+<meta http-equiv="cache-control" content="no-cache" />
+{{/section}}
+{{#section 'js'}}
+<script>
+    $(document).ready(function() {
+        // force page reload, prevent caching
+        if(!!window.performance && window.performance.navigation.type == 2)
+        {
+            window.location.reload();
+        }   
+    });
+
+    function favorite(e) {
+        $.ajax({
+            type: 'POST',
+            data: {isFavorite: e.value, IDSanPham: e.name },
+            url: '/changeFav',
+            dataType: 'text',
+        });
+        e.value = 1 - e.value;
+    }
+    function rating(e, id) {
+        if (e.value == 1){
+            var box = prompt("Điểm +1. Nhận xét:")
+        }
+        else{
+            var box = prompt("Điểm -1. Nhận xét:")
+        }
+        if (box != null) {
+            $.ajax({
+                type: 'POST',
+                data: {DiemDanhGia: e.value, IDNguoiDuocDanhGia: e.name, IDSanPham: id, 
+                        NhanXet: box},
+                url: '/rating',
+                dataType: 'text',
+                timeout: 3000
+            });
+            var id1 = id + "_up"
+            var id2 = id + "_down"
+            if (e.value == 1){
+                $(`#${id1}`).addClass( "green-color" );
+                $(`#${id2}`).removeClass( "green-color" );
+            } 
+            else{
+                $(`#${id1}`).removeClass( "green-color" );
+                $(`#${id2}`).addClass( "green-color" );
+            }
+        }
+    }
+</script>
+{{/section}}
 <div class="row" id="body-row">
     <!--sidebar-->
     <div class="sidebar-container">
@@ -45,19 +97,8 @@
                         {{/if}}
                         <div class="img-wrap">
                             {{#if ../isAuthenticated}}
-                            <button class="asText bookmark" name="{{ID}}" value="{{isFavorite}}" onclick="mySubmit(this);">
+                            <button class="asText bookmark" name="{{ID}}" value="{{isFavorite}}" onclick="favorite(this);">
                                 <i class="fa fa-bookmark fa-lg align-top {{#if isFavorite}}green-color{{/if}}" aria-hidden="true"></i></button>
-                            <script>
-                                function mySubmit(e) {
-                                    $.ajax({
-                                        type: 'POST',
-                                        data: {isFavorite: e.value, IDSanPham: e.name },
-                                        url: '/changeFav',
-                                        dataType: 'text',
-                                    });
-                                    e.value = 1 - e.value;
-                                }
-                            </script>
                             {{/if}}  
                             <a href="/productView/{{ID}}"><img class="img-fluid mx-auto d-block"
                                 src="{{MainImg}}" alt=""></a>
@@ -78,8 +119,24 @@
                             <div class="align-self-end">
                                 <span class="font-weight-bold">{{formatMoney Gia}}</span>
                             </div>
-                            <span class="maskHalf d-flex justify-content-end hidden {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">({{HoTen}})</span>
+                            <span class="maskHalf d-flex justify-content-end hidden {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">({{TenTaiKhoan}})</span>
                             <h3 class="mt-auto align-self-center countdown hidden">{{formatDate NgayHetHan}}</h3>
+                            {{#if ../rateable}}
+                            <div class="d-flex justify-content-center">
+                                <button class="asText" {{#if_eq ../pageTitle "Đã thắng"}}name="{{IDNguoiBan}}"{{/if_eq}}
+                                                       {{#if_eq ../pageTitle "Đã bán"}}name="{{IDNguoiThangDauGia}}"{{/if_eq}}
+                                                        value="1" onclick="rating(this, {{ID}});">
+                                    <i id="{{ID}}_up" class="fa fa-thumbs-up mx-2 {{#if_eq DiemDanhGia 1}}green-color{{/if_eq}}"></i>
+                                </button>
+                                <button class="asText" {{#if_eq ../pageTitle "Đã thắng"}}name="{{IDNguoiBan}}"{{/if_eq}}
+                                                       {{#if_eq ../pageTitle "Đã bán"}}name="{{IDNguoiThangDauGia}}"{{/if_eq}}
+                                                        value="-1" onclick="rating(this, {{ID}});">
+                                    <i id="{{ID}}_down" class="fa fa-thumbs-down mx-2 {{#if_eq DiemDanhGia -1}}green-color{{/if_eq}}"></i>
+                                </button>
+                            </div>
+                            {{/if}}
+                            
+
                             <div class="d-flex justify-content-between small">
                                 <span> {{SoLanDuocDauGia}} Lượt</span>
                                 <span>{{formatDate NgayDang}}</span>

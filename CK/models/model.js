@@ -27,7 +27,7 @@ module.exports = {
         return rows[0].total;
     },
     getProductByCat: (id, idND, offset) => {
-        const guest = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen
+        const guest = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                                 ,(
                                     CASE
                                         WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
@@ -43,7 +43,7 @@ module.exports = {
                                                  )
                     ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
                     LIMIT ? OFFSET ?`;
-        const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen
+        const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                             ,(
                                 CASE
                                     WHEN EXISTS
@@ -79,7 +79,8 @@ module.exports = {
     },
 
     getPersonalListByID: (type, id, offset) => {
-        var head = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen
+        var head = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, 
+                           SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan, SP.IDNguoiBan, SP.IDNguoiThangDauGia
                             ,(
                                 CASE
                                     WHEN EXISTS
@@ -115,9 +116,11 @@ module.exports = {
                         WHERE CT3.IDNguoiDauGia = ${id} AND SP.NgayHetHan > NOW() AND ND2.ID = ${id}`;
                 break;
             case 2: // won
-                diff = `FROM  SANPHAM SP 
+                diff = `, DG.DiemDanhGia
+                        FROM  SANPHAM SP 
                         LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
-                        LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID           
+                        LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
+                        LEFT JOIN CHITIETDANHGIA DG ON DG.IDNguoiDanhGia = ${id} AND DG.IDNguoiDuocDanhGia = SP.IDNguoiBan AND DG.IDSanPham = SP.ID
                         CROSS JOIN NGUOIDUNG ND2
                         WHERE SP.IDNguoiThangDauGia = ${id} AND ND2.ID = ${id}`;
                 break;
@@ -129,9 +132,11 @@ module.exports = {
                         WHERE SP.IDNguoiBan = ${id} AND ND2.ID = ${id}`;
                 break;
             case 4: // sold
-                diff = `FROM  SANPHAM SP 
+                diff = `,DG.DiemDanhGia
+                        FROM  SANPHAM SP 
                         LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                         LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
+                        LEFT JOIN CHITIETDANHGIA DG ON DG.IDNguoiDanhGia = ${id} AND DG.IDNguoiDuocDanhGia = SP.IDNguoiThangDauGia AND DG.IDSanPham = SP.ID
                         CROSS JOIN NGUOIDUNG ND2
                         WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW() AND ND2.ID = ${id}`;
                 break;
@@ -187,7 +192,7 @@ module.exports = {
     },
     getSearchListbyKey: (key, idLoai, by, order, idND, offset) => {
 
-        const guest = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen
+        const guest = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                                 ,(
                                     CASE
                                         WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
@@ -356,11 +361,23 @@ module.exports = {
         return db.patch('SANPHAM', entity, condition)
     },
 
+    // Rating
+    findRating: entity => db.loadSafe('SELECT * FROM CHITIETDANHGIA WHERE IDNguoiDanhGia = ? AND IDNguoiDuocDanhGia = ? AND IDSanPham = ?', [entity.IDNguoiDanhGia, entity.IDNguoiDuocDanhGia, entity.IDSanPham]),
+
+    addRating: entity => db.add('CHITIETDANHGIA', entity),
+
+    delRating: (entity) => 
+        db.delete('DELETE FROM CHITIETDANHGIA WHERE IDNguoiDanhGia = ? AND IDNguoiDuocDanhGia = ? AND IDSanPham = ?', [entity.IDNguoiDanhGia, entity.IDNguoiDuocDanhGia, entity.IDSanPham]),
+    
+    // Favorite
+    addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
+
+    delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
+
+    // Bid
     addBidDetail: entity => db.add('chitietdaugia', entity),
 
     addUser: entity => db.add('NGUOIDUNG', entity),
-
-    addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
 
     addNewProduct: (entity) => db.add('sanpham', entity),
 
@@ -375,7 +392,6 @@ module.exports = {
         }
     },
 
-    delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
 
     updateProduct: entity => {
         const condition = { id: entity.idsanpham };

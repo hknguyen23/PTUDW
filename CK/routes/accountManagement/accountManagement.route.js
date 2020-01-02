@@ -110,6 +110,6 @@ router.post("/modify" ,async (req, res) => {
 
 	await model.updateNguoiDung(entity);
 	res.redirect('/accountManagement');
-    }
+    
 });
 module.exports = router;

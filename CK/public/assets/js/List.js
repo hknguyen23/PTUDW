@@ -19,9 +19,12 @@ $(document).ready(function() {
     $(".maskHalf").each (
         function maskHalf() {
             var str = this.innerHTML;
-            var pos = str.lastIndexOf(" ");
-        
-            var mask = "(" +"****" + str.substring(pos);
+            var pos = str.length;
+            var mask = "("
+            for (i=0; i < pos-6; i++){
+                mask = mask + "*"
+            }
+            mask = mask + str.substring(pos - 5);
             this.innerHTML = mask;
             $(this).removeClass( "hidden" )
         }
