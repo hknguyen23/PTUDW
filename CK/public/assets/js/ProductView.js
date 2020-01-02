@@ -39,3 +39,9 @@ $("a.history_expand").click(function() {
     $(this).find('i').toggleClass("fa-angle-double-up fa-angle-double-down");
 
 });
+
+$(document).ready(function() {
+    $('.wrapper').click(function() {
+        $('.div1, .div2').toggle();
+    });
+});

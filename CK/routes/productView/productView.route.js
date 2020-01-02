@@ -1,11 +1,12 @@
 const express = require("express");
 const moment = require('moment');
 const model = require("../../models/model");
+const date = require("date-and-time");
 const router = express.Router({ mergeParams: true });
-
+const SellerOnly = require('../../middlewares/SellerOnly.mdw');
 const UserOnly = require('../../middlewares/UserOnly.mdw');
-router.use(express.static("public"));
 
+router.use('/:Id', express.static("public"));
 
 router.get("/:Id", async(req, res) => {
     //Id = id sản phẩm
@@ -14,7 +15,7 @@ router.get("/:Id", async(req, res) => {
     if (res.locals.authUser !== null)
         userId = res.locals.authUser.ID;
 
-    const [productDetails, image, biddingHistory, relationProduct, favProduct, userScore, hasEverBid] =
+    const [productDetails, image, biddingHistory, relationProduct, favProduct, userScore, hasEverBid, isBanned] = //hasEverBid <=> has this User win anny items?
     await Promise.all([
         model.getProduct(productId),
         model.getImage(productId),
@@ -22,11 +23,16 @@ router.get("/:Id", async(req, res) => {
         model.getRelation(productId),
         model.getFavorite(userId, productId),
         model.getScore(userId),
-        model.countWonListbyID(userId)
+        model.countWonListbyID(userId),
+        model.checkIsBanned(productId, userId)
     ]);
 
     if (productDetails.length === 0) // nhập đường dẫn bậy
         return res.redirect('/');
+
+    if (userId === productDetails[0].IDNGUOIBAN)
+        res.locals.ownedByThisUser = true;
+    else res.locals.ownedByThisUser = false;
 
     //mask name in bidding history
     for (let i = 0; i < biddingHistory.length; i++) {
@@ -53,6 +59,7 @@ router.get("/:Id", async(req, res) => {
         userId,
         userScore: userScore[0],
         hasEverBid,
+        isBanned,
         errMsg
     });
 });
@@ -62,30 +69,28 @@ router.post("/:Id", UserOnly, async(req, res) => {
     const productId = +req.params.Id;
     const userId = res.locals.authUser.ID;
     const details = await model.getProduct(productId);
-
-    // check again ----------
-
-    if (req.body.price <= details[0].GIA) {
-        req.session.proView_errMsg = "Đấu giá thất bại! Giá đặt phải lớn hơn giá hiện tại."
-        return res.redirect(req.headers.referer);
-    }
-    if ((req.body.price - details[0].GIA) % details[0].BUOCGIA !== 0) {
-        req.session.proView_errMsg = "Đấu giá thất bại! Giá đặt không đúng bước giá."
-        return res.redirect(req.headers.referer);
-    }
+    let errMsg = []
+        // check again ----------
+    if (req.body.price <= details[0].GIA)
+        errMsg.push("Đấu giá thất bại! Giá đặt phải lớn hơn giá hiện tại.");
+    if ((req.body.price - details[0].GIA) % details[0].BUOCGIA !== 0)
+        errMsg.push("Đấu giá thất bại! Giá đặt không đúng bước giá.");
 
     const today = moment().format('YYYY-MM-DD HH:mm:ss');
-    const endate = moment(details[0].NGAYHETHAN).format("YYYY-MM-DD HH:mm:ss");
-    if (today > endate) {
-        req.session.proView_errMsg = "Đấu giá thất bại! Sản phẩm đã hết hạn đấu giá"
-        return res.redirect(req.headers.referer);
-    } //else { console.log("ko dau dc"); }
+    var endate = moment(details[0].NGAYHETHAN);
+    endate = endate.format("YYYY-MM-DD HH:mm:ss");
+    if (today > endate)
+        req.session.proView_errMsg = "Đấu giá thất bại! Sản phẩm đã hết hạn đấu giá";
     // end check ---------------
+    if (errMsg.length !== 0) {
+        req.session.proView_errMsg = errMsg;
+        return res.redirect(req.headers.referer);
+    }
 
     var entity1 = {
         idnguoidaugia: userId,
         idsanpham: productId,
-        thoigiandaugia: moment().format('YYYY-MM-DD hh:mm:ss'),
+        thoigiandaugia: today,
         gia: req.body.price
     };
     const solanduocdaugia = details[0].SOLAN + 1;
@@ -95,6 +100,22 @@ router.post("/:Id", UserOnly, async(req, res) => {
         gia: entity1.gia,
         solanduocdaugia
     };
+
+    if (details[0].TUDONGGIAHAN === 1) {
+        // Do your operations
+        var endDate = moment(details[0].NGAYHETHAN);
+        endDate = endDate.format('YYYY-MM-DD HH:mm:ss');
+        var diff = moment(endDate).diff(today, 'minutes');
+        if (diff <= 5) // nếu còn 5 phút
+        {
+            var newExpiredDate = moment(endDate).add(10, 'minutes');
+            entity2.ngayhethan = newExpiredDate.format('YYYY-MM-DD HH:mm:ss');
+        }
+    }
+    // console.log(today);
+    // console.log(endDate);
+    // console.log(diff);
+
     if (giamuangay !== null) {
         if (entity1.gia >= giamuangay) // nếu giá đặt lớn hơn giá hiện tại
             entity2.idnguoithangdaugia = userId;
@@ -105,4 +126,90 @@ router.post("/:Id", UserOnly, async(req, res) => {
     ]);
     res.redirect(req.headers.referer);
 });
+
+router.post("/:proID/rejectBidding/:IDToReject", SellerOnly, async(req, res) => {
+    console.log("your here");
+    const productId = +req.params.proID;
+    const ownerId = res.locals.authUser.ID;
+    const idToReject = +req.params.IDToReject;
+    let errMsg = [];
+
+    //check again
+    const [productDetails, biddingHistory] = await Promise.all([
+        model.getProduct(productId),
+        model.getBiddingHistory(productId)
+    ]);
+    console.log(productDetails);
+    console.log(biddingHistory);
+
+    if (productDetails[0].IDNGUOIBAN !== ownerId) // kiểm tra chính chủ
+        errMsg.push("Bạn không phải chủ sở hữu của sản phẩm này");
+    if (ownerId === idToReject)
+        errMsg.push("Bạn là chủ sỡ hữu sản phẩm này nên không thể chặn");
+    var count = 0;
+    for (let i = 0; i < biddingHistory.length; i++) {
+        if (idToReject === biddingHistory[i].id_ndg) { count = 1; break; }
+    }
+    if (count === 0)
+        errMsg.push("Người bị chặn không có trong lịch sử đấu giá");
+
+    if (errMsg.length !== 0) {
+        req.session.proView_errMsg = errMsg;
+        return res.redirect(`/productView/${productId}`);
+    }
+    // end check -------------------
+    await model.rejectBidding(productId, idToReject);
+    res.redirect(req.headers.referer);
+});
+
+router.get('/:Id/appendDes', SellerOnly, async(req, res) => {
+    const productId = +req.params.Id;
+    //check
+    const [productDetails] = await Promise.all([
+        model.getProduct(productId)
+    ]);
+    if (productDetails.length === 0) {
+        return res.send("Không tồn tại sản phẩm này");
+    }
+    // console.log(productDetails[0].IDNGUOIBAN);
+    // console.log(res.locals.authUser.ID);
+    // console.log(productDetails[0].IDNGUOIBAN !== res.locals.authUser.ID);
+    if (productDetails[0].IDNGUOIBAN !== res.locals.authUser.ID) {
+        req.session.proView_errMsg = ["Bạn không phải chủ của sản phẩm, nên không thể thêm mô tả"];
+        return res.redirect(`/productView/${productId}`);
+    }
+    res.render("appendDes", {
+        title: "Bổ sung mô tả",
+        css: ["HomeStyle.css"],
+        js: [],
+        proID: req.params.Id
+    });
+});
+
+
+router.post('/:Id/appendDes', SellerOnly, async(req, res) => {
+    const productId = +req.params.Id;
+    //check
+    const [productDetails] = await Promise.all([
+        model.getProduct(productId)
+    ]);
+    if (productDetails.length === 0) {
+        return res.send("Không tồn tại sản phẩm này");
+    }
+    if (productDetails[0].IDNGUOIBAN !== res.locals.authUser.ID) {
+        req.session.proView_errMsg = ["Bạn không phải chủ của sản phẩm, nên không thể thêm mô tả"];
+        return res.redirect(`/productView/${productId}`);
+    }
+    var now = moment().format("YYYY-MM-DD HH:mm:ss");
+    var oldDes = productDetails[0].MOTADAI;
+    var newDes = oldDes + 'Thêm vào lúc: ' + now + '<br/>' + req.body.fulldes;
+    console.log(newDes);
+    if (newDes.length >= 1000) {
+        req.session.proView_errMsg = ["Mô tả quá dài, không thể thêm!"];
+        return res.redirect(`/productView/${productId}`);
+    }
+    await model.appendDes(productId, newDes);
+    res.redirect(`/productView/${productId}`);
+});
+
 module.exports = router;

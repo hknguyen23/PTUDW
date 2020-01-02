@@ -1,4 +1,5 @@
-.bidding_history tr td, .bidding_history tr th {
+.bidding_history tr td,
+.bidding_history tr th {
     padding: 5px;
     width: 200px;
     cursor: pointer;
@@ -9,6 +10,14 @@
     color: #FFF;
 }
 
+.wrapper {
+    cursor: pointer;
+}
+
+.hidden-text {
+    display: none;
+}
+
 @media all and (max-width: 1000px) {
     .card>div {
         display: block !important;
@@ -16,16 +25,16 @@
         margin-left: auto;
         margin-right: auto;
     }
-    .left, .right {
+    .left,
+    .right {
         width: 100% !important;
     }
-    .left #main_window { 
+    .left #main_window {
         width: auto;
         margin-left: auto;
         margin-right: auto;
-    }  
-
-    .right .row div  {
+    }
+    .right .row div {
         display: block !important;
         text-align: left !important;
     }

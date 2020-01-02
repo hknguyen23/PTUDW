@@ -2,7 +2,7 @@ const model = require('../models/model');
 
 module.exports = function(app) {
     app.use(async(req, res, next) => {
-        const [catLV1, catLV2] = await Promise.all([
+        const [catLV1, catLV2, userType] = await Promise.all([
             model.getCategoriesLV1(),
             model.getCategoriesLV2(),
         ]);
@@ -16,7 +16,15 @@ module.exports = function(app) {
         }
         res.locals.isAuthenticated = req.session.isAuthenticated;
         res.locals.authUser = req.session.authUser;
-        //console.log(req.session);
+        // //console.log(req.session);
+        // if (res.locals.authUser !== null) {
+        //     const user = await model.getUserById(res.locals.authUser.ID);
+        //     if (user[0].Loai === 1)
+        //         res.locals.isBidder = true;
+        //     else if (user[0].Loai === 2)
+        //         res.locals.isSeller = true;
+        //     else res.locals.isAdmin = true;
+        // }
         next();
     })
 };

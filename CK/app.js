@@ -9,7 +9,6 @@ const moment = require('moment');
 const session = require('express-session');
 const UserOnly = require('./middlewares/UserOnly.mdw');
 const SellerOnly = require('./middlewares/SellerOnly.mdw');
-
 const AdminOnly = require('./middlewares/AdminOnly.mdw');
 require('express-async-errors');
 
@@ -58,12 +57,20 @@ app.engine(
                 return (today > val_formated) ? true : false;
             },
             or: (foo, bar) => (foo || bar),
+            // or: function(foo) {
+            //     var result = foo;
+            //     for (var i = 1; i < arguments.length; i++) {
+            //         result = result || arguments[i];
+            //         console.log(result);
+            //     }
 
+            //     return result;
+            // },
             countDown: val => {
-                console.log(val);
-                const today = moment().format('YYYY/MM/DD HH:mm:ss');
-                const endDate = moment(val).format('YYYY/MM/DD HH:mm:ss');
-
+                const today = moment().format('YYYY-MM-DD HH:mm:ss');
+                var endDate = moment(val);
+                endDate = endDate.format('YYYY-MM-DD HH:mm:ss');
+                console.log(endDate);
                 if (today > endDate)
                     return endDate;
                 var duration = moment(endDate).diff(today, 'days');
@@ -84,9 +91,6 @@ require('./middlewares/cron.mdw')(app);
 // user route
 app.use('/', require('./routes/home/home.route'));
 app.use('/', require('./routes/changeFav.route'));
-
-app.use('/productView', require('./routes/productView/productView.route'));
-
 app.use('/lists', require('./routes/lists/searchable.lists.route'));
 app.use('/lists/acc', UserOnly, require('./routes/lists/personal.lists.route'));
 app.use('/lists/category', require('./routes/lists/category.lists.route'));
@@ -95,7 +99,6 @@ app.use('/lists/search', require('./routes/lists/searchable.lists.route'));
 app.use('/postProduct', SellerOnly, require('./routes/seller/postProduct.seller.route'));
 app.use('/user', require('./routes/home/home.route'));
 app.use('/productView', require('./routes/productView/productView.route'));
-app.use('/postProduct', require('./routes/seller/postProduct.seller.route'));
 
 app.use('/accountManagement', UserOnly, require('./routes/accountManagement/accountManagement.route'));
 app.use('/userView', AdminOnly, require('./routes/admin/userView.route'));
