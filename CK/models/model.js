@@ -3,7 +3,7 @@ const config = require('../config/default.json');
 
 module.exports = {
     getProduct: id =>
-        db.load(`SELECT SP.ID, SP.TENSANPHAM , SP.GIA, SP.GIAMUANGAY, SP.NGAYDANG, SP.NGAYHETHAN, SP.BUOCGIA, SP.TUDONGGIAHAN, SP.LUONDUOCDAUGIA,
+        db.load(`SELECT SP.ID, SP.TENSANPHAM , SP.GIA, SP.GIAMUANGAY, SP.NGAYDANG, SP.NGAYHETHAN, SP.BUOCGIA, SP.TUDONGGIAHAN, SP.LUONDUOCDAUGIA, SP.IDNGUOIBAN,
                         SELLER.TENTAIKHOAN AS SELLER,SELLER.TONGDIEMDANHGIA AS DIEMSELLER, 
                         SP.MOTADAI, SP.SOLANDUOCDAUGIA AS SOLAN, SP.IDNGUOITHANGDAUGIA AS ID_NG_THANG, LOAICAP1.TENLOAI AS LOAI1, LOAICAP2.TENLOAI AS LOAI2
                 FROM SANPHAM SP JOIN NGUOIDUNG SELLER ON SP.IDNGUOIBAN = SELLER.ID
@@ -18,7 +18,7 @@ module.exports = {
         db.load(`select ndg.id as id_ndg,ndg.tentaikhoan, ndg.hoten,ndg.tongdiemdanhgia as diemndg, ctdg.thoigiandaugia as thoigian, ctdg.gia
                   from chitietdaugia ctdg join nguoidung ndg on ctdg.idnguoidaugia = ndg.id
                   where idsanpham = '${id}'
-                  order by ctdg.gia desc , ctdg.thoigiandaugia asc`),
+                  order by ctdg.thoigiandaugia desc, ctdg.gia desc`),
 
     // route list                  
     countProductByCat: async id => {
@@ -377,11 +377,37 @@ module.exports = {
 
     delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
 
+    rejectBidding: async function(proId, idToReject) {
+        await Promise.all([
+            db.delete('delete from chitietdaugia where idnguoidaugia = ? and idsanpham = ?', [idToReject, proId]),
+            db.add('danhsachcam', { idnguoidung: idToReject, idsanpham: proId }),
+        ]);
+        const [proDetail, newbiddingHistory] = await Promise.all([
+            module.exports.getProduct(proId),
+            module.exports.getBiddingHistory(proId),
+        ]);
+        await db.patch('sanpham', { gia: newbiddingHistory[0].gia }, { ID: proId });
+        if (proDetail[0].ID_NG_THANG !== null) {
+            await db.patch('sanpham', { IDNguoiThangDauGia: newbiddingHistory[0].id_ndg }, { ID: proId });
+        }
+        console.log("chặn xong");
+        // cứ lấy người đầu tiên của lịch sử đấu giá sau khi cấm thì sẽ là người giữ giá cao nhất ko bị cấm
+
+    },
+
+    checkIsBanned: async function(proId, userId) {
+        const res = await db.load(`select * from danhsachcam where idnguoidung = ${userId} and idsanpham = ${proId}`);
+        if (res.length === 0)
+            return false;
+        return true;
+    },
+
+    appendDes: (proId, newFullDes) => db.patch('sanpham', { motadai: newFullDes }, { id: proId }),
+
     updateProduct: entity => {
         const condition = { id: entity.idsanpham };
         delete entity.idsanpham;
-        console.log(entity);
-        //console.log(`update sanpham set ? where ?`, [entity, condition]);
+        //console.log(entity);
         return db.patch('sanpham', entity, condition);
     }
 };

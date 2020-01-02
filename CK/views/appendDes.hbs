@@ -1,0 +1,31 @@
+<div class="mx-auto my-4" style="width: 75%;">
+    <div class="card text-center">
+        <h4 class="card-header font-weight-bold text-danger">
+            <i class="fa fa-pencil" aria-hidden="true"></i> Bổ sung thông tin mô tả sản phẩm
+        </h4>
+        <div class="card-body text-left">
+            <form action="/productView/{{proID}}/appendDes" method="POST"
+                onsubmit="javascript: return confirm('Bạn chắc chắn muốn thêm');">
+                <textarea name="fulldes" id="txtFullDes" cols="30" rows="10"></textarea>
+                <button class="btn btn-outline-success my-3" type="submit">Xác nhận</button>
+                <a href="/productView/{{proID}}" role="button" class="btn btn-outline-primary">Trở về chi tiết sản phẩm</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script
+    src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=x2y7fn9k7dxnxh9q4xbzm4v0afd7jyn3uv8fe3ug89t1i4lu"></script>
+<script>
+    tinymce.init({
+        selector: '#txtFullDes',
+        height: 400,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+            'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright',
+            'forecolor backcolor',
+            'table link image media',
+        ],
+    });
+</script>

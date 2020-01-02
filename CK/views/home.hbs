@@ -19,7 +19,11 @@
                                                 <h6>{{TenSanPham}}</h6>
                                                 <p>Giá: {{formatMoney Gia}}</p>
                                                 <p>Thời gian còn lại: {{formatDate NgayHetHan}}</p>
-                                                <p>Số lần đấu giá: {{SoLanDuocDauGia}}</p>
+                                                <p>Số lần đấu giá: {{#if SoLanDuocDauGia}}
+                                                    {{SoLanDuocDauGia}}
+                                                    {{else}}
+                                                    Chưa có lượt đấu giá nào
+                                                    {{/if}} </p>
                                                 <p><a class="btn btn-lg btn-primary" href="/productView/{{ID}}"
                                                         role="button">Xem
                                                         chi tiết</a></p>
@@ -59,7 +63,11 @@
                                                     <h6>{{TenSanPham}}</h6>
                                                     <p>Giá: {{formatMoney Gia}}</p>
                                                     <p>Thời gian còn lại: {{formatDate NgayHetHan}}</p>
-                                                    <p>Số lần đấu giá: {{SoLanDuocDauGia}}</p>
+                                                    <p>Số lần đấu giá: {{#if SoLanDuocDauGia}}
+                                                        {{SoLanDuocDauGia}}
+                                                        {{else}}
+                                                        Chưa có lượt đấu giá nào
+                                                        {{/if}} </p>
                                                     <p><a class="btn btn-lg btn-primary" href="/productView/{{ID}}"
                                                             role="button">Xem
                                                             chi tiết</a></p>
@@ -100,7 +108,11 @@
                                                         <h6>{{TenSanPham}}</h6>
                                                         <p>Giá: {{formatMoney Gia}}</p>
                                                         <p>Thời gian còn lại: {{formatDate NgayHetHan}}</p>
-                                                        <p>Số lần đấu giá: {{SoLanDuocDauGia}}</p>
+                                                        <p>Số lần đấu giá: {{#if SoLanDuocDauGia}}
+                                                            {{SoLanDuocDauGia}}
+                                                            {{else}}
+                                                            Chưa có lượt đấu giá nào
+                                                            {{/if}} </p>
                                                         <p><a class="btn btn-lg btn-primary" href="/productView/{{ID}}"
                                                                 role="button">Xem
                                                                 chi tiết</a></p>

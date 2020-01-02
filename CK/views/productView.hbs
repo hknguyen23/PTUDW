@@ -1,9 +1,9 @@
-<main class="main" role="main">
+<div class="main" role="main">
     <div id="page-content-wrapper">
         <div class="container pt-3">
             <div>
-                <div class="float-left w-65" style="color: royalblue;"> Danh mục: {{details.LOAI1}} <i
-                        class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>
+                <div class="float-left w-65" style="color: royalblue;">
+                    Danh mục: {{details.LOAI1}} <i class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>
                     {{details.LOAI2}}
                     <i class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>
                     {{details.TENSANPHAM}}
@@ -34,7 +34,10 @@
                 <button class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                {{errMsg}}
+                {{#each errMsg}}
+                {{this}}
+                <br>
+                {{/each}}
             </div>
             {{/if}}
             <div class="card" style="border: none;">
@@ -49,7 +52,6 @@
                                     onmouseover="show(this.id)" />
                             </div>
                             {{/each}}
-
                         </div>
                     </div>
 
@@ -65,7 +67,7 @@
 
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
-                                Giá hiện tại (đ):
+                                Giá hiện tại (VNĐ):
                             </div>
                             <div class="text-left col-md-8" style="color:tomato;" id="current_price"
                                 name="current_price">
@@ -75,7 +77,7 @@
                         {{#if (isDefinedVal details.GIAMUANGAY)}}
                         <div class="row my-4">
                             <div class="col-md-4 text-right">
-                                Giá mua ngay (đ):
+                                Giá mua ngay (VNĐ):
                             </div>
                             <div class="text-left col-md-8" style="color:tomato;" id="current_price"
                                 name="current_price">
@@ -130,14 +132,16 @@
                             <div class="col-md-4 text-right">
                                 Mô tả sản phẩm:
                             </div>
-                            <div class="rounded-lg col-md-7 text-left overflow-auto p-1"
-                                style="border: 1px solid black; height: 165px;" id="exp_date" name="exp_date">
-                                {{!-- 三星 Galaxy S10 是韩国三星公司推出的新一代智能手机产品，
-                                搭载高通骁龙 855 处理器，屏幕 6.1 英寸；后置三摄，
-                                分别为 1200 像素长焦摄像头，1200 万广角摄像头和 1600万 超广角摄像头。
-                                北京时间 2019 年 2 月 21 日，三星 Galaxy S10 在旧金山正式发布；
-                                2019 年 2 月 28 日，三星在乌镇举行发布会发布国行版，2019 年 3 月 8 日正式开售。 --}}
-                                {{{details.MOTADAI}}}
+                            <div class="col-md-8">
+                                <div class="card-header rounded-lg text-left overflow-auto p-1"
+                                    style="border: 1px solid grey; height: 250px;">
+                                    {{{details.MOTADAI}}}
+                                </div>
+                                {{#if ownedByThisUser}}
+                                <a class="text-info float-right" href="/productView/{{details.ID}}/appendDes">Thêm mô tả
+                                    <i class="fa  fa-angle-right text-info" aria-hidden="true"></i></a>
+
+                                {{/if}}
                             </div>
                         </div>
                         {{!-- userid {{isDefinedVal userId}}
@@ -145,11 +149,13 @@
                         nhỏ hơn 8 : {{isLessThanOrEqual userScore.diem 8}} --}}
 
                         <!-- bid fields -->
-                        {{!-- {{ isPast details.NGAYHETHAN}} --}}
-                        {{#if (or (isPast details.NGAYHETHAN) (isDefinedVal details.ID_NG_THANG))}}
-                        {{!-- khóa đấu giá nếu hết hạn --}}
+                        {{#if (or ownedByThisUser (or isBanned (or (isPast details.NGAYHETHAN) (isDefinedVal details.ID_NG_THANG)))   )}}
+                        {{!-- khóa đấu giá nếu thỏa --}}
+                        {{#if isBanned}}
+                        <div class="text-danger">Bạn không thể tiếp tục đấu giá sản phẩm này vì người bán đã từ chối
+                            quyền của bạn</div>
+                        {{/if}}
                         {{else}}
-                        {{!-- {{#if (isDefinedVal userId)}} --}}
                         {{#if details.LUONDUOCDAUGIA}}
                         <div>
                             <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
@@ -213,9 +219,8 @@
                         </div>
                         {{/if}}
                         {{/if}}
-                        {{!-- {{/if}} --}}
-
                         {{/if}}
+
                         {{!-- lịch sử đấu giá --}}
                         <div class="mt-3">
                             <a href="#history" class="history_expand" data-toggle="collapse">Xem lịch sử đấu giá
@@ -224,15 +229,40 @@
                                 <table name="bidding_history" id="table" class="bidding_history mt-3 table-hover"
                                     align="center" border="1">
                                     <tr>
-                                        <th>Thời điểm</th>
-                                        <th>Người mua</th>
-                                        <th>Giá</th>
+                                        <th scope="col">Thời điểm</th>
+                                        <th scope="col">Người mua</th>
+                                        <th scope="col">Giá</th>
+                                        {{#if ownedByThisUser}}
+                                        <th scope="col">Từ chối ra giá</th>
+                                        {{/if}}
                                     </tr>
                                     {{#each this.biddingHistory}}
                                     <tr>
                                         <td>{{formatDateTime thoigian}}</td>
                                         <td id="{{id_ndg}}">{{tentaikhoan}}</td>
                                         <td>{{formatMoney gia}}</td>
+                                        {{#if ../ownedByThisUser}}
+                                        <td>
+                                            <form method="POST"
+                                                action="/productView/{{../details.ID}}/rejectBidding/{{id_ndg}}">
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-trash-o"
+                                                        aria-hidden="true"></i> Từ chối</button>
+                                            </form>
+                                            {{!-- <script>
+                                                function reject(e) {
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        data: {
+                                                            id: {{../ details.ID }}
+                                                userToRecject: { { id_ndg } }
+                                                        },
+                                                url: `/productView/rejectBidding`,
+                                                    dataType: 'text',
+                                                    });
+                                                }
+                                            </script> --}}
+                                        </td>
+                                        {{/if}}
                                     </tr>
                                     {{/each}}
                                 </table>
@@ -249,38 +279,35 @@
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
                     <div class="carousel-inner" role="listbox">
                         {{#each this.relationProduct}}
-                        {{#if @index}}
-                        <div class="carousel-item">
-                            {{else}}
-                            <div class="carousel-item active">
-                                {{/if}}
-                                <div class="col-md-4">
-                                    <div class="card card-body">
-                                        <img class="img-fluid" src="{{avatar}}">
-                                        <h6>{{tensanpham}}</h6>
-                                        <p>Giá: {{formatMoney gia}}</p>
-                                        <p>Thời gian còn lại: {{formatDate ngayhethan}}</p>
-                                        <p>Số lần đấu giá: {{solan}}</p>
-                                        <p><a class="btn btn-lg btn-primary" href="/productView/{{id}}"
-                                                role="button">Xem
-                                                chi tiết</a></p>
-                                    </div>
+                        <div class="carousel-item {{#if @index}}  {{else}}active {{/if}}">
+                            <div class="col-md-4">
+                                <div class="card card-body">
+                                    <img class="img-fluid" src="{{avatar}}">
+                                    <h6>{{tensanpham}}</h6>
+                                    <p>Giá: {{formatMoney gia}}</p>
+                                    <p>Thời gian còn lại: {{formatDate ngayhethan}}</p>
+                                    <p>Số lần đấu giá: {{#if solan}}
+                                        {{solan}}
+                                        {{else}}
+                                        Chưa có lượt đấu giá nào
+                                        {{/if}} </p>
+                                    <p><a class="btn btn-lg btn-primary" href="/productView/{{id}}" role="button">Xem
+                                            chi tiết</a></p>
                                 </div>
                             </div>
-                            {{/each}}
                         </div>
-
-                        <a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
-                            <i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;"
-                                aria-hidden="true"></i>
-                        </a>
-                        <a class="right carousel-control-next w-auto" href="#myCarousel" role="button"
-                            data-slide="next">
-                            <i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;"
-                                aria-hidden="true"></i>
-                        </a>
+                        {{/each}}
                     </div>
+                    <a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
+                        <i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;"
+                            aria-hidden="true"></i>
+                    </a>
+                    <a class="right carousel-control-next w-auto" href="#myCarousel" role="button" data-slide="next">
+                        <i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;"
+                            aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </div>
-</main>
+    </div>
+</div>

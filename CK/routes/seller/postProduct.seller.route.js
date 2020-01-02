@@ -9,7 +9,7 @@ const rename = util.promisify(fs.rename);
 const newDirectory = Date.now();
 const storage = multer.diskStorage({
     filename: function(req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
+        cb(null, Date.now() + file.originalname);
     },
     destination: function(req, file, cb) {
         destination = `./public/assets/images/product/${newDirectory}`;

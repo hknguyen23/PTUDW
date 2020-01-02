@@ -4,11 +4,11 @@ const emailserver = require('../middlewares/email.mdw');
 
 module.exports = function(app) {
     new cron.schedule("*/5 * * * * *", async function() {
-        console.log("running a task every 5 second");
+        //console.log("running a task every 5 second");
         const check = await model.checkExpireAuction();
 
         for (i = 0; i < check.length; i++) {
-            console.log("finish: " + check[i].ID);
+            //console.log("finish: " + check[i].ID);
             if (check[i].winner == undefined) {
                 const status = {
                     id: check[i].ID,

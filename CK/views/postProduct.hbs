@@ -47,7 +47,7 @@
                 <label for="IDLoai" class="col-sm-4 col-form-label">Loại sản phẩm (*): </label>
                 <div class="col-sm-8" style="line-height: 250%;">
                     <select id="IDLoai" name="IDLoai" style="width:100%" required>
-                        <option value="-1">Chọn loại sản phẩm</option>
+                        <option value="">Chọn loại sản phẩm</option>
                         {{#each catList}}
                         <option value="{{this.ID}}">{{this.TenLoai}}</option>
                         {{/each}}
