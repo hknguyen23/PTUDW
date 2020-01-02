@@ -161,7 +161,7 @@ router.post('/forgot', async(req, res) => {
             token: token,
             id: user[0].ID
         }
-        var result = await model.updateToken(entity);
+        var result = await model.updateNguoiDung(entity);
         result = await model.updateTokenExpire(user[0].ID);
 
         var string = 'http://localhost:3000/newPass/' + token;
@@ -226,7 +226,7 @@ router.post('/newPass', [
       token: 0,
       id: user[0].ID
     }
-    await model.updateToken(entity);
+    await model.updateNguoiDung(entity);
 
     res.redirect('/login');
   }

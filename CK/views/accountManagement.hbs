@@ -113,7 +113,7 @@
 										</tr>
 										<tr>
 											<th>Ngày sinh</th>
-											<td id="second-col" colspan="2">{{NgaySinh}}</td>
+											<td id="second-col" colspan="2">{{#if NgaySinh}}{{NgaySinh}}{{/if}}</td>
 										</tr>
 										<tr>
 											<th>Địa chỉ</th>
@@ -135,7 +135,7 @@
 									</table>
 								</div>
 								<div class="card-footer">
-									<a class="btn btn-primary" href="ChangeInfo.html">
+									<a class="btn btn-primary" href="modify">
 										Thay đổi thông tin
 									</a>
 									{{#each this.info}}
