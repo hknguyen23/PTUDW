@@ -31,14 +31,16 @@ router.post('/rating', async(req, res) => {
 
 
         console.log(req.body);
-        if (id.length > 0) {
+        if (id.length > 0) {                        
             await model.delRating(entity);
         } 
-        entity.ThoiGianDanhGia = moment().format("YYYY-MM-DD HH:mm:ss");
-        entity.DiemDanhGia = req.body.DiemDanhGia;
-        entity.NhanXet = req.body.NhanXet;
-        await model.addRating(entity);
-          
+        if (req.body.DiemDanhGia != 0) {            // only add when rating != 0
+            entity.ThoiGianDanhGia = moment().format("YYYY-MM-DD HH:mm:ss");
+            entity.DiemDanhGia = req.body.DiemDanhGia;
+            entity.NhanXet = req.body.NhanXet;    
+            await model.addRating(entity);
+        }
+
     }
 });
 module.exports = router;

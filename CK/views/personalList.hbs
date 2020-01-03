@@ -21,31 +21,44 @@
         e.value = 1 - e.value;
     }
     function rating(e, id) {
-        if (e.value == 1){
+        var id1 = id + "_up"
+        var id2 = id + "_down"
+
+        if (e.value == 1 && $(`#${id1}`).hasClass( "green-color" )){        // remove rating 1
+            $(`#${id1}`).removeClass( "green-color" );
+            value = 0;
+        }
+        else if (e.value == -1 && $(`#${id2}`).hasClass( "green-color" )){  // remove rating -1
+            $(`#${id2}`).removeClass( "green-color" );
+            value = 0;  
+        }
+        else if (e.value == 1){
             var box = prompt("Điểm +1. Nhận xét:")
+            value = e.value
         }
         else{
             var box = prompt("Điểm -1. Nhận xét:")
+             value = e.value
         }
-        if (box != null) {
+        if (box != null || value == 0) {
+            if (value == 1){                                         // change rating from 1->-1
+                $(`#${id1}`).addClass( "green-color" );
+                $(`#${id2}`).removeClass( "green-color" );
+            } 
+            else if (value == -1){
+                $(`#${id1}`).removeClass( "green-color" );                  // change rating from -1->1
+                $(`#${id2}`).addClass( "green-color" );     
+            }
+
+
             $.ajax({
                 type: 'POST',
-                data: {DiemDanhGia: e.value, IDNguoiDuocDanhGia: e.name, IDSanPham: id, 
+                data: {DiemDanhGia: value, IDNguoiDuocDanhGia: e.name, IDSanPham: id, 
                         NhanXet: box},
                 url: '/rating',
                 dataType: 'text',
                 timeout: 3000
             });
-            var id1 = id + "_up"
-            var id2 = id + "_down"
-            if (e.value == 1){
-                $(`#${id1}`).addClass( "green-color" );
-                $(`#${id2}`).removeClass( "green-color" );
-            } 
-            else{
-                $(`#${id1}`).removeClass( "green-color" );
-                $(`#${id2}`).addClass( "green-color" );
-            }
         }
     }
 </script>
