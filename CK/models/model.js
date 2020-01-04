@@ -327,9 +327,15 @@ module.exports = {
     updateTokenExpire: id =>
         db.loadSafe('update nguoidung set token_expire = (NOW() + INTERVAL 5 MINUTE) where ID = ?', id),
 
-    changePass: entity => {
+    changePassByToken: entity => {
         const condition = { token: entity.token };
         delete entity.token;
+
+        return db.patch('NGUOIDUNG', entity, condition)
+    },
+    changePassById: entity => {
+        const condition = { id: entity.id };
+        delete entity.id;
 
         return db.patch('NGUOIDUNG', entity, condition)
     },

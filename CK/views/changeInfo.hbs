@@ -1,23 +1,10 @@
 {{#section 'css'}}
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
-    rel="stylesheet" type="text/css" />
-
 {{/section}}
 {{#section 'js'}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
-
-<script>
-	$('#fuMain').fileinput({
-        theme: 'fa',
-        showUpload: false,
-        dropZoneEnabled: false,
-        allowedFileExtensions: ['png', 'jpg', 'gif'],
-    });
-	
+<script>	
     $('#NgaySinh').datetimepicker({
         format: 'd/m/Y',
         timepicker: false,
@@ -28,6 +15,7 @@
 	{{#if NgaySinh}}
 	$( "#NgaySinh" ).datetimepicker({ 	
 		defaultDate: '{{NgaySinh}}',
+		scrollInput : false;
 	});
 	{{/if}}
 	{{/each}}
@@ -129,7 +117,7 @@
 				</div>
 				{{else}}
 
-				<form method="POST" enctype="multipart/form-data">
+				<form method="POST">
 					<div class="card m-3">
 						<h2 class="card-header">Hồ sơ</h2>
 						{{#if errors}}
@@ -144,46 +132,28 @@
 							{{#each info}}
 							<table class="table">
 								<tr>
-									<th>Ảnh</th>
+									<th>Họ *</th>
 									<td id="second-col">
-										Bấm vào để chọn ảnh khác
-										<img name="avatar" id="avatar" type="file" class="rounded-circle my-3"
-											 src="{{AvatarURL}}" alt="Your avatar" width="200" height="200">
-									</td>
-									<td style="text-align: right;">
-										<div class="file-loading">
-											<input id="fuMain" name="AvatarURL" type="file" multiple required="true"></div>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<th>Họ</th>
-									<td id="second-col-2">
 										<input type="text" name="firstName" value="{{../firstName}}" required=""></input>
 									</td>
-									<td id="required" style="text-align: right;">*</td>
 								</tr>
 								<tr>
-									<th>Tên</th>
-									<td id="second-col-2">
+									<th>Tên *</th>
+									<td id="second-col">
 										<input type="text" name="lastName" value="{{../lastName}}" required=""></input>
 									</td>
-									<td id="required" style="text-align: right;">*</td>
 								</tr>
-
-								<tr>
-									<th>Email</th>
-									<td id="second-col">
-										<input type="hidden" name="id" value="{{../authUser.ID}}" required=""></input>
-										<input type="text" name="Email" value="{{Email}}" required=""></input>
-									</td>
-									<td id="required" style="text-align: right;">*</td>								
-								</tr>
-
 								<tr>
 									<th>Ngày sinh</th>
 									<td id="second-col">
 									    <input type="text" id="NgaySinh" name="NgaySinh" value="{{NgaySinh}}"></input>
+									</td>
+								</tr>
+								<tr>
+									<th>Email *</th>
+									<td id="second-col">
+										<input type="hidden" name="id" value="{{../authUser.ID}}" required=""></input>
+										<input type="text" name="Email" value="{{Email}}" required=""></input>
 									</td>
 								</tr>
 								<tr>
@@ -201,10 +171,16 @@
 							</table>
 							{{/each}}
 						</div>
+						<div class="card-footer">
+							<a class="btn btn-primary float-left" href="/accountManagement">
+								Back
+							</a>
+							<button class="btn btn-primary float-right" type="submit">
+								Lưu lại
+							</button>
+						</div>
+
 					</div>
-					<button class="btn btn-primary" type="submit">
-						Lưu lại
-					</button>
 				</form>
 				{{/if}}
 			</div>
