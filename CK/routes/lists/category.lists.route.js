@@ -5,10 +5,11 @@ const config = require('../../config/default.json');
 const router = express.Router();
 router.use(express.static("public"));
 
-router.get('/:id', async(req, res) => {
+router.get('/:id?', async(req, res) => {
+    const id = req.params.id || 1;
     // page
     const limit = config.paginate.limit;
-
+    console.log(id);
     const page = req.query.page || 1;
     if (page < 1) page = 1;
     const offset = (page - 1) * config.paginate.limit;
@@ -19,8 +20,8 @@ router.get('/:id', async(req, res) => {
         idND = res.locals.authUser.ID;
     }
     const [total, rows, catLV1, catLV2] = await Promise.all([
-        model.countProductByCat(req.params.id),
-        model.getProductByCat(req.params.id, idND, offset),
+        model.countProductByCat(id),
+        model.getProductByCat(id, idND, offset),
         model.getCategoriesLV1(),
         model.getCategoriesLV2(),
     ]);

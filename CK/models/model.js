@@ -37,12 +37,13 @@ module.exports = {
                     FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
                     LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                     LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
-                    WHERE L2.ID = ? AND CT.Gia = ( 
-                                                    SELECT MAX(CT2.Gia) 
-                                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                 )
+                    WHERE L2.ID = ? AND (CT.Gia IS NULL OR CT.Gia = (
+                                                                        SELECT MAX(CT2.Gia) 
+                                                                        FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                                    ) )
                     ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
                     LIMIT ? OFFSET ?`;
+                    
         const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                             ,(
                                 CASE
@@ -65,10 +66,10 @@ module.exports = {
                     LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                     LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
                     CROSS JOIN NGUOIDUNG ND2
-                    WHERE L2.ID = ? AND ND2.ID = ? AND CT.Gia = ( 
-                                                                    SELECT MAX(CT2.Gia) 
-                                                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                                )
+                    WHERE L2.ID = ? AND ND2.ID = ? AND (CT.Gia IS NULL OR CT.Gia = (
+                                                                                        SELECT MAX(CT2.Gia) 
+                                                                                        FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                                                    ) )
                     ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
                     LIMIT ? OFFSET ?`;
         if (idND == -1) {
@@ -141,10 +142,10 @@ module.exports = {
                         WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW() AND ND2.ID = ${id}`;
                 break;
         }
-        var foot = ` AND CT.Gia = ( 
-                                    SELECT MAX(CT2.Gia) 
-                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                 )
+        var foot = ` AND (CT.Gia IS NULL OR CT.Gia = (
+                                                        SELECT MAX(CT2.Gia) 
+                                                        FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                    ) )
                     ORDER BY SP.NgayDang DESC
                     LIMIT ${config.paginate.limit} OFFSET ${offset}`;
         var query = head + diff + foot;
@@ -202,10 +203,11 @@ module.exports = {
                     FROM SANPHAM SP 
                     LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                     LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
-                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND CT.Gia = ( 
+                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND (CT.Gia IS NULL OR 
+                                                                                         CT.Gia = (
                                                                                                     SELECT MAX(CT2.Gia) 
                                                                                                     FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                                                                 )
+                                                                                                ) )
                     ORDER BY ${by} ${order}
                     LIMIT ${config.paginate.limit} OFFSET ${offset}`;
         const user = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen 
@@ -230,10 +232,11 @@ module.exports = {
                     LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                     LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
                     CROSS JOIN NGUOIDUNG ND2
-                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND ND2.ID = ${idND} AND CT.Gia = ( 
-                                                                                                                        SELECT MAX(CT2.Gia) 
-                                                                                                                        FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                                                                                      )
+                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND ND2.ID = ${idND} AND (CT.Gia IS NULL OR 
+                                                                                                            CT.Gia = (
+                                                                                                                    SELECT MAX(CT2.Gia) 
+                                                                                                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                                                                                ) )
                     ORDER BY ${by} ${order}
                     LIMIT ${config.paginate.limit} OFFSET ${offset}`;
         if (idND == -1) {
