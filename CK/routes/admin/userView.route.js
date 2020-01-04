@@ -11,10 +11,9 @@ router.get("/", async(req, res) => {
     if (page < 1) page = 1;
     const offset = (page - 1) * limit;
 	
-    const [total, rows, info] = await Promise.all([
+    const [total, rows] = await Promise.all([
 		model.countAllUsers(),
 		model.getAllUsers(offset),
-		model.getUserById(res.locals.authUser.ID)
 	]);
 		
 	// calculate page number
@@ -39,23 +38,12 @@ router.get("/", async(req, res) => {
 		row.NgaySinh = moment(row.NgaySinh).format('DD/MM/YYYY');
     }
 	
-	for (const row of info) {
-		if (row.Loai === 1) {
-			row.isBidder = true;
-		}
-		else if (row.Loai === 2) {
-			row.isSeller = true;
-		}
-		else row.isAdmin = true;
-	}
-	
     res.render("allUsers", {
         title: "Danh sách toàn bộ người dùng",
         css: ["HomeStyle.css", "AccountStyle.css"],
         js: ["AccountScript.js", "UserView.js"],
 		empty: rows.length === 0,
         users: rows,
-		info,
 		page,
         maxPages,
 		prev_value: +page - 1,
@@ -86,10 +74,9 @@ router.post("/", async(req, res) => {
     if (page < 1) page = 1;
     const offset = (page - 1) * limit;
 	
-    const [total, rows, info] = await Promise.all([
+    const [total, rows] = await Promise.all([
 		model.countAllUsers(),
 		model.getAllUsers(offset),
-		model.getUserById(res.locals.authUser.ID)
 	]);
 		
 	// calculate page number
@@ -114,23 +101,12 @@ router.post("/", async(req, res) => {
 		row.NgaySinh = moment(row.NgaySinh).format('DD/MM/YYYY');
     }
 	
-	for (const row of info) {
-		if (row.Loai === 1) {
-			row.isBidder = true;
-		}
-		else if (row.Loai === 2) {
-			row.isSeller = true;
-		}
-		else row.isAdmin = true;
-	}
-	
     res.render("allUsers", {
         title: "Danh sách toàn bộ người dùng",
         css: ["HomeStyle.css", "AccountStyle.css"],
         js: ["AccountScript.js", "UserView.js"],
 		empty: rows.length === 0,
         users: rows,
-		info,
 		page,
         maxPages,
 		prev_value: +page - 1,
