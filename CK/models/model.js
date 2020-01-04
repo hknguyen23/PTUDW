@@ -293,19 +293,6 @@ module.exports = {
         return rows[0].total;
     },
 
-    // Admin manage category
-    getAllCategoryLv1WithQuantity: () => db.load(`SELECT C1.ID, C1.TenLoai, COUNT(SP.ID) AS SoLuong
-						FROM SANPHAM SP JOIN LOAICAP2 C2 ON SP.IDLoai = C2.ID
-						RIGHT JOIN LOAICAP1 C1 ON C1.ID = C2.IDLoaiCap1
-						GROUP BY C1.ID, C1.TenLoai`),
-	
-    getAllCategoryLv1: () => db.load(`SELECT * FROM LOAICAP1`),
-	
-    getAllCategoryLv2ByCategoryLv1ID: id => db.load(`SELECT C2.ID, C2.TenLoai, COUNT(SP.ID) AS SoLuong
-							FROM SANPHAM SP RIGHT JOIN LOAICAP2 C2 ON SP.IDLoai = C2.ID
-							WHERE C2.IDLoaiCap1 = ${id}
-							GROUP BY C2.ID, C2.TenLoai`),
-
     getTop5HighestBidTimes: () => db.load(`SELECT * FROM SANPHAM 
                                            WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW()
                                            ORDER BY SoLanDuocDauGia DESC LIMIT 5`),
