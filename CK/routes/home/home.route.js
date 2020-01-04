@@ -220,7 +220,7 @@ router.post('/newPass', [
       MatKhau: hash,
       token: req.body.token
     }
-    await model.changePass(entity);
+    await model.changePassByToken(entity);
     
     entity = {
       token: 0,

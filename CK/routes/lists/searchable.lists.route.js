@@ -45,6 +45,10 @@ router.post('/', async (req, res) => {
         value: i,
         })
     }
+
+    if (rows.GiaMuaNgay == 0){
+        rows.GiaMuaNgay = null;
+    }
     res.render("search", {
         title: "Search page",
         css: ["List.css"],

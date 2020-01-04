@@ -1,7 +1,7 @@
 <main class="main" role="main">
-    <div class="container-fruid mb-3">
-        <div class="d-flex wrapper">
-            <!-- Sidebar -->
+	<div class="container-fruid mb-3">
+		<div class="d-flex wrapper">
+			<!-- Sidebar -->
 			<div class="bg-light border-right" id="sidebar-wrapper">
 				<div class="list-group list-group-flush">
 					<!-- Bao gồm việc sửa thông tin cá nhân -->
@@ -65,23 +65,6 @@
 							<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
 						</a>
 					</div>
-					
-					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-						href="#submenu-category" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-						Quản lý danh mục
-						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
-					</a>
-					
-					<!-- Submenu của Quản lý danh mục -->
-					<div id="submenu-category" class="collapse sidebar-submenu">
-						<a href="/categoryLv1" class="list-group-item list-group-item-action bg-light">
-							<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
-							<span class="menu-collapsed">Quản lý danh mục cha</span>
-						</a>
-						<a href="/categoryLv2" class="list-group-item list-group-item-action bg-light">
-							<span class="menu-collapsed">Quản lý danh mục con</span>
-						</a>
-					</div>
 					{{/if}}
 					
 					<!-- Đăng sản phẩm -->
@@ -100,54 +83,66 @@
 				</div>
 			</div>
 			<!-- /#sidebar-wrapper -->
+			
+			<div class="text-center mt-3" id="page-content-wrapper">
+				<h1>Thông tin cá nhân</h1>
+				
+				{{#if this.empty}}
+				<div class="card-body">
+					<p class="card-text">Không có dữ liệu.</p>
+				</div>
+				{{else}}
 
-            <div class="text-center mt-3" id="page-content-wrapper">
-                <h1>Điểm đánh giá và chi tiết</h1>
-                <div>Xem điểm đánh giá và chi tiết các lần được đánh giá & đoạn nhận xét mà người đánh giá gửi</div>
+				<form method="POST">
+					<div class="card m-3">
+						<h2 class="card-header">Hồ sơ</h2>
+						{{#if errors}}
+							<p class="alert alert-danger">
+							{{#each errors }}
+								{{this.msg}} <br>
+							{{/each}}
+							</p>
+						{{/if}}
 
-                <div class="card m-3">
-                    <h2 class="card-header">Điểm đánh giá</h2>
-                    <div class="card-body">
-                        <h3>
-						{{#each this.point}}
-						{{TongDiemDanhGia}}/10
-						{{/each}}
-						</h3>
-                    </div>
-                </div>
-
-                <div class="card m-3">
-                    <h2 class="card-header">Chi tiết các lần được đánh giá</h2>
-					{{#if this.empty}}
-					<div class="card-body">
-						<p class="card-text">Không có dữ liệu.</p>
+						<div class="card-body">
+							{{#each info}}
+							<table class="table">
+								<tr>
+									<th>Nhập mật khẩu cũ</th>
+									<td id="second-col">
+										<input type="hidden" name="id" value="{{../authUser.ID}}" required=""></input>
+										<input type="hidden" name="TenTaiKhoan" value="{{../authUser.TenTaiKhoan}}" required=""></input>
+										<input type="password" name="formerPass" required=""></input>
+									</td>
+								</tr>
+								<tr>
+									<th>Nhập mật khẩu mới</th>
+									<td id="second-col">
+										<input type="password" name="newPass" required=""></input>
+									</td>
+								</tr>
+								<tr>
+									<th>Nhập lại mật khẩu mới</th>
+									<td id="second-col">
+										<input type="password" name="repeatPass" required=""></input>
+									</td>
+								</tr>
+							</table>
+							{{/each}}
+						</div>
+						<div class="card-footer">
+							<a class="btn btn-primary float-left" href="/accountManagement">
+								Back
+							</a>
+							<button class="btn btn-primary float-right" type="submit">
+								Lưu lại
+							</button>
+						</div>
 					</div>
-					{{else}}
-                    <div class="card-body">
-                        <table class="table table-hover text-left">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%;" scope="col">ID</th>
-                                    <th style="word-break: break-all; width: 10%;" scope="col">Người đánh giá</th>
-                                    <th style="text-align: center; width: 10%;" scope="col">Điểm đánh giá</th>
-                                    <th scope="col">Nhận xét</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-								{{#each this.details}}
-                                <tr>
-                                    <th style="width: 5%;" scope="row">{{IDNguoiDanhGia}}</th>
-                                    <td style="word-break: break-all; width: 10%;">{{TenTaiKhoan}}</td>
-                                    <td style="text-align: center; width: 10%;">{{DiemDanhGia}}</td>
-                                    <td style="word-break: break-all;">{{NhanXet}}</td>
-                                </tr>
-								{{/each}}
-                            </tbody>
-                        </table>
-                    </div>
-					{{/if}}
-                </div>
-            </div>
-        </div>
-    </div>
+				</form>
+				{{/if}}
+			</div>
+		</div>
+	</div>		
 </main>
+

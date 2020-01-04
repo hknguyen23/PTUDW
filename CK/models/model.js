@@ -27,7 +27,7 @@ module.exports = {
         return rows[0].total;
     },
     getProductByCat: (id, idND, offset) => {
-        const guest = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen
+        const guest = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                                 ,(
                                     CASE
                                         WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
@@ -37,13 +37,14 @@ module.exports = {
                     FROM LOAICAP2 L2 LEFT JOIN SANPHAM SP ON L2.ID = SP.IDLoai
                     LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                     LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
-                    WHERE L2.ID = ? AND CT.Gia = ( 
-                                                    SELECT MAX(CT2.Gia) 
-                                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                 )
+                    WHERE L2.ID = ? AND (CT.Gia IS NULL OR CT.Gia = (
+                                                                        SELECT MAX(CT2.Gia) 
+                                                                        FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                                    ) )
                     ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
                     LIMIT ? OFFSET ?`;
-        const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen
+                    
+        const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                             ,(
                                 CASE
                                     WHEN EXISTS
@@ -65,10 +66,10 @@ module.exports = {
                     LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                     LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
                     CROSS JOIN NGUOIDUNG ND2
-                    WHERE L2.ID = ? AND ND2.ID = ? AND CT.Gia = ( 
-                                                                    SELECT MAX(CT2.Gia) 
-                                                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                                )
+                    WHERE L2.ID = ? AND ND2.ID = ? AND (CT.Gia IS NULL OR CT.Gia = (
+                                                                                        SELECT MAX(CT2.Gia) 
+                                                                                        FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                                                    ) )
                     ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
                     LIMIT ? OFFSET ?`;
         if (idND == -1) {
@@ -79,7 +80,8 @@ module.exports = {
     },
 
     getPersonalListByID: (type, id, offset) => {
-        var head = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen
+        var head = `SELECT SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, 
+                           SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan, SP.IDNguoiBan, SP.IDNguoiThangDauGia
                             ,(
                                 CASE
                                     WHEN EXISTS
@@ -115,9 +117,11 @@ module.exports = {
                         WHERE CT3.IDNguoiDauGia = ${id} AND SP.NgayHetHan > NOW() AND ND2.ID = ${id}`;
                 break;
             case 2: // won
-                diff = `FROM  SANPHAM SP 
+                diff = `, DG.DiemDanhGia
+                        FROM  SANPHAM SP 
                         LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
-                        LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID           
+                        LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
+                        LEFT JOIN CHITIETDANHGIA DG ON DG.IDNguoiDanhGia = ${id} AND DG.IDNguoiDuocDanhGia = SP.IDNguoiBan AND DG.IDSanPham = SP.ID
                         CROSS JOIN NGUOIDUNG ND2
                         WHERE SP.IDNguoiThangDauGia = ${id} AND ND2.ID = ${id}`;
                 break;
@@ -129,17 +133,19 @@ module.exports = {
                         WHERE SP.IDNguoiBan = ${id} AND ND2.ID = ${id}`;
                 break;
             case 4: // sold
-                diff = `FROM  SANPHAM SP 
+                diff = `,DG.DiemDanhGia
+                        FROM  SANPHAM SP 
                         LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                         LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
+                        LEFT JOIN CHITIETDANHGIA DG ON DG.IDNguoiDanhGia = ${id} AND DG.IDNguoiDuocDanhGia = SP.IDNguoiThangDauGia AND DG.IDSanPham = SP.ID
                         CROSS JOIN NGUOIDUNG ND2
                         WHERE SP.IDNguoiBan = ${id} AND SP.NgayHetHan <= NOW() AND ND2.ID = ${id}`;
                 break;
         }
-        var foot = ` AND CT.Gia = ( 
-                                    SELECT MAX(CT2.Gia) 
-                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                 )
+        var foot = ` AND (CT.Gia IS NULL OR CT.Gia = (
+                                                        SELECT MAX(CT2.Gia) 
+                                                        FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                    ) )
                     ORDER BY SP.NgayDang DESC
                     LIMIT ${config.paginate.limit} OFFSET ${offset}`;
         var query = head + diff + foot;
@@ -187,7 +193,7 @@ module.exports = {
     },
     getSearchListbyKey: (key, idLoai, by, order, idND, offset) => {
 
-        const guest = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen
+        const guest = `SELECT SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                                 ,(
                                     CASE
                                         WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
@@ -197,13 +203,14 @@ module.exports = {
                     FROM SANPHAM SP 
                     LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                     LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
-                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND CT.Gia = ( 
+                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND (CT.Gia IS NULL OR 
+                                                                                         CT.Gia = (
                                                                                                     SELECT MAX(CT2.Gia) 
                                                                                                     FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                                                                 )
+                                                                                                ) )
                     ORDER BY ${by} ${order}
                     LIMIT ${config.paginate.limit} OFFSET ${offset}`;
-        const user = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen 
+        const user = `SELECT SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen 
                             ,(
                                 CASE
                                     WHEN EXISTS
@@ -225,10 +232,11 @@ module.exports = {
                     LEFT JOIN CHITIETDAUGIA CT ON CT.IDSanPham = SP.ID
                     LEFT JOIN NGUOIDUNG ND ON CT.IDNguoiDauGia = ND.ID
                     CROSS JOIN NGUOIDUNG ND2
-                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND ND2.ID = ${idND} AND CT.Gia = ( 
-                                                                                                                        SELECT MAX(CT2.Gia) 
-                                                                                                                        FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
-                                                                                                                      )
+                    WHERE MATCH (TenSanPham, MoTaNgan) AGAINST ('${key}') ${idLoai} AND ND2.ID = ${idND} AND (CT.Gia IS NULL OR 
+                                                                                                            CT.Gia = (
+                                                                                                                    SELECT MAX(CT2.Gia) 
+                                                                                                                    FROM CHITIETDAUGIA CT2 WHERE CT2.IDSanPham = SP.ID
+                                                                                                                ) )
                     ORDER BY ${by} ${order}
                     LIMIT ${config.paginate.limit} OFFSET ${offset}`;
         if (idND == -1) {
@@ -288,6 +296,19 @@ module.exports = {
         return rows[0].total;
     },
 
+    // Admin manage category
+    getAllCategoryLv1WithQuantity: () => db.load(`SELECT C1.ID, C1.TenLoai, COUNT(SP.ID) AS SoLuong
+						FROM SANPHAM SP JOIN LOAICAP2 C2 ON SP.IDLoai = C2.ID
+						RIGHT JOIN LOAICAP1 C1 ON C1.ID = C2.IDLoaiCap1
+						GROUP BY C1.ID, C1.TenLoai`),
+	
+    getAllCategoryLv1: () => db.load(`SELECT * FROM LOAICAP1`),
+	
+    getAllCategoryLv2ByCategoryLv1ID: id => db.load(`SELECT C2.ID, C2.TenLoai, COUNT(SP.ID) AS SoLuong 
+													FROM SANPHAM SP RIGHT JOIN LOAICAP2 C2 ON SP.IDLoai = C2.ID 
+													WHERE C2.IDLoaiCap1 = ${id} 
+													GROUP BY C2.ID, C2.TenLoai`),
+
     getTop5HighestBidTimes: () => db.load(`SELECT * FROM SANPHAM 
                                            WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW()
                                            ORDER BY SoLanDuocDauGia DESC LIMIT 5`),
@@ -322,9 +343,15 @@ module.exports = {
     updateTokenExpire: id =>
         db.loadSafe('update nguoidung set token_expire = (NOW() + INTERVAL 5 MINUTE) where ID = ?', id),
 
-    changePass: entity => {
+    changePassByToken: entity => {
         const condition = { token: entity.token };
         delete entity.token;
+
+        return db.patch('NGUOIDUNG', entity, condition)
+    },
+    changePassById: entity => {
+        const condition = { id: entity.id };
+        delete entity.id;
 
         return db.patch('NGUOIDUNG', entity, condition)
     },
@@ -356,11 +383,23 @@ module.exports = {
         return db.patch('SANPHAM', entity, condition)
     },
 
+    // Rating
+    findRating: entity => db.loadSafe('SELECT * FROM CHITIETDANHGIA WHERE IDNguoiDanhGia = ? AND IDNguoiDuocDanhGia = ? AND IDSanPham = ?', [entity.IDNguoiDanhGia, entity.IDNguoiDuocDanhGia, entity.IDSanPham]),
+
+    addRating: entity => db.add('CHITIETDANHGIA', entity),
+
+    delRating: (entity) => 
+        db.delete('DELETE FROM CHITIETDANHGIA WHERE IDNguoiDanhGia = ? AND IDNguoiDuocDanhGia = ? AND IDSanPham = ?', [entity.IDNguoiDanhGia, entity.IDNguoiDuocDanhGia, entity.IDSanPham]),
+    
+    // Favorite
+    addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
+
+    delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
+
+    // Bid
     addBidDetail: entity => db.add('chitietdaugia', entity),
 
     addUser: entity => db.add('NGUOIDUNG', entity),
-
-    addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
 
     addNewProduct: (entity) => db.add('sanpham', entity),
 
@@ -375,7 +414,6 @@ module.exports = {
         }
     },
 
-    delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
 
     rejectBidding: async function(proId, idToReject) {
         await Promise.all([

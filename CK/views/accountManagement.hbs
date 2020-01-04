@@ -1,155 +1,176 @@
 <main class="main" role="main">
-			<div class="container-fruid mb-3">
-				<div class="d-flex wrapper">
-					<!-- Sidebar -->
-					<div class="bg-light border-right" id="sidebar-wrapper">
-						<div class="list-group list-group-flush">
-							<!-- Bao gồm việc sửa thông tin cá nhân -->
-							<a href="/accountManagement" class="list-group-item list-group-item-action bg-light">
-								Xem thông tin cá nhân
-							</a>
-							<a href="/yourPointAndDetail" class="list-group-item list-group-item-action bg-light">
-								Xem điểm đánh giá và chi tiết
-							</a>	
+	<div class="container-fruid mb-3">
+		<div class="d-flex wrapper">
+			<!-- Sidebar -->
+			<div class="bg-light border-right" id="sidebar-wrapper">
+				<div class="list-group list-group-flush">
+					<!-- Bao gồm việc sửa thông tin cá nhân -->
+					<a href="/accountManagement" class="list-group-item list-group-item-action bg-light">
+						Xem thông tin cá nhân
+					</a>
+					<a href="/yourPointAndDetail" class="list-group-item list-group-item-action bg-light">
+						Xem điểm đánh giá và chi tiết
+					</a>	
+					
+					{{#each this.info}}
+					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
+						href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						Xem danh sách
+						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
+					</a>
 							
+					<!-- Submenu của Xem danh sách -->
+					<div id="submenu-watch" class="collapse sidebar-submenu">
+						<a href="/lists/acc/watch" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm yêu thích</span>
+						</a>
+						<a href="/lists/acc/ongoing" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm đang đấu giá</span>
+						</a>
+						<a href="/lists/acc/won" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm đã thắng đấu giá</span>
+						</a>
+						{{#if this.isSeller}}
+						<a href="/lists/acc/upload" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
+						</a>
+						<a href="/lists/acc/sold" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
+						</a>
+						{{/if}}
+						{{#if this.isAdmin}}
+						<a href="/lists/acc/upload" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
+						</a>
+						<a href="/lists/acc/sold" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
+						</a>
+						{{/if}}
+					</div>
+							
+					{{#if this.isAdmin}}
+					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
+						href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						Quản lý người dùng
+						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
+					</a>
+							
+					<!-- Submenu của Quản lý người dùng -->
+					<div id="submenu-user" class="collapse sidebar-submenu">
+						<a href="/userView" class="list-group-item list-group-item-action bg-light">
+							<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
+							<span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
+						</a>
+						<a href="/bidderList" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
+						</a>
+					</div>
+					
+					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
+						href="#submenu-category" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						Quản lý danh mục
+						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
+					</a>
+					
+					<!-- Submenu của Quản lý danh mục -->
+					<div id="submenu-category" class="collapse sidebar-submenu">
+						<a href="/categoryLv1" class="list-group-item list-group-item-action bg-light">
+							<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
+							<span class="menu-collapsed">Quản lý danh mục cha</span>
+						</a>
+						<a href="/categoryLv2" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Quản lý danh mục con</span>
+						</a>
+					</div>
+					{{/if}}
+					
+					<!-- Đăng sản phẩm -->
+					{{#if this.isSeller}}
+					<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+						Đăng sản phẩm đấu giá mới
+					</a>
+					{{/if}}
+					{{#if this.isAdmin}}
+					<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+						Đăng sản phẩm đấu giá mới
+					</a>
+					{{/if}}
+					{{/each}}
+					<!-- Add more items here-->
+				</div>
+			</div>
+			<!-- /#sidebar-wrapper -->
+					
+			<div class="text-center mt-3" id="page-content-wrapper">
+				<h1>Thông tin cá nhân</h1>
+				<div>Thông tin cơ bản, như tên và ảnh của bạn, mà bạn sử dụng trên trang web của chúng tôi</div>
+						
+				<form action="#" method="POST">
+					<div class="card m-3">
+						<h2 class="card-header">Hồ sơ</h2>
+						{{#if this.empty}}
+						<div class="card-body">
+							<p class="card-text">Không có dữ liệu.</p>
+						</div>
+						{{else}}
+						<div class="card-body">		
+							<table id="myTable" class="table">
+								{{#each this.info}}
+								<tr>
+									<th>Ảnh</th>
+									<td id="second-col">Một bức ảnh giúp cá nhân hóa tài khoản của bạn</td>
+									<td style="text-align: right;">
+										<img class="rounded-circle" src="{{AvatarURL}}" alt="Your avatar"
+											width="200" height="200">
+									</td>
+								</tr>
+								<tr>
+									<th>Họ và tên</th>
+									<td id="second-col" colspan="2">{{HoTen}}</td>
+								</tr>
+								<tr>
+									<th>Ngày sinh</th>
+									<td id="second-col" colspan="2">{{#if NgaySinh}}{{NgaySinh}}{{/if}}</td>
+								</tr>
+								<tr>
+									<th>Địa chỉ</th>
+									<td id="second-col" colspan="2">{{DiaChi}}</td>
+								</tr>
+								<tr>
+									<th>Email</th>
+									<td id="second-col" colspan="2">{{Email}}</td>
+								</tr>
+								<tr>
+									<th>Điện thoại</th>
+									<td id="second-col" colspan="2">{{DienThoai}}</td>
+								</tr>
+								<tr>
+									<th>Cấp bậc</th>
+									<td id="second-col" colspan="2">{{#if this.isBidder}}Bidder{{/if}}{{#if this.isSeller}}Seller{{/if}}{{#if this.isAdmin}}Admin{{/if}}</td>
+								</tr>
+								{{/each}}
+							</table>
+						</div>
+						
+						<div class="card-footer">
+							<a class="btn btn-primary" href="modify">
+								Thay đổi thông tin
+							</a>
+							<a class="btn btn-primary" href="modifyPass">
+								Thay đổi mật khẩu
+							</a>
 							{{#each this.info}}
-							<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-								href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-								Xem danh sách
-								<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
-							</a>
-							
-							<!-- Submenu của Xem danh sách -->
-							<div id="submenu-watch" class="collapse sidebar-submenu">
-								<a href="Theo dõi.html" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Sản phẩm yêu thích</span>
-								</a>
-								<a href="Đang đấu giá.html" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Sản phẩm đang đấu giá</span>
-								</a>
-								<a href="Đã thắng.html" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Sản phẩm đã thắng đấu giá</span>
-								</a>
-								{{#if this.isSeller}}
-								<a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
-								</a>
-								<a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
-								</a>
-								{{/if}}
-								{{#if this.isAdmin}}
-								<a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
-								</a>
-								<a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
-								</a>
-								{{/if}}
-							</div>
-							
-							{{#if this.isAdmin}}
-							<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-								href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
-								Quản lý người dùng
-								<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
-							</a>
-							
-							<!-- Submenu của Quản lý người dùng -->
-							<div id="submenu-user" class="collapse sidebar-submenu">
-								<a href="/userView" class="list-group-item list-group-item-action bg-light">
-									<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
-									<span class="menu-collapsed">Xem danh sách toàn bộ người dùng</span>
-								</a>
-								<a href="/bidderList" class="list-group-item list-group-item-action bg-light">
-									<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
-								</a>
-							</div>
-							{{/if}}
-							
-							<!-- Đăng sản phẩm -->
-							{{#if this.isSeller}}
-							<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
-								Đăng sản phẩm đấu giá mới
-							</a>
-							{{/if}}
-							{{#if this.isAdmin}}
-							<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
-								Đăng sản phẩm đấu giá mới
-							</a>
+							{{#if this.isBidder}}
+							<button class="btn btn-primary" type="submit" onclick="upgradeRequest();">
+								Xin nâng cấp thành Seller
+							</button>
 							{{/if}}
 							{{/each}}
-							<!-- Add more items here-->
 						</div>
+					{{/if}}
 					</div>
-					<!-- /#sidebar-wrapper -->
-					
-					<div class="text-center mt-3" id="page-content-wrapper">
-						<h1>Thông tin cá nhân</h1>
-						<div>Thông tin cơ bản, như tên và ảnh của bạn, mà bạn sử dụng trên trang web của chúng tôi</div>
-						
-						<form action="#" method="POST">
-							<div class="card m-3">
-								<h2 class="card-header">Hồ sơ</h2>
-								{{#if this.empty}}
-								<div class="card-body">
-									<p class="card-text">Không có dữ liệu.</p>
-								</div>
-								{{else}}
-								<div class="card-body">		
-									<table id="myTable" class="table">
-										{{#each this.info}}
-										<tr>
-											<th>Ảnh</th>
-											<td id="second-col">Một bức ảnh giúp cá nhân hóa tài khoản của bạn</td>
-											<td style="text-align: right;">
-												<img class="rounded-circle" src="{{AvatarURL}}" alt="Your avatar"
-													width="200" height="200">
-											</td>
-										</tr>
-										<tr>
-											<th>Họ và tên</th>
-											<td id="second-col" colspan="2">{{HoTen}}</td>
-										</tr>
-										<tr>
-											<th>Ngày sinh</th>
-											<td id="second-col" colspan="2">{{#if NgaySinh}}{{NgaySinh}}{{/if}}</td>
-										</tr>
-										<tr>
-											<th>Địa chỉ</th>
-											<td id="second-col" colspan="2">{{DiaChi}}</td>
-										</tr>
-										<tr>
-											<th>Email</th>
-											<td id="second-col" colspan="2">{{Email}}</td>
-										</tr>
-										<tr>
-											<th>Điện thoại</th>
-											<td id="second-col" colspan="2">{{DienThoai}}</td>
-										</tr>
-										<tr>
-											<th>Cấp bậc</th>
-											<td id="second-col" colspan="2">{{#if this.isBidder}}Bidder{{/if}}{{#if this.isSeller}}Seller{{/if}}{{#if this.isAdmin}}Admin{{/if}}</td>
-										</tr>
-										{{/each}}
-									</table>
-								</div>
-								<div class="card-footer">
-									<a class="btn btn-primary" href="modify">
-										Thay đổi thông tin
-									</a>
-									{{#each this.info}}
-									{{#if this.isBidder}}
-									<button class="btn btn-primary" type="submit" onclick="upgradeRequest();">
-										Xin nâng cấp thành Seller
-									</button>
-									{{/if}}
-									{{/each}}
-								</div>
-								{{/if}}
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>		
-		</main>
+				</form>
+			</div>
+		</div>
+	</div>		
+</main>

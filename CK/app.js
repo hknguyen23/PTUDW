@@ -91,11 +91,13 @@ app.use('/postProduct', SellerOnly, require('./routes/seller/postProduct.seller.
 app.use('/user', require('./routes/home/home.route'));
 app.use('/productView', require('./routes/productView/productView.route'));
 
-app.use('/accountManagement', UserOnly, require('./routes/accountManagement/accountManagement.route'));
-app.use('/userView', AdminOnly, require('./routes/admin/userView.route'));
 app.use('/yourPointAndDetail', UserOnly, require('./routes/accountManagement/yourPointAndDetail.route'));
-app.use('/bidderList', AdminOnly, require('./routes/admin/bidderUpgradeRequestList.route'));
+app.use('/accountManagement', UserOnly, require('./routes/accountManagement/accountManagement.route'));
 
+app.use('/bidderList', AdminOnly, require('./routes/admin/bidderUpgradeRequestList.route'));
+app.use('/userView', AdminOnly, require('./routes/admin/userView.route'));
+app.use('/categoryLv1', AdminOnly, require('./routes/admin/categoryLv1.route'));
+app.use('/categoryLv2', AdminOnly, require('./routes/admin/categoryLv2.route'));
 
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));
 // app.use('/bidder',require('./routes/bidder/home.bidder.route'));

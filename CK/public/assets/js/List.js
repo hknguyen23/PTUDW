@@ -11,28 +11,12 @@ $(document).scroll(function() {
 
 
 $(document).ready(function() {
-	$(".ellipsis").dotdotdot({
-		height: 100,
-		watch: true,
-    });
-    
-    $(".maskHalf").each (
-        function maskHalf() {
-            var str = this.innerHTML;
-            var pos = str.lastIndexOf(" ");
-        
-            var mask = "(" +"****" + str.substring(pos);
-            this.innerHTML = mask;
-            $(this).removeClass( "hidden" )
-        }
-    );
-
     $(".countdown").each (
         function countdown() {
             var object = this;
             
             var date = new Date(object.innerHTML);
-            object.innerHTML = date.toLocaleDateString();
+            object.innerHTML = date.toLocaleDateString() + '<br />' + date.toLocaleTimeString('en-GB');
 
             var expire = date.getTime();
             function minTwoDigits(n) {
@@ -75,6 +59,26 @@ $(document).ready(function() {
             1000);
         }
     );
+	$(".ellipsis").dotdotdot({
+		height: 100,
+		watch: true,
+    });
+    
+    $(".maskHalf").each (
+        function maskHalf() {
+            var str = this.innerHTML;
+            var pos = str.length;
+            var mask = ""
+            for (i=0; i < pos-5; i++){
+                mask = mask + "*"
+            }
+            mask = mask + str.substring(pos - 5);
+            this.innerHTML = mask;
+            $(this).removeClass( "hidden" )
+        }
+    );
+
+    
 });
 
 

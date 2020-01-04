@@ -1,3 +1,68 @@
+{{#section 'css'}}
+<meta http-equiv="cache-control" content="no-cache" />
+{{/section}}
+{{#section 'js'}}
+<script>
+    $(document).ready(function() {
+        // force page reload, prevent caching
+        if(!!window.performance && window.performance.navigation.type == 2)
+        {
+            window.location.reload();
+        }   
+    });
+
+    function favorite(e) {
+        $.ajax({
+            type: 'POST',
+            data: {isFavorite: e.value, IDSanPham: e.name },
+            url: '/changeFav',
+            dataType: 'text',
+        });
+        e.value = 1 - e.value;
+    }
+    function rating(e, id) {
+        var id1 = id + "_up"
+        var id2 = id + "_down"
+
+        if (e.value == 1 && $(`#${id1}`).hasClass( "green-color" )){        // remove rating 1
+            $(`#${id1}`).removeClass( "green-color" );
+            value = 0;
+        }
+        else if (e.value == -1 && $(`#${id2}`).hasClass( "green-color" )){  // remove rating -1
+            $(`#${id2}`).removeClass( "green-color" );
+            value = 0;  
+        }
+        else if (e.value == 1){
+            var box = prompt("Điểm +1. Nhận xét:")
+            value = e.value
+        }
+        else{
+            var box = prompt("Điểm -1. Nhận xét:")
+             value = e.value
+        }
+        if (box != null || value == 0) {
+            if (value == 1){                                         // change rating from 1->-1
+                $(`#${id1}`).addClass( "green-color" );
+                $(`#${id2}`).removeClass( "green-color" );
+            } 
+            else if (value == -1){
+                $(`#${id1}`).removeClass( "green-color" );                  // change rating from -1->1
+                $(`#${id2}`).addClass( "green-color" );     
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                data: {DiemDanhGia: value, IDNguoiDuocDanhGia: e.name, IDSanPham: id, 
+                        NhanXet: box},
+                url: '/rating',
+                dataType: 'text',
+                timeout: 3000
+            });
+        }
+    }
+</script>
+{{/section}}
 <div class="row" id="body-row">
     <!--sidebar-->
     <div class="sidebar-container">
@@ -45,19 +110,8 @@
                         {{/if}}
                         <div class="img-wrap">
                             {{#if ../isAuthenticated}}
-                            <button class="asText bookmark" name="{{ID}}" value="{{isFavorite}}" onclick="mySubmit(this);">
+                            <button class="asText bookmark" name="{{ID}}" value="{{isFavorite}}" onclick="favorite(this);">
                                 <i class="fa fa-bookmark fa-lg align-top {{#if isFavorite}}green-color{{/if}}" aria-hidden="true"></i></button>
-                            <script>
-                                function mySubmit(e) {
-                                    $.ajax({
-                                        type: 'POST',
-                                        data: {isFavorite: e.value, IDSanPham: e.name },
-                                        url: '/changeFav',
-                                        dataType: 'text',
-                                    });
-                                    e.value = 1 - e.value;
-                                }
-                            </script>
                             {{/if}}  
                             <a href="/productView/{{ID}}"><img class="img-fluid mx-auto d-block"
                                 src="{{MainImg}}" alt=""></a>
@@ -70,18 +124,53 @@
                                 <span>Mua ngay:</span>
                             </div>
                             <div class="align-self-end">
-                                <span>{{formatMoney GiaMuaNgay}}</span>
+                                <span>  
+                                    {{#if_eq GiaMuaNgay null}}
+                                    NONE
+                                    {{else}}
+                                    {{formatMoney GiaMuaNgay}}
+                                    {{/if_eq}}
+                                </span>
                             </div>
                             <div>
                                 <span>Giá hiện tại: </span>
                             </div>
                             <div class="align-self-end">
-                                <span class="font-weight-bold">{{formatMoney Gia}}</span>
+                                <span class="font-weight-bold">
+                                    {{#if_eq Gia null}}
+                                    {{formatMoney GiaBanDau}}
+                                    {{else}}
+                                    {{formatMoney Gia}} 
+                                    {{/if_eq}}
+                                </span>
                             </div>
-                            <span class="maskHalf d-flex justify-content-end hidden {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">({{HoTen}})</span>
-                            <h3 class="mt-auto align-self-center countdown hidden">{{formatDate NgayHetHan}}</h3>
+                            {{#if TenTaiKhoan}}
+                            <span class="maskHalf d-flex justify-content-end hidden {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">{{TenTaiKhoan}}</span>
+                            {{else}}
+                            <span class="d-flex justify-content-end">Giá khởi điểm</span>
+                            {{/if}}
+                            <h4 class="my-auto align-self-center text-center hidden countdown">{{NgayHetHan}}</h3>
+                            {{#if ../rateable}}
+                            <div class="d-flex justify-content-center">
+                                <button class="asText" {{#if_eq ../pageTitle "Đã thắng"}}name="{{IDNguoiBan}}"{{/if_eq}}
+                                                       {{#if_eq ../pageTitle "Đã bán"}}name="{{IDNguoiThangDauGia}}"{{/if_eq}}
+                                                        value="1" onclick="rating(this, {{ID}});">
+                                    <i id="{{ID}}_up" class="fa fa-thumbs-up mx-2 {{#if_eq DiemDanhGia 1}}green-color{{/if_eq}}"></i>
+                                </button>
+                                <button class="asText" {{#if_eq ../pageTitle "Đã thắng"}}name="{{IDNguoiBan}}"{{/if_eq}}
+                                                       {{#if_eq ../pageTitle "Đã bán"}}name="{{IDNguoiThangDauGia}}"{{/if_eq}}
+                                                        value="-1" onclick="rating(this, {{ID}});">
+                                    <i id="{{ID}}_down" class="fa fa-thumbs-down mx-2 {{#if_eq DiemDanhGia -1}}green-color{{/if_eq}}"></i>
+                                </button>
+                            </div>
+                            {{/if}}
+                        
                             <div class="d-flex justify-content-between small">
-                                <span> {{SoLanDuocDauGia}} Lượt</span>
+                                <span> 
+                                    {{#if SoLanDuocDauGia}}
+                                    {{SoLanDuocDauGia}} 
+                                    {{else}}0{{/if}}
+                                    Lượt</span>
                                 <span>{{formatDate NgayDang}}</span>
                             </div>
                         </div>
