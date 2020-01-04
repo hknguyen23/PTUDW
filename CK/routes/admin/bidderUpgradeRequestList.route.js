@@ -10,11 +10,22 @@ router.get("/", async(req, res) => {
     if (page < 1) page = 1;
     const offset = (page - 1) * limit;
 	
-    const [total, rows] = await Promise.all([
+    const [total, rows, info] = await Promise.all([
 		model.countAllBidderRequest(),
 		model.getBidderUpgradeRequest(),
+		model.getUserById(res.locals.authUser.ID)
 	]);
-			
+	
+	for (const row of info) {
+		if (row.Loai === 1) {
+			row.isBidder = true;
+		}
+		else if (row.Loai === 2) {
+			row.isSeller = true;
+		}
+		else row.isAdmin = true;
+	}
+		
 	// calculate page number
     var maxPages = Math.floor(total / limit);
     if (total % limit > 0) maxPages++;
@@ -31,6 +42,7 @@ router.get("/", async(req, res) => {
         js: ["AccountScript.js", "BidderList.js"],
 		empty: rows.length === 0,
         list: rows,
+		info,
 		page,
         maxPages,
 		prev_value: +page - 1,
@@ -58,10 +70,21 @@ router.post("/", async(req, res) => {
     if (page < 1) page = 1;
     const offset = (page - 1) * limit;
 	
-    const [total, rows] = await Promise.all([
+    const [total, rows, info] = await Promise.all([
 		model.countAllBidderRequest(),
 		model.getBidderUpgradeRequest(),
+		model.getUserById(res.locals.authUser.ID)
 	]);
+	
+	for (const row of info) {
+		if (row.Loai === 1) {
+			row.isBidder = true;
+		}
+		else if (row.Loai === 2) {
+			row.isSeller = true;
+		}
+		else row.isAdmin = true;
+	}
 		
 	// calculate page number
     var maxPages = Math.floor(total / limit);
@@ -79,6 +102,7 @@ router.post("/", async(req, res) => {
         js: ["AccountScript.js", "BidderList.js"],
 		empty: rows.length === 0,
         list: rows,
+		info,
 		page,
         maxPages,
 		prev_value: +page - 1,
