@@ -123,8 +123,8 @@
                                 Thời điểm kết thúc:
                             </div>
                             <div class="col-md-8 text-left" id="exp_date" name="exp_date">
-                                <div datetime="{{details.NGAYHETHAN}}">
-                                    {{countDown (formatDateTime details.NGAYHETHAN)}}
+                                <div class="countdown">
+                                    {{formatDateTime details.NGAYHETHAN}}
                                 </div>
                             </div>
                         </div>
@@ -164,9 +164,9 @@
 
                             <form method="POST" id="frmain" onsubmit="return checkPrice({{details.GIA}})">
                                 <div class="dropdown bg-info">
-                                    <input type="number" class="float-left col-md-7" id="price" name="price"
+                                    <input type="number" class="float-left col-md-7" id="price" name="price"  onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
                                         step="{{details.BUOCGIA}}" min="{{details.GIA}}"
-                                        placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
+                                        placeholder="Bước giá: {{formatMoney details.BUOCGIA}}"/>
                                 </div>
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
@@ -197,14 +197,15 @@
                             <form method="POST" id="frmain" onsubmit="return checkPrice({{biddingHistory.0.gia}})">
                                 <div class="dropdown bg-info">
                                     <input type="number" class="float-left col-md-7" id="price" name="price"
-                                        step="{{details.BUOCGIA}}"
+                                        step="{{details.BUOCGIA}}" onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
                                         placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
                                 </div>
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
                                     <script>
-                                        var x = {{ biddingHistory.0.gia }} + {{ details.BUOCGIA }};
+                                        var x = {{ details.GIA }} + {{ details.BUOCGIA }};
+                                        alert
                                         document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
                                     </script>
                                 </div>
@@ -278,14 +279,14 @@
             <div class="mx-auto my-auto">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
                     <div class="carousel-inner" role="listbox">
-                        {{#each this.relationProduct}}
+                        {{#each relationProduct}}
                         <div class="carousel-item {{#if @index}}  {{else}}active {{/if}}">
                             <div class="col-md-4">
                                 <div class="card card-body">
                                     <img class="img-fluid" src="{{avatar}}">
                                     <h6>{{tensanpham}}</h6>
                                     <p>Giá: {{formatMoney gia}}</p>
-                                    <p>Thời gian còn lại: {{formatDate ngayhethan}}</p>
+                                    <h4 class="countdown">{{formatDateTime ngayhethan}}</h4>
                                     <p>Số lần đấu giá: {{#if solan}}
                                         {{solan}}
                                         {{else}}
@@ -298,11 +299,11 @@
                         </div>
                         {{/each}}
                     </div>
-                    <a class="left carousel-control-prev w-auto" href="#myCarousel" role="button" data-slide="prev">
+                    <a class="left carousel-control-prev w-auto" href="#myCarousel"  data-target="#myCarousel" role="button" data-slide="prev">
                         <i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;"
                             aria-hidden="true"></i>
                     </a>
-                    <a class="right carousel-control-next w-auto" href="#myCarousel" role="button" data-slide="next">
+                    <a class="right carousel-control-next w-auto" href="#myCarousel"  data-target="#myCarousel" role="button" data-slide="next">
                         <i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;"
                             aria-hidden="true"></i>
                     </a>

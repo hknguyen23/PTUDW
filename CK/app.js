@@ -57,15 +57,6 @@ app.engine(
                 return (today > val_formated) ? true : false;
             },
             or: (foo, bar) => (foo || bar),
-            // or: function(foo) {
-            //     var result = foo;
-            //     for (var i = 1; i < arguments.length; i++) {
-            //         result = result || arguments[i];
-            //         console.log(result);
-            //     }
-
-            //     return result;
-            // },
             countDown: val => {
                 const today = moment().format('YYYY-MM-DD HH:mm:ss');
                 var endDate = moment(val);
@@ -77,7 +68,7 @@ app.engine(
                 // console.log(today);
                 // console.log(endDate);
                 // console.log(duration);
-                return (duration <= 3) ? moment(new Date(val)).locale('VI').fromNow() : endDate;
+                return (duration <= 3) ? moment(new Date(val)).locale('VI').fromNow() : endDate.format('YYYY/MM/DD HH:mm:ss');
             },
         },
     }));

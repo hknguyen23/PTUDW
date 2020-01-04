@@ -6,7 +6,7 @@ module.exports = async(req, res, next) => {
         return res.redirect(`/login?retUrl=${req.originalUrl}`);
 
     //console.log(rows);
-    if (res.locals.authUser.Loai === 2) {
+    if (res.locals.authUser.Loai >= 2) {
         res.locals.isAuthenticated = true;
     } else return res.send("Hãy nâng cấp thành Seller!");
     //console.log("là seller");

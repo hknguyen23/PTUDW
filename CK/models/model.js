@@ -243,7 +243,7 @@ module.exports = {
                  from sanpham sp1 join sanpham sp2 on sp1.idloai = sp2.idloai
                                   join loaicap2 on sp2.IDLoai = loaicap2.id and sp1.idloai = loaicap2.id
                                   join loaicap1 on loaicap2.IDLoaiCap1 = loaicap1.id
-                 where sp2.id = '${id}' and sp2.id <> sp1.id
+                 where sp2.id = '${id}' and sp2.id <> sp1.id and sp1.ngayhethan > now()
                  order by rand() limit 5;`),
 
     getFavorite: (idUser, idProduct) =>
