@@ -43,6 +43,9 @@ router.get('/:id?', async(req, res) => {
         pTitle = rows[0].TenLoai;
     }
 
+    if (rows.GiaMuaNgay == 0){
+        rows.GiaMuaNgay = null;
+    }
     res.render("productList", {
         title: "Category",
         css: ["List.css"],

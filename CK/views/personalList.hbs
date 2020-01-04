@@ -124,16 +124,32 @@
                                 <span>Mua ngay:</span>
                             </div>
                             <div class="align-self-end">
-                                <span>{{formatMoney GiaMuaNgay}}</span>
+                                <span>  
+                                    {{#if_eq GiaMuaNgay null}}
+                                    NONE
+                                    {{else}}
+                                    {{formatMoney GiaMuaNgay}}
+                                    {{/if_eq}}
+                                </span>
                             </div>
                             <div>
                                 <span>Giá hiện tại: </span>
                             </div>
                             <div class="align-self-end">
-                                <span class="font-weight-bold">{{formatMoney Gia}}</span>
+                                <span class="font-weight-bold">
+                                    {{#if_eq Gia null}}
+                                    {{formatMoney GiaBanDau}}
+                                    {{else}}
+                                    {{formatMoney Gia}} 
+                                    {{/if_eq}}
+                                </span>
                             </div>
-                            <span class="maskHalf d-flex justify-content-end hidden {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">({{TenTaiKhoan}})</span>
-                            <h3 class="mt-auto align-self-center countdown hidden">{{NgayHetHan}}</h3>
+                            {{#if TenTaiKhoan}}
+                            <span class="maskHalf d-flex justify-content-end hidden {{#if_eq IDNguoiDauGia ../authUser.ID}}green-color{{/if_eq}}">{{TenTaiKhoan}}</span>
+                            {{else}}
+                            <span class="d-flex justify-content-end">Giá khởi điểm</span>
+                            {{/if}}
+                            <h4 class="my-auto align-self-center text-center hidden countdown">{{NgayHetHan}}</h3>
                             {{#if ../rateable}}
                             <div class="d-flex justify-content-center">
                                 <button class="asText" {{#if_eq ../pageTitle "Đã thắng"}}name="{{IDNguoiBan}}"{{/if_eq}}
@@ -148,10 +164,13 @@
                                 </button>
                             </div>
                             {{/if}}
-                            
-
+                        
                             <div class="d-flex justify-content-between small">
-                                <span> {{SoLanDuocDauGia}} Lượt</span>
+                                <span> 
+                                    {{#if SoLanDuocDauGia}}
+                                    {{SoLanDuocDauGia}} 
+                                    {{else}}0{{/if}}
+                                    Lượt</span>
                                 <span>{{formatDate NgayDang}}</span>
                             </div>
                         </div>

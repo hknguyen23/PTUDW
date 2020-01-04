@@ -166,6 +166,9 @@ router.get('/upload', async (req, res) => {
         })
     }
 
+    if (rows.GiaMuaNgay == 0){
+        rows.GiaMuaNgay = null;
+    }
     res.render("personalList", {
         title: "Sản phẩm đã đăng",
         css: ["List.css"],

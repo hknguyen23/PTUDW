@@ -27,7 +27,7 @@ module.exports = {
         return rows[0].total;
     },
     getProductByCat: (id, idND, offset) => {
-        const guest = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
+        const guest = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                                 ,(
                                     CASE
                                         WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
@@ -44,7 +44,7 @@ module.exports = {
                     ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
                     LIMIT ? OFFSET ?`;
                     
-        const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
+        const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                             ,(
                                 CASE
                                     WHEN EXISTS
@@ -80,7 +80,7 @@ module.exports = {
     },
 
     getPersonalListByID: (type, id, offset) => {
-        var head = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, 
+        var head = `SELECT SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, 
                            SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan, SP.IDNguoiBan, SP.IDNguoiThangDauGia
                             ,(
                                 CASE
@@ -193,7 +193,7 @@ module.exports = {
     },
     getSearchListbyKey: (key, idLoai, by, order, idND, offset) => {
 
-        const guest = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
+        const guest = `SELECT SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                                 ,(
                                     CASE
                                         WHEN SP.NgayDang BETWEEN DATE_SUB(NOW(), INTERVAL 3 DAY) AND NOW() THEN 1
@@ -210,7 +210,7 @@ module.exports = {
                                                                                                 ) )
                     ORDER BY ${by} ${order}
                     LIMIT ${config.paginate.limit} OFFSET ${offset}`;
-        const user = `SELECT SP.ID, SP.TenSanPham, SP.Gia, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen 
+        const user = `SELECT SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.HoTen 
                             ,(
                                 CASE
                                     WHEN EXISTS
