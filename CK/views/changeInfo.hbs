@@ -89,6 +89,23 @@
 							<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
 						</a>
 					</div>
+					
+					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
+						href="#submenu-category" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						Quản lý danh mục
+						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
+					</a>
+					
+					<!-- Submenu của Quản lý danh mục -->
+					<div id="submenu-category" class="collapse sidebar-submenu">
+						<a href="/categoryLv1" class="list-group-item list-group-item-action bg-light">
+							<!-- Bao gồm việc xóa người dùng, nâng cấp bidder, hạ cấp seller-->
+							<span class="menu-collapsed">Quản lý danh mục cha</span>
+						</a>
+						<a href="/categoryLv2" class="list-group-item list-group-item-action bg-light">
+							<span class="menu-collapsed">Quản lý danh mục con</span>
+						</a>
+					</div>
 					{{/if}}
 					
 					<!-- Đăng sản phẩm -->

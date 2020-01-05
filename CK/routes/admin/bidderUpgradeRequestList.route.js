@@ -41,7 +41,7 @@ router.get("/", async(req, res) => {
 
 router.post("/", async(req, res) => {
 	const limit = config.paginate.limit;
-	for (i = 0; i < limit; i++){
+	for (i = 0; i < req.body.id.length; i++){
 		var type = 2;
 		const entity = {
 			ID: req.body.id[i],

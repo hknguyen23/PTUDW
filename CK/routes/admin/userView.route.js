@@ -54,7 +54,7 @@ router.get("/", async(req, res) => {
 
 router.post("/", async(req, res) => {
 	const limit = config.paginate.limit;
-	for (i = 0; i < limit; i++){
+	for (i = 0; i < req.body.id.length; i++){
 		var type = 3;
 		if (req.body.type[i] == "Bidder") type = 1;
 		else if (req.body.type[i] == "Seller") type = 2;

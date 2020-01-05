@@ -83,64 +83,58 @@
 			<div class="text-center mt-3" id="page-content-wrapper">
 				<h1>Danh mục con (Danh mục cấp 2)</h1>
 						
-				<form action="#" method="POST">
+				<form method="POST">
 					<div class="card m-3">
 						<h2 class="card-header">Danh sách</h2>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<label class="input-group-text" for="catLv1">Tên danh mục cha</label>
 							</div>
-							<select class="custom-select" id="catLv1" onchange="location.href='?id=' + this.selectedIndex;">
+							<select class="custom-select" id="catLv1" onchange="location.href = '/categoryLv2/' + this.selectedIndex;">
 								<option id="option" value="-1">-----</option>
 								{{#each this.catLv1}}
-								<option id="option" value="{{ID}}">{{TenLoai}}</option>
+								<option id="option" value="{{ID}}" {{#if_eq ID ../catLv1ID}}selected{{/if_eq}}>{{TenLoai}}</option>
 								{{/each}}
 							</select>
 						</div>
-						{{#if this.empty}}
 						<div class="card-body">
-							<p class="card-text">Không có dữ liệu.</p>
-						</div>
-						{{else}}
-						<div class="card-body">
-							<table id="myTable" class= "table table-hover text-left">
+							<table name="myTable" id="myTable" class= "table table-hover text-left">
 								<thead>
-									<tr>
+									<tr id="mainRow">
 										<th style="width: 5%;" scope="col">ID</th>
 										<th style="width: 50%;" scope="col">Tên danh mục</th>
 										<th style="text-align: center; word-break: break-all; width: 25%;" scope="col">Số lượng sản phẩm</th>
 										<th style="text-align: right; width: 5%;" scope="col">Sửa</th>
-										<th style="text-align: right; width: 5%;" scope="col">Xóa</th>
 									</tr>
 								</thead>
+								{{#if this.empty}}{{else}}
 								{{#each this.list}}
-								<tr>
+								<tr id="myRow">
 									<th style="width: 5%;" scope="row">
-										<input class="id" name="id" id="id" value="{{ID}}" style="border: none; width: 100%; font-weight: bold;" readonly>
+										<input name="id[]" id="id" value="{{ID}}" style="border: none; width: 100%; font-weight: bold;" readonly>
 									</th>
-									<td style="width: 50%;">{{TenLoai}}</td>
+									<td style="width: 50%;">
+										<input class="catName" name="catName[]" id="catName" value="{{TenLoai}}" style="border: none; width: 100%;" readonly>
+									</td>
 									<td style="text-align: center; word-break: break-all; width: 25%;">{{SoLuong}}</td>
 									<td style="text-align: right; width: 5%;">
-										<button class="btn btn-success" type="button">
+										<button class="btn btn-info" name="editButton" id="editButton" type="button" onclick="editButtonClick(this);">
 											<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 										</button>
-									</td>
-									<td style="text-align: right; width: 5%;">
-										<button class="btn btn-danger" type="button">
-											<i class="fa fa-trash-o" aria-hidden="true"></i>
-										</button>
-									</td>									
+									</td>							
 								</tr>
 								{{/each}}
+								{{/if}}
 							</table>
 						</div>
 						
+						{{#if this.isExist}}
 						<div class="card-footer">
-							<a class="btn btn-primary" href="modify">
+							<button class="btn btn-primary" name="addButton" id="addButton" type="button" onclick="addButtonClick();">
 								Thêm danh mục mới
-							</a>
+							</button>
 						</div>
-					{{/if}}
+						{{/if}}
 					</div>
 				</form>
 			</div>
