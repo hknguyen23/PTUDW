@@ -6,6 +6,7 @@ const GuestOnly = require('../../middlewares/GuestOnly.mdw');
 const { check, validationResult } = require('express-validator');
 const emailserver = require('../../middlewares/email.mdw');
 const crypto = require('crypto');
+var request = require('request');
 
 const router = express.Router();
 
@@ -44,6 +45,26 @@ router.get("/login", GuestOnly, (req, res) => {
 });
 
 router.post('/login', async(req, res) => {
+    // if g-recaptcha-response is blank or null means user has not selected the captcha, so return the error.
+    if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+        req.session.errors = [{ msg: 'Vui lòng nhập captcha' }];
+        return res.redirect('/login')
+    }
+    // Put your secret key here.
+    var secretKey = "6LfRhcwUAAAAAFh6To7y1W5rznjx9gOlxyyO56O1";
+    // req.connection.remoteAddress will provide IP address of connected user.
+    var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+    // Hitting GET request to the URL, Google will respond with success or error scenario.
+    request(verificationUrl,function(error,response,body) {
+        body = JSON.parse(body);
+        // Success will be true or false depending upon captcha validation.
+        if(body.success !== undefined && !body.success) {
+            req.session.errors = [{ msg: 'Vui lòng nhập lại captcha' }];
+            return res.redirect('/login')
+        }
+    });
+
+
     const user = await model.getIdByUsername(req.body.TenTaiKhoan);
     if (user.length == 0) {
         req.session.errors = [{ msg: 'Tài khoản không tồn tại' }];
@@ -94,7 +115,6 @@ router.post('/login/register', [
     .normalizeEmail()
     .isLength({ max:50 }).withMessage("Email tối đa 50 ký tự")
     .custom(async value => {
-        console.log(value);
         return id = await model.getIdByEmail(value).then(result => {
             if (result.length > 0) {
                 return Promise.reject('Email đã tồn tại');
@@ -112,11 +132,11 @@ router.post('/login/register', [
             return val;
         }
     }),
-    check('fFirstName', "")
+    check('fFirstName', "Họ không hợp lệ")
     .not().isEmpty()
     .trim()
     .isLength({ max:20 }).withMessage("Họ tối đa 20 ký tự"),
-    check('fLastName')
+    check('fLastName', "Tên không hợp lệ")
     .not().isEmpty()
     .trim()
     .isLength({ max:10 }).withMessage("Tên tối đa 10 ký tự"),
@@ -127,20 +147,42 @@ router.post('/login/register', [
         req.session.saveForm = req.body;
         res.redirect('/login#sign-up');
     } else {
+
+        // if g-recaptcha-response is blank or null means user has not selected the captcha, so return the error.
+        if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+            req.session.errors = [{ msg: 'Vui lòng nhập lại captcha' }];
+            req.session.saveForm = req.body;
+            return res.redirect('/login#sign-up')
+        }
+        // Put your secret key here.
+        var secretKey = "6LfRhcwUAAAAAFh6To7y1W5rznjx9gOlxyyO56O1";
+        // req.connection.remoteAddress will provide IP address of connected user.
+        var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+        // Hitting GET request to the URL, Google will respond with success or error scenario.
+        request(verificationUrl,function(error,response,body) {
+            body = JSON.parse(body);
+            // Success will be true or false depending upon captcha validation.
+            if(body.success !== undefined && !body.success) {
+                req.session.errors = [{ msg: 'Vui lòng nhập lại captcha' }];
+                req.session.saveForm = req.body;
+                return res.redirect('/login#sign-up')
+            }
+        });
+        
+
+
         const N = 10;
         const hash = bcrypt.hashSync(req.body.fPass, N);
 
-        const entity = req.body;
-        entity.MatKhau = hash;
-        entity.HoTen = req.body.fFirstName + " " + req.body.fLastName;
-        entity.Loai = 1;
-        entity.XinNangCap = false;
-        entity.TongDiemDanhGia = 0;
-
-        delete entity.fPass;
-        delete entity.fRPass;
-        delete entity.fFirstName;
-        delete entity.fLastName;
+        const entity = {
+            TenTaiKhoan: req.body.TenTaiKhoan,
+            Email: req.body.Email,
+            MatKhau: hash,
+            HoTen: req.body.fFirstName + " " + req.body.fLastName,
+            Loai: 1,
+            XinNangCap: false,
+            TongDiemDanhGia: 0,
+        }
 
         const result = await model.addUser(entity);
         res.redirect('/login');

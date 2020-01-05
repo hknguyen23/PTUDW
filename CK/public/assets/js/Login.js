@@ -10,6 +10,8 @@ function toggleSignUp(e){
     $('.alert-danger').toggle();
     $('#logreg-forms .form-signin').toggle(); // display:block or none
     $('#logreg-forms .form-signup').toggle(); // display:block or none
+    grecaptcha.reset(captcha1);
+    grecaptcha.reset(captcha2);
 }
 
 $(()=>{
