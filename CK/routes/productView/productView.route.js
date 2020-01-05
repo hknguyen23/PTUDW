@@ -127,12 +127,76 @@ router.post("/:Id", UserOnly, async(req, res) => {
     // console.log(today);
     // console.log(endDate);
     // console.log(diff);
-    console.log(req.body);
+
+    // check if same id as current holder: update bid
+    result = await model.getBiddingHistory(details[0].ID);
+    if (userId == result[0].id_ndg) {      
+        await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);    // remove and add new bid
+        if (req.body.auto != undefined) {
+            entity1.MaxGia = entity1.gia;
+            entity1.gia = details[0].GIA;
+        }
+        await model.addBidDetail(entity1);
+
+        entity2.gia = entity1.gia;
+        const update = await  model.updateProduct(entity2) // update current price of product
+        return res.redirect(req.headers.referer);
+    }
+
+    // Check Auto Bid
+    if (result.length >= 0 && result[0].max != null){                // if current holder's auto is on
+        if (result[0].max >= entity1.gia) {                 // if current holder still wins
+            var current = {
+                idnguoidaugia: result[0].id_ndg,
+                idsanpham: productId,
+                thoigiandaugia: today,
+                gia: req.body.price,
+                MaxGia: result[0].max
+            }
+            console.log(1);
+            await model.removeBid(current.idnguoidaugia, current.idsanpham);
+            await model.addBidDetail(current);
+            
+            
+            entity1.thoigiandaugia = moment(today).add(1, 'seconds').format('YYYY-MM-DD HH:mm:ss');
+            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+            await model.addBidDetail(entity1);
+        }
+        else if (req.body.auto != undefined){                // if new bid wins and auto is on
+            entity1.MaxGia = entity1.gia;
+            entity1.gia = result[0].max + details[0].BUOCGIA;
+            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+            await model.addBidDetail(entity1);
+            console.log(2);
+
+        }
+        else{                                               // if new bid wins and auto is off
+            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+            await model.addBidDetail(entity1);
+            console.log(3);
+        }
+        entity2.solanduocdaugia++;
+    }
+    else {                                                              // if current holder's auto is off
+        if (req.body.auto != undefined){            // if new bid wins and auto is on
+            entity1.MaxGia = entity1.gia;
+            entity1.gia = details[0].GIA + details[0].BUOCGIA;
+            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+            await model.addBidDetail(entity1);
+            console.log(4);
+
+        }
+        else{                                        // if new bid wins and auto is off
+            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+            await model.addBidDetail(entity1);
+            console.log(5);
+
+        }
+    }
+    // update current price of product
+    entity2.gia = entity1.gia;          
+    const update = await  model.updateProduct(entity2) // gửi vào 1 entity khác chỉ có 2 trường là idsp và giá
     
-    const [addResult, update] = await Promise.all([
-        model.addBidDetail(entity1),
-        model.updateProduct(entity2) // gửi vào 1 entity khác chỉ có 2 trường là idsp và giá
-    ]);
     res.redirect(req.headers.referer);
 });
 

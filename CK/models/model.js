@@ -15,11 +15,11 @@ module.exports = {
                 from sanpham sp join hinhanh hinh on sp.id = hinh.idsanpham
                 where sp.id = '${id}'`),
     getBiddingHistory: id =>
-        db.load(`select ndg.id as id_ndg,ndg.tentaikhoan, ndg.hoten,ndg.tongdiemdanhgia as diemndg, ctdg.thoigiandaugia as thoigian, ctdg.gia
+        db.load(`select ndg.id as id_ndg,ndg.tentaikhoan, ndg.hoten,ndg.tongdiemdanhgia as diemndg, ctdg.thoigiandaugia as thoigian, ctdg.gia, ctdg.MaxGia as max
                   from chitietdaugia ctdg join nguoidung ndg on ctdg.idnguoidaugia = ndg.id
                   where idsanpham = '${id}'
-                  order by ctdg.thoigiandaugia desc, ctdg.gia desc`),
-
+                  order by ctdg.gia desc, ctdg.thoigiandaugia asc`),
+    
     // route list                  
     countProductByCat: async id => {
         const rows = await db.load(`SELECT count(*) AS total FROM SANPHAM SP 
@@ -429,6 +429,8 @@ module.exports = {
     delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
 
     // Bid
+    getMaxBid: entity => db.loadSafe('SELECT * FROM CHITIETDAUGIA WHERE ', entity),
+
     addBidDetail: entity => db.add('chitietdaugia', entity),
 
     addUser: entity => db.add('NGUOIDUNG', entity),
@@ -446,6 +448,7 @@ module.exports = {
         }
     },
 
+    removeBid: (id, idsp) => db.delete('delete from chitietdaugia where idnguoidaugia = ? and idsanpham = ?', [id, idsp]),
 
     rejectBidding: async function(proId, idToReject) {
         await Promise.all([
