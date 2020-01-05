@@ -3,7 +3,26 @@ const model = require("../../models/model");
 const moment = require('moment');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-
+const multer = require("multer");
+const storage = multer.diskStorage({
+    filename: function(req, file, cb) {
+        cb(null, Date.now() + file.originalname);
+    },
+    destination: function(req, file, cb) {
+        destination = `./public/assets/images/avatar`;
+        var stat = null;
+        try {
+            stat = fs.statSync(destination);
+        } catch (err) {
+            fs.mkdirSync(destination);
+        }
+        if (stat && !stat.isDirectory()) {
+            throw new Error('Directory cannot be created because an inode of a different type exists at "' + destination + '"');
+        }
+        cb(null, destination);
+    }
+});
+const upload = multer({ storage });
 const router = express.Router();
 router.use(express.static("public"));
 
@@ -100,18 +119,18 @@ router.post("/modify", [
     .not().isEmpty()
     .isEmail()
     .normalizeEmail()
-    .isLength({ max:50 }).withMessage("Email tối đa 50 ký tự")
-    .custom(async (value, { req }) => {
+    .isLength({ max: 50 }).withMessage("Email tối đa 50 ký tự")
+    .custom(async(value, { req }) => {
         result = await model.getIdByEmail(value);
         if (result.length > 0 && result[0].ID != req.body.id) {
             return Promise.reject('Email đã tồn tại');
         }
-    
+
     }),
     check('NgaySinh', "Ngày sinh không hợp lệ")
-    .optional({checkFalsy: true}) 
-    .custom( val => {
-        if (moment(val, "DD/MM/YYYY").isValid() || val === "__/__/____" ) {
+    .optional({ checkFalsy: true })
+    .custom(val => {
+        if (moment(val, "DD/MM/YYYY").isValid() || val === "__/__/____") {
             return val;
         } else {
             throw new Error("Ngày sinh không hợp lệ");
@@ -120,19 +139,19 @@ router.post("/modify", [
     check('firstName', "Họ không hợp lệ")
     .not().isEmpty()
     .trim()
-    .isLength({ max:20 }).withMessage("Họ tối đa 20 ký tự"),
+    .isLength({ max: 20 }).withMessage("Họ tối đa 20 ký tự"),
     check('lastName', "Tên không hợp lệ")
     .not().isEmpty()
     .trim()
-    .isLength({ max:10 }).withMessage("Tên tối đa 10 ký tự"),
+    .isLength({ max: 10 }).withMessage("Tên tối đa 10 ký tự"),
     check('DiaChi', "Địa chỉ không hợp lệ")
-    .optional({checkFalsy: true}) 
+    .optional({ checkFalsy: true })
     .trim()
-    .isLength({ max:1000 }).withMessage("Địa chỉ tối đa 1000 ký tự"),
-    check('DienThoai', "Điện thoại không hợp lệ" )
-    .optional({checkFalsy: true}) 
+    .isLength({ max: 1000 }).withMessage("Địa chỉ tối đa 1000 ký tự"),
+    check('DienThoai', "Điện thoại không hợp lệ")
+    .optional({ checkFalsy: true })
     .trim()
-    .isLength({ max:20 }).withMessage("Điện thoại tối đa 20 chữ số"),
+    .isLength({ max: 20 }).withMessage("Điện thoại tối đa 20 chữ số"),
 ], async(req, res) => {
     var errors = validationResult(req).array();
     if (errors.length > 0) {
@@ -143,10 +162,9 @@ router.post("/modify", [
         const entity = req.body;
         entity.HoTen = req.body.firstName + " " + req.body.lastName;
 
-        if (entity.NgaySinh != "" && entity.NgaySinh != "__/__/____"){
+        if (entity.NgaySinh != "" && entity.NgaySinh != "__/__/____") {
             entity.NgaySinh = moment(req.body.NgaySinh, 'DD/MM/YYYY').format('YYYY/MM/DD');
-        } 
-        else {
+        } else {
             delete entity.NgaySinh;
         }
         delete entity.firstName;
@@ -186,7 +204,7 @@ router.get("/modifyPass", async(req, res) => {
 router.post("/modifyPass", [
     check('formerPass')
     .not().isEmpty()
-    .custom( async (val, { req }) => {
+    .custom(async(val, { req }) => {
         const user = await model.getIdByUsername(req.body.TenTaiKhoan);
         if (user.length == 0){
             throw new Error("Tài khoản không tồn tại. Hãy đăng nhập lại");
@@ -204,7 +222,7 @@ router.post("/modifyPass", [
     check('newPass')
     .not().isEmpty()
     .isLength({ min: 6 }).withMessage("Mật khẩu mới phải có ít nhất 6 ký tự")
-    .isLength({ max:100 }).withMessage("Mật khẩu tối đa 100 ký tự")
+    .isLength({ max: 100 }).withMessage("Mật khẩu tối đa 100 ký tự")
     .custom((val, { req }) => {
         if (val !== req.body.repeatPass) {
             throw new Error("Mật khẩu mới nhập lại không đúng");
@@ -215,12 +233,12 @@ router.post("/modifyPass", [
 ], async(req, res) => {
     var errors = validationResult(req).array();
     if (errors.length > 0) {
-      req.session.errors = errors;
-      res.redirect('/accountManagement/modifyPass');
-    } else {  
+        req.session.errors = errors;
+        res.redirect('/accountManagement/modifyPass');
+    } else {
         const N = 10;
         const hash = bcrypt.hashSync(req.body.newPass, N);
-  
+
         var entity = {
             id: req.body.id,
             MatKhau: hash,
@@ -228,6 +246,10 @@ router.post("/modifyPass", [
         await model.changePassById(entity);
         res.redirect('/accountManagement');
     }
-  });
+});
+
+router.post('/changeAvatar/:id', (req, res) => {
+
+})
 
 module.exports = router;

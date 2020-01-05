@@ -1,3 +1,21 @@
+{{#section 'css'}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/css/fileinput.min.css" media="all"
+	rel="stylesheet" type="text/css" />
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.3/themes/fa/theme.min.js"></script>
+<script>
+	$('#fuMain').fileinput({
+		theme: 'fa',
+		showUpload: false,
+		dropZoneEnabled: false,
+		allowedFileExtensions: ['png', 'jpg', 'gif'],
+	});
+</script>
+{{/section}}
+
 <main class="main" role="main">
 	<div class="container-fruid mb-3">
 		<div class="d-flex wrapper">
@@ -10,15 +28,16 @@
 					</a>
 					<a href="/yourPointAndDetail" class="list-group-item list-group-item-action bg-light">
 						Xem điểm đánh giá và chi tiết
-					</a>	
-					
+					</a>
+
 					{{#each this.info}}
 					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-						href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						href="#submenu-watch" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true"
+						aria-expanded="false">
 						Xem danh sách
 						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
 					</a>
-							
+
 					<!-- Submenu của Xem danh sách -->
 					<div id="submenu-watch" class="collapse sidebar-submenu">
 						<a href="/lists/acc/watch" class="list-group-item list-group-item-action bg-light">
@@ -47,14 +66,15 @@
 						</a>
 						{{/if}}
 					</div>
-							
+
 					{{#if this.isAdmin}}
 					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-						href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						href="#submenu-user" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true"
+						aria-expanded="false">
 						Quản lý người dùng
 						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
 					</a>
-							
+
 					<!-- Submenu của Quản lý người dùng -->
 					<div id="submenu-user" class="collapse sidebar-submenu">
 						<a href="/userView" class="list-group-item list-group-item-action bg-light">
@@ -65,13 +85,14 @@
 							<span class="menu-collapsed">Xem danh sách bidder xin nâng cấp tài khoản</span>
 						</a>
 					</div>
-					
+
 					<a class="list-group-item list-group-item-action bg-light flex-column align-items-start"
-						href="#submenu-category" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+						href="#submenu-category" id="navbarDropdown" data-toggle="collapse" aria-haspopup="true"
+						aria-expanded="false">
 						Quản lý danh mục
 						<i class="fa fa-caret-down" style="float: right;" aria-hidden="true"></i>
 					</a>
-					
+
 					<!-- Submenu của Quản lý danh mục -->
 					<div id="submenu-category" class="collapse sidebar-submenu">
 						<a href="/categoryLv1" class="list-group-item list-group-item-action bg-light">
@@ -83,7 +104,7 @@
 						</a>
 					</div>
 					{{/if}}
-					
+
 					<!-- Đăng sản phẩm -->
 					{{#if this.isSeller}}
 					<a href="/postProduct" class="list-group-item list-group-item-action bg-light">
@@ -100,12 +121,12 @@
 				</div>
 			</div>
 			<!-- /#sidebar-wrapper -->
-					
+
 			<div class="text-center mt-3" id="page-content-wrapper">
 				<h1>Thông tin cá nhân</h1>
 				<div>Thông tin cơ bản, như tên và ảnh của bạn, mà bạn sử dụng trên trang web của chúng tôi</div>
-						
-				<form action="#" method="POST">
+
+				<form  action="/accountManagement/changeAvatar/{{info.ID}}" method="POST" enctype="multipart/form-data">
 					<div class="card m-3">
 						<h2 class="card-header">Hồ sơ</h2>
 						{{#if this.empty}}
@@ -113,45 +134,56 @@
 							<p class="card-text">Không có dữ liệu.</p>
 						</div>
 						{{else}}
-						<div class="card-body">		
-							<table id="myTable" class="table">
-								{{#each this.info}}
-								<tr>
-									<th>Ảnh</th>
-									<td id="second-col">Một bức ảnh giúp cá nhân hóa tài khoản của bạn</td>
-									<td style="text-align: right;">
-										<img class="rounded-circle" src="{{AvatarURL}}" alt="Your avatar"
-											width="200" height="200">
-									</td>
-								</tr>
-								<tr>
-									<th>Họ và tên</th>
-									<td id="second-col" colspan="2">{{HoTen}}</td>
-								</tr>
-								<tr>
-									<th>Ngày sinh</th>
-									<td id="second-col" colspan="2">{{#if NgaySinh}}{{NgaySinh}}{{/if}}</td>
-								</tr>
-								<tr>
-									<th>Địa chỉ</th>
-									<td id="second-col" colspan="2">{{DiaChi}}</td>
-								</tr>
-								<tr>
-									<th>Email</th>
-									<td id="second-col" colspan="2">{{Email}}</td>
-								</tr>
-								<tr>
-									<th>Điện thoại</th>
-									<td id="second-col" colspan="2">{{DienThoai}}</td>
-								</tr>
-								<tr>
-									<th>Cấp bậc</th>
-									<td id="second-col" colspan="2">{{#if this.isBidder}}Bidder{{/if}}{{#if this.isSeller}}Seller{{/if}}{{#if this.isAdmin}}Admin{{/if}}</td>
-								</tr>
-								{{/each}}
-							</table>
+						<div class="card-body">
+							{{!-- <table id="myTable" class="table"> --}}
+							{{#each info}}
+							<div class="form-group row">
+								<label class="col-sm-3 text-right col-form-label">Ảnh đại diện: </label>
+								<div class="col-sm-4"><img src="" alt=""></div>
+								<div class="col-sm-5">
+									<input id="fuMain" type="file"></input>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3  text-right col-form-label">Họ tên: </label>
+								<div class="col-sm-9 text-left form-control">
+									{{HoTen}}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3  text-right col-form-label">Ngày sinh: </label>
+								<div class="col-sm-9 text-left form-control">
+									{{#if NgaySinh}}{{NgaySinh}}{{/if}}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3  text-right col-form-label">Địa chỉ: </label>
+								<div class="col-sm-9 text-left form-control">
+									{{DiaChi}}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3  text-right col-form-label">Email: </label>
+								<div class="col-sm-9 text-left form-control">
+									{{Email}}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3  text-right col-form-label" for="tel">Điện thoại: </label>
+								<div class="col-sm-9 text-left form-control" id="tel" name="tel">
+									{{DienThoai}}
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3  text-right col-form-label" for="loai">Cấp bậc: </label>
+								<div class="col-sm-9 text-left form-control" id="loai" name="loai">
+									{{#if this.isBidder}}Bidder{{/if}}{{#if this.isSeller}}Seller{{/if}}{{#if this.isAdmin}}Admin{{/if}}
+								</div>
+							</div>
+							{{/each}}
+							{{!-- </table> --}}
 						</div>
-						
+
 						<div class="card-footer">
 							<a class="btn btn-primary" href="modify">
 								Thay đổi thông tin
@@ -167,10 +199,10 @@
 							{{/if}}
 							{{/each}}
 						</div>
-					{{/if}}
+						{{/if}}
 					</div>
 				</form>
 			</div>
 		</div>
-	</div>		
+	</div>
 </main>
