@@ -308,7 +308,29 @@ module.exports = {
 													FROM SANPHAM SP RIGHT JOIN LOAICAP2 C2 ON SP.IDLoai = C2.ID 
 													WHERE C2.IDLoaiCap1 = ${id} 
 													GROUP BY C2.ID, C2.TenLoai`),
-
+	
+	updateCatLv1Name: entity => {
+		const condition = { ID: entity.ID };
+        delete entity.ID;
+        return db.patch('LOAICAP1', entity, condition);
+	},
+	
+	updateCatLv2Name: entity => {
+		const condition = { ID: entity.ID };
+        delete entity.ID;
+        return db.patch('LOAICAP2', entity, condition);
+	},
+	
+	delCatLv1ById: entity => db.delete('DELETE FROM LOAICAP1 WHERE ID = ?', [entity.ID]),
+	
+	delCatLv2ById: entity => db.delete('DELETE FROM LOAICAP2 WHERE ID = ?', [entity.ID]),
+	
+	addCatLv1: entity => db.add('LOAICAP1', entity),
+	
+	addCatLv2: entity => db.add('LOAICAP2', entity),
+	
+	addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
+	
     getTop5HighestBidTimes: () => db.load(`SELECT * FROM SANPHAM 
                                            WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW()
                                            ORDER BY SoLanDuocDauGia DESC LIMIT 5`),
