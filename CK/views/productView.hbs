@@ -170,18 +170,26 @@
                                         placeholder="Bước giá: {{formatMoney details.BUOCGIA}}"/>
                                 </div>
 
-                                <input type="checkbox" class="ml-3" name="auto" value="1"> Tự động<br>
+                                <input type="checkbox" class="ml-3" name="auto" value="1" {{#if hasMaxBid}}checked{{/if}}> Tự động<br>
                                 
-
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
                                     <script>
                                         var x = {{ details.GIA }} + {{ details.BUOCGIA }};
-                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
+                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + ' VNĐ';
                                     </script>
                                 </div>
-
+                                {{#if hasMaxBid}}
+                                <div class="float-right mt-3 col-md-8 text-muted">
+                                    Tự động đặt tối giá:
+                                    <span id="max" name="max"></span>
+                                    <script>
+                                        var x = {{hasMaxBid}};
+                                        document.getElementById("max").innerHTML = x.toLocaleString() + ' VNĐ';
+                                    </script>
+                                </div>
+                                {{/if}}
                                 <div class="clearfix"></div>
                                 <div class="mt-4 text-center">
                                     <button type="submit" class="btn btn-danger">
@@ -195,29 +203,40 @@
                         <div><b class="text-danger">Bạn không đủ điểm để đấu giá sản phầm này</b></div>
                         {{else}}
                         <div>
-                            <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
-                                Đặt giá tự động:
-                            </div>
-
-                            <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
-                                Đặt giá của bạn:
-                            </div>
 
                             <form method="POST" id="frmain" onsubmit="return checkPrice({{biddingHistory.0.gia}})">
+                                <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
+                                    Đặt giá của bạn:
+                                </div>
+
                                 <div class="dropdown bg-info">
                                     <input type="number" class="float-left col-md-7" id="price" name="price"
                                         step="{{details.BUOCGIA}}" onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
                                         placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
                                 </div>
+
+                                <input type="checkbox" class="ml-3" name="auto" value="1" {{#if hasMaxBid}}checked{{/if}}> Tự động<br>
+
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
                                     <script>
                                         var x = {{ details.GIA }} + {{ details.BUOCGIA }};
                                         alert
-                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
+                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + ' VNĐ';
                                     </script>
                                 </div>
+
+                                {{#if hasMaxBid}}
+                                <div class="float-right mt-3 col-md-8 text-muted">
+                                    Tự động đặt tối giá:
+                                    <span id="max" name="max"></span>
+                                    <script>
+                                        var x = {{hasMaxBid}};
+                                        document.getElementById("max").innerHTML = x.toLocaleString() + ' VNĐ';
+                                    </script>
+                                </div>
+                                {{/if}}
 
                                 <div class="clearfix"></div>
                                 <div class="mt-4 text-center">

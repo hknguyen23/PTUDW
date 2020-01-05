@@ -41,6 +41,13 @@ router.get("/:Id", async(req, res) => {
         biddingHistory[i].tentaikhoan = mask;
     }
 
+    var hasMaxBid = null;
+    if (biddingHistory.length > 0 && userId == biddingHistory[0].id_ndg) {   
+        if (biddingHistory[0].max != null) {
+            hasMaxBid = biddingHistory[0].max;
+        }
+    }   
+
     let errMsg;
     if (req.session.proView_errMsg !== 'undefined') {
         errMsg = req.session.proView_errMsg;
@@ -60,7 +67,8 @@ router.get("/:Id", async(req, res) => {
         userScore: userScore[0],
         hasEverBid,
         isBanned,
-        errMsg
+        errMsg,
+        hasMaxBid
     });
 });
 
@@ -130,7 +138,7 @@ router.post("/:Id", UserOnly, async(req, res) => {
 
     // check if same id as current holder: update bid
     result = await model.getBiddingHistory(details[0].ID);
-    if (userId == result[0].id_ndg) {      
+    if (result.length > 0 && userId == result[0].id_ndg) {      
         await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);    // remove and add new bid
         if (req.body.auto != undefined) {
             entity1.MaxGia = entity1.gia;
@@ -144,7 +152,7 @@ router.post("/:Id", UserOnly, async(req, res) => {
     }
 
     // Check Auto Bid
-    if (result.length >= 0 && result[0].max != null){                // if current holder's auto is on
+    if (result.length > 0 && result[0].max != null){                // if current holder's auto is on
         if (result[0].max >= entity1.gia) {                 // if current holder still wins
             var current = {
                 idnguoidaugia: result[0].id_ndg,
