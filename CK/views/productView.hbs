@@ -158,16 +158,21 @@
                         {{else}}
                         {{#if details.LUONDUOCDAUGIA}}
                         <div>
-                            <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
-                                Đặt giá của bạn:
-                            </div>
-
                             <form method="POST" id="frmain" onsubmit="return checkPrice({{details.GIA}})">
+
+                                <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
+                                    Đặt giá của bạn:
+                                </div>
+
                                 <div class="dropdown bg-info">
-                                    <input type="number" class="float-left col-md-7" id="price" name="price"  onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
+                                    <input type="number" class="float-left col-md-5" id="price" name="price"  onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
                                         step="{{details.BUOCGIA}}" min="{{details.GIA}}"
                                         placeholder="Bước giá: {{formatMoney details.BUOCGIA}}"/>
                                 </div>
+
+                                <input type="checkbox" class="ml-3" name="auto" value="0"> Tự động<br>
+                                
+
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
@@ -190,6 +195,10 @@
                         <div><b class="text-danger">Bạn không đủ điểm để đấu giá sản phầm này</b></div>
                         {{else}}
                         <div>
+                            <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
+                                Đặt giá tự động:
+                            </div>
+
                             <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
                                 Đặt giá của bạn:
                             </div>
@@ -277,7 +286,7 @@
         <div class="text-center my-5">
             <h2>Các sản phẩm liên quan</h2>
             <div class="mx-auto my-auto">
-                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
                     <div class="carousel-inner" role="listbox">
                         {{#each relationProduct}}
                         <div class="carousel-item {{#if @index}}  {{else}}active {{/if}}">

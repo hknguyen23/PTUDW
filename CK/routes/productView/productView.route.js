@@ -127,11 +127,8 @@ router.post("/:Id", UserOnly, async(req, res) => {
     // console.log(today);
     // console.log(endDate);
     // console.log(diff);
-
-    if (giamuangay !== null) {
-        if (entity1.gia >= giamuangay) // nếu giá đặt lớn hơn giá hiện tại
-            entity2.idnguoithangdaugia = userId;
-    }
+    console.log(req.body);
+    
     const [addResult, update] = await Promise.all([
         model.addBidDetail(entity1),
         model.updateProduct(entity2) // gửi vào 1 entity khác chỉ có 2 trường là idsp và giá
