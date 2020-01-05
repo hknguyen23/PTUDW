@@ -31,7 +31,7 @@ router.get("/:Id", async(req, res) => {
         return res.redirect('/');
 
     if (userId === productDetails[0].IDNGUOIBAN)
-        res.locals.ownedByThisUser = true;
+        res.locals.ownedByThisUser = true; // tạo biến này lưu trong res.locals để bên view xài
     else res.locals.ownedByThisUser = false;
 
     //mask name in bidding history
@@ -73,8 +73,20 @@ router.post("/:Id", UserOnly, async(req, res) => {
         // check again ----------
     if (req.body.price <= details[0].GIA)
         errMsg.push("Đấu giá thất bại! Giá đặt phải lớn hơn giá hiện tại.");
-    if ((req.body.price - details[0].GIA) % details[0].BUOCGIA !== 0)
-        errMsg.push("Đấu giá thất bại! Giá đặt không đúng bước giá.");
+
+    if ((req.body.price - details[0].GIA) % details[0].BUOCGIA !== 0) {
+        if (details[0].GIAMUANGAY === null)
+            errMsg.push("Đấu giá thất bại! Giá đặt không đúng bước giá.");
+        else {
+            if (req.body.price < details[0].GIAMUANGAY)
+                errMsg.push("Đấu giá thất bại! Giá đặt không đúng bước giá.");
+            else {
+                if (req.body.price % 1000 !== 0)
+                    errMsg.push("Giá mua ngay phải là bội số của 1.000 VNĐ");
+            }
+        }
+    }
+
 
     const today = moment().format('YYYY-MM-DD HH:mm:ss');
     var endate = moment(details[0].NGAYHETHAN);
