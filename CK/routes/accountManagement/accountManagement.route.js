@@ -188,12 +188,17 @@ router.post("/modifyPass", [
     .not().isEmpty()
     .custom( async (val, { req }) => {
         const user = await model.getIdByUsername(req.body.TenTaiKhoan);
-        const rs = bcrypt.compareSync(val, user[0].MatKhau);
-        if (rs === false) {
-            throw new Error("Sai mật khẩu");
-        } else {
-            return val;
+        if (user.length == 0){
+            throw new Error("Tài khoản không tồn tại. Hãy đăng nhập lại");
+        }
+        else {
+            const rs = bcrypt.compareSync(val, user[0].MatKhau);
+            if (rs === false) {
+                throw new Error("Sai mật khẩu");
+            } else {
+                return val;
 
+            }
         }
     }),
     check('newPass')

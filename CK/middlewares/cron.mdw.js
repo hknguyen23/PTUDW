@@ -16,8 +16,8 @@ module.exports = function(app) {
                 }
                 await model.setStatusSold(status);
 
-                var string = 'No one bidded your' + check[i].TenSanPham + '. Please upload your product one more if you want to try again' + check[i].ID;
-                var title = 'Your auction has run out of time'
+                var string = 'Không có người mua' + check[i].TenSanPham + '. Hãy đăng lại sản phẩm nếu bạn muốn tiếp tục đấu giá';
+                var title = 'Sản phẩm đấu giá của bạn đã hết hạn'
                 emailserver.send(check[i].emailSeller, string, title)
             } else {
                 const status = {
@@ -31,11 +31,11 @@ module.exports = function(app) {
                 await model.setStatusSold(status);
                 await model.setWinner(winner);
 
-                var string = 'You bought ' + check[i].TenSanPham + ' at ' + check[i].bid + 'VND. Please go to product page to contact your seller';
-                var title = 'Congratulation! You won an auction'
+                var string = 'Bạn đã mua ' + check[i].TenSanPham + ' với giá ' + check[i].bid + ' VND. Hãy đến trang sản phẩm để giao dịch với người bán';
+                var title = 'Chúc mừng, bạn đã thắng tại sàn đấu giá trực tuyến'
                 emailserver.send(check[i].emailWinner, string, title)
-                string = 'Your ' + check[i].TenSanPham + ' was sold at ' + check[i].bid + 'VND. Please go to product page to contact your buyer';
-                title = 'Congratulation! Your auction has finished'
+                string = 'Bạn đã bán ' + check[i].TenSanPham + ' với giá ' + check[i].bid + ' VND. Hãy đến trang sản phẩm để giao dịch với người thắng cuộc';
+                title = 'Chúc mừng, sản phẩm đấu giá của bạn đã kết thúc'
                 emailserver.send(check[i].emailSeller, string, title)
 
             }

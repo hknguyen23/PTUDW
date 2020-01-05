@@ -391,6 +391,14 @@ module.exports = {
     delRating: (entity) => 
         db.delete('DELETE FROM CHITIETDANHGIA WHERE IDNguoiDanhGia = ? AND IDNguoiDuocDanhGia = ? AND IDSanPham = ?', [entity.IDNguoiDanhGia, entity.IDNguoiDuocDanhGia, entity.IDSanPham]),
     
+    getScoreById: id => db.loadSafe(`SELECT COUNT(*) as score 
+                                    FROM CHITIETDANHGIA DG 
+                                    WHERE IDNguoiDuocDanhGia = ? AND DiemDanhGia = 1
+                                    UNION ALL
+                                    SELECT COUNT(*) as score
+                                    FROM CHITIETDANHGIA DG 
+                                    WHERE IDNguoiDuocDanhGia = ? AND DiemDanhGia = -1`, [id, id]),
+    
     // Favorite
     addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
 

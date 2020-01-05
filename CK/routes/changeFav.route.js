@@ -21,7 +21,9 @@ router.post('/changeFav', async(req, res) => {
 });
 
 router.post('/rating', async(req, res) => {
-    if (res.locals.isAuthenticated) {
+    // Check if voted user exists
+    const user = await model.getUserById(req.body.IDNguoiDuocDanhGia);
+    if (res.locals.isAuthenticated && user.length > 0) {
         const entity = {
             IDSanPham: req.body.IDSanPham,
             IDNguoiDanhGia: res.locals.authUser.ID,
@@ -30,17 +32,27 @@ router.post('/rating', async(req, res) => {
         const id = await model.findRating(entity);
 
 
-        console.log(req.body);
+        // add, remove in CHITIETDANHGIA table
         if (id.length > 0) {                        
             await model.delRating(entity);
         } 
-        if (req.body.DiemDanhGia != 0) {            // only add when rating != 0
+        if (req.body.DiemDanhGia != 0) {            // only add when rating = 1 or -1
             entity.ThoiGianDanhGia = moment().format("YYYY-MM-DD HH:mm:ss");
             entity.DiemDanhGia = req.body.DiemDanhGia;
             entity.NhanXet = req.body.NhanXet;    
-            await model.addRating(entity);
+            await model.addRating(entity); 
         }
 
+        // update score
+        score = await model.getScoreById(entity.IDNguoiDuocDanhGia)
+        if (score.length == 2) {
+            var updateScore = Math.ceil(score[0].score/ (score[1].score + score[0].score) * 10)      // plus/all * 10
+            const entity2 = {
+                id: req.body.IDNguoiDuocDanhGia,
+                TongDiemDanhGia: updateScore
+            }    
+            await model.updateNguoiDung(entity2);
+        }
     }
 });
 module.exports = router;
