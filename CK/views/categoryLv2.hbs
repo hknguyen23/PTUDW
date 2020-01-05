@@ -97,11 +97,6 @@
 								{{/each}}
 							</select>
 						</div>
-						{{#if this.empty}}
-						<div class="card-body">
-							<p class="card-text" id="no-data">Không có dữ liệu.</p>
-						</div>
-						{{else}}
 						<div class="card-body">
 							<table name="myTable" id="myTable" class= "table table-hover text-left">
 								<thead>
@@ -112,13 +107,14 @@
 										<th style="text-align: right; width: 5%;" scope="col">Sửa</th>
 									</tr>
 								</thead>
+								{{#if this.empty}}{{else}}
 								{{#each this.list}}
 								<tr id="myRow">
 									<th style="width: 5%;" scope="row">
-										<input name="id" id="id" value="{{ID}}" style="border: none; width: 100%; font-weight: bold;" readonly>
+										<input name="id[]" id="id" value="{{ID}}" style="border: none; width: 100%; font-weight: bold;" readonly>
 									</th>
 									<td style="width: 50%;">
-										<input name="catName" id="catName" value="{{TenLoai}}" style="border: none; width: 100%;" readonly>
+										<input class="catName" name="catName[]" id="catName" value="{{TenLoai}}" style="border: none; width: 100%;" readonly>
 									</td>
 									<td style="text-align: center; word-break: break-all; width: 25%;">{{SoLuong}}</td>
 									<td style="text-align: right; width: 5%;">
@@ -128,16 +124,17 @@
 									</td>							
 								</tr>
 								{{/each}}
+								{{/if}}
 							</table>
 						</div>
 						
-						
-					{{/if}}
+						{{#if this.isExist}}
 						<div class="card-footer">
 							<button class="btn btn-primary" name="addButton" id="addButton" type="button" onclick="addButtonClick();">
 								Thêm danh mục mới
 							</button>
 						</div>
+						{{/if}}
 					</div>
 				</form>
 			</div>

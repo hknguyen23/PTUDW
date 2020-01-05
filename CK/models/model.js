@@ -309,6 +309,8 @@ module.exports = {
 													WHERE C2.IDLoaiCap1 = ${id} 
 													GROUP BY C2.ID, C2.TenLoai`),
 	
+	isExistCatLv1: id => db.load(`SELECT * FROM LOAICAP1 WHERE ID = ${id}`),
+	
 	updateCatLv1Name: entity => {
 		const condition = { ID: entity.ID };
         delete entity.ID;
