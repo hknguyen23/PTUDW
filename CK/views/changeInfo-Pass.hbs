@@ -21,28 +21,28 @@
 					
 					<!-- Submenu của Xem danh sách -->
 					<div id="submenu-watch" class="collapse sidebar-submenu">
-						<a href="Theo dõi.html" class="list-group-item list-group-item-action bg-light">
+						<a href="/lists/acc/watch" class="list-group-item list-group-item-action bg-light">
 							<span class="menu-collapsed">Sản phẩm yêu thích</span>
 						</a>
-						<a href="Đang đấu giá.html" class="list-group-item list-group-item-action bg-light">
+						<a href="/lists/acc/ongoing" class="list-group-item list-group-item-action bg-light">
 							<span class="menu-collapsed">Sản phẩm đang đấu giá</span>
 						</a>
-						<a href="Đã thắng.html" class="list-group-item list-group-item-action bg-light">
+						<a href="/lists/acc/won" class="list-group-item list-group-item-action bg-light">
 							<span class="menu-collapsed">Sản phẩm đã thắng đấu giá</span>
 						</a>
 						{{#if this.isSeller}}
-						<a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
+						<a href="/lists/acc/upload" class="list-group-item list-group-item-action bg-light">
 							<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
 						</a>
-						<a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
+						<a href="/lists/acc/sold" class="list-group-item list-group-item-action bg-light">
 							<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
 						</a>
 						{{/if}}
 						{{#if this.isAdmin}}
-						<a href="Đã đăng.html" class="list-group-item list-group-item-action bg-light">
+						<a href="/lists/acc/upload" class="list-group-item list-group-item-action bg-light">
 							<span class="menu-collapsed">Sản phẩm đang đăng đấu giá</span>
 						</a>
-						<a href="Đã bán.html" class="list-group-item list-group-item-action bg-light">
+						<a href="/lists/acc/sold" class="list-group-item list-group-item-action bg-light">
 							<span class="menu-collapsed">Sản phẩm có người thắng đấu giá</span>
 						</a>
 						{{/if}}
@@ -86,12 +86,12 @@
 					
 					<!-- Đăng sản phẩm -->
 					{{#if this.isSeller}}
-					<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+					<a href="/postProduct" class="list-group-item list-group-item-action bg-light">
 						Đăng sản phẩm đấu giá mới
 					</a>
 					{{/if}}
 					{{#if this.isAdmin}}
-					<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+					<a href="/postProduct" class="list-group-item list-group-item-action bg-light">
 						Đăng sản phẩm đấu giá mới
 					</a>
 					{{/if}}

@@ -75,8 +75,6 @@ $(document).ready(function() {
             $(this).removeClass( "hidden" )
         }
     );
-
-    
 });
 
 

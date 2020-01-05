@@ -91,6 +91,7 @@ app.use('/postProduct', SellerOnly, require('./routes/seller/postProduct.seller.
 app.use('/user', require('./routes/home/home.route'));
 app.use('/productView', require('./routes/productView/productView.route'));
 
+app.use('/score', require('./routes/accountManagement/publicScore.route'));
 app.use('/yourPointAndDetail', UserOnly, require('./routes/accountManagement/yourPointAndDetail.route'));
 app.use('/accountManagement', UserOnly, require('./routes/accountManagement/accountManagement.route'));
 
@@ -106,43 +107,6 @@ app.use('/categoryLv2', AdminOnly, require('./routes/admin/categoryLv2.route'));
 // admin route
 // app.use('/admin', require('./routes/admin/'));
 
-
-
-
-
-
-
-
-
-
-//4. Use HANDLEBARS TEMPLATE
-
-app.get("/changeInfo", function(req, res) {
-    // res.render("changeInfo", {
-    //   title: "Change infomation",
-    //   css: ["HomeStyle.css", "AccountStyle.css"],
-    //   js: ["AccountScript.js"]
-    // });
-
-
-    //chưa có
-});
-
-app.get("/postProduct", function(req, res) {
-    res.render("postProduct", {
-        title: "Online Auction | Đăng sản phẩm",
-        css: ["HomeStyle.css", "PostProduct.css"],
-        js: ["PostProduct.js"]
-    });
-});
-
-app.get("/productView", function(req, res) {
-    res.render("productView", {
-        title: "Thông tin sản phẩm",
-        css: ["HomeStyle.css", "carousel.css", "ProductView.css"],
-        js: ["ProductView.js", "carousel.js"]
-    });
-});
 
 
 // ERROR HANDLER

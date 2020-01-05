@@ -5,6 +5,7 @@ const date = require("date-and-time");
 const router = express.Router({ mergeParams: true });
 const SellerOnly = require('../../middlewares/SellerOnly.mdw');
 const UserOnly = require('../../middlewares/UserOnly.mdw');
+const emailserver = require('../../middlewares/email.mdw');
 
 router.use('/:Id', express.static("public"));
 
@@ -136,6 +137,8 @@ router.post("/:Id", UserOnly, async(req, res) => {
     // console.log(endDate);
     // console.log(diff);
 
+    var emailUser;
+    var changeBid = 0;
     // check if same id as current holder: update bid
     result = await model.getBiddingHistory(details[0].ID);
     if (result.length > 0 && userId == result[0].id_ndg) {      
@@ -145,66 +148,87 @@ router.post("/:Id", UserOnly, async(req, res) => {
             entity1.gia = details[0].GIA;
         }
         await model.addBidDetail(entity1);
-
-        entity2.gia = entity1.gia;
-        const update = await  model.updateProduct(entity2) // update current price of product
-        return res.redirect(req.headers.referer);
+        emailUser = entity1;
+        changeBid = 1;
     }
-
-    // Check Auto Bid
-    if (result.length > 0 && result[0].max != null){                // if current holder's auto is on
-        if (result[0].max >= entity1.gia) {                 // if current holder still wins
-            var current = {
-                idnguoidaugia: result[0].id_ndg,
-                idsanpham: productId,
-                thoigiandaugia: today,
-                gia: req.body.price,
-                MaxGia: result[0].max
+    else {                                              // Different bidder
+        if (result.length > 0 && result[0].max != null){                // if current holder's auto is on
+            if (result[0].max >= entity1.gia) {                // if current holder wins
+                var current = {
+                    idnguoidaugia: result[0].id_ndg,
+                    idsanpham: productId,
+                    thoigiandaugia: today,
+                    gia: req.body.price,
+                    MaxGia: result[0].max
+                }
+                console.log(1);
+                await model.removeBid(current.idnguoidaugia, current.idsanpham);
+                await model.addBidDetail(current);
+                
+                entity1.thoigiandaugia = moment(today).add(1, 'seconds').format('YYYY-MM-DD HH:mm:ss');
+                await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+                await model.addBidDetail(entity1);
+                emailUser = current;
             }
-            console.log(1);
-            await model.removeBid(current.idnguoidaugia, current.idsanpham);
-            await model.addBidDetail(current);
-            
-            
-            entity1.thoigiandaugia = moment(today).add(1, 'seconds').format('YYYY-MM-DD HH:mm:ss');
-            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
-            await model.addBidDetail(entity1);
+            else if (req.body.auto != undefined){               // if new bid wins and auto is on
+                entity1.MaxGia = entity1.gia;
+                entity1.gia = result[0].max + details[0].BUOCGIA;
+                await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+                await model.addBidDetail(entity1);
+                emailUser = entity1;
+            }
+            else{                                               // if new bid wins and auto is off
+                await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+                await model.addBidDetail(entity1);
+                emailUser = entity1;
+            }
+            entity2.solanduocdaugia++;
         }
-        else if (req.body.auto != undefined){                // if new bid wins and auto is on
-            entity1.MaxGia = entity1.gia;
-            entity1.gia = result[0].max + details[0].BUOCGIA;
-            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
-            await model.addBidDetail(entity1);
-            console.log(2);
-
-        }
-        else{                                               // if new bid wins and auto is off
-            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
-            await model.addBidDetail(entity1);
-            console.log(3);
-        }
-        entity2.solanduocdaugia++;
-    }
-    else {                                                              // if current holder's auto is off
-        if (req.body.auto != undefined){            // if new bid wins and auto is on
-            entity1.MaxGia = entity1.gia;
-            entity1.gia = details[0].GIA + details[0].BUOCGIA;
-            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
-            await model.addBidDetail(entity1);
-            console.log(4);
-
-        }
-        else{                                        // if new bid wins and auto is off
-            await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
-            await model.addBidDetail(entity1);
-            console.log(5);
-
+        else {                                                              // if current holder's auto is off
+            if (req.body.auto != undefined){            // if new bid wins and auto is on
+                entity1.MaxGia = entity1.gia;
+                entity1.gia = details[0].GIA + details[0].BUOCGIA;
+                await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+                await model.addBidDetail(entity1);
+            }
+            else{                                        // if new bid wins and auto is off
+                await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
+                await model.addBidDetail(entity1);
+            }
+            emailUser = entity1;
         }
     }
+
     // update current price of product
-    entity2.gia = entity1.gia;          
-    const update = await  model.updateProduct(entity2) // gửi vào 1 entity khác chỉ có 2 trường là idsp và giá
-    
+    entity2.gia = emailUser.gia;
+    const update = await  model.updateProduct(entity2) // update current price of product
+
+
+    var title = 'Sàn đấu giá trực tuyến'
+
+    // mail to bidder
+    var string = 'Bạn đã ra giá thành công: ' + emailUser.gia + ' VND cho sản phẩm ' + details[0].TENSANPHAM;
+    const bidder = await model.getUserById(emailUser.idnguoidaugia);
+    if (bidder.length > 0){
+        emailserver.send(bidder[0].Email, string, title)
+    }
+
+    // mail to seller
+    var string = 'Có người đã đấu giá sản phẩm ' + details[0].TENSANPHAM + ' của bạn với giá ' + emailUser.gia + ' VND';
+    const seller = await model.getUserById(details[0].IDNGUOIBAN);
+    if (seller.length > 0){
+        emailserver.send(seller[0].Email, string, title)
+    }
+
+    // mail to previous bidder
+    var previousUser = await model.getBiddingHistory(details[0].ID);
+    if (previousUser.length > 1 && changeBid == 0) {
+        var string = 'Có người đã vượt giá của bạn ở sản phẩm ' + details[0].TENSANPHAM + ' với giá ' + emailUser.gia + ' VND';
+        const bidder = await model.getUserById(previousUser[1].id_ndg);
+        if (bidder.length > 0){
+            emailserver.send(bidder[0].Email, string, title)
+        }
+    }
     res.redirect(req.headers.referer);
 });
 
@@ -239,6 +263,15 @@ router.post("/:proID/rejectBidding/:IDToReject", SellerOnly, async(req, res) => 
         return res.redirect(`/productView/${productId}`);
     }
     // end check -------------------
+
+    // mail 
+    var string = 'Bạn đã bị cấm đấu giá sản phẩm ' + productDetails[0].TENSANPHAM + ' bởi chủ đấu giá.';
+    var title = 'Sàn đấu giá trực tuyến'
+    const user = await model.getUserById(idToReject);
+    if (user.length > 0){
+        emailserver.send(user[0].Email, string, title)
+    }
+
     await model.rejectBidding(productId, idToReject);
     res.redirect(req.headers.referer);
 });

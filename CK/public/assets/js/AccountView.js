@@ -8,3 +8,4 @@ function upgradeRequest(){
 		window.alert('Bạn đã là Seller');
 	}
 }
+

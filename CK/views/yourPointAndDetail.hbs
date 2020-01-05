@@ -86,12 +86,12 @@
 					
 					<!-- Đăng sản phẩm -->
 					{{#if this.isSeller}}
-					<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+					<a href="/postProduct" class="list-group-item list-group-item-action bg-light">
 						Đăng sản phẩm đấu giá mới
 					</a>
 					{{/if}}
 					{{#if this.isAdmin}}
-					<a href="PostProduct.html" class="list-group-item list-group-item-action bg-light">
+					<a href="/postProduct" class="list-group-item list-group-item-action bg-light">
 						Đăng sản phẩm đấu giá mới
 					</a>
 					{{/if}}
@@ -110,7 +110,7 @@
                     <div class="card-body">
                         <h3>
 						{{#each this.point}}
-						{{TongDiemDanhGia}}/10
+						{{TongDiemDanhGia}}%
 						{{/each}}
 						</h3>
                     </div>
@@ -137,7 +137,7 @@
 								{{#each this.details}}
                                 <tr>
                                     <th style="width: 5%;" scope="row">{{IDNguoiDanhGia}}</th>
-                                    <td style="word-break: break-all; width: 10%;">{{TenTaiKhoan}}</td>
+                                    <td class="maskHalf hidden" style="word-break: break-all; width: 10%;">{{TenTaiKhoan}}</td>
                                     <td style="text-align: center; width: 10%;">{{DiemDanhGia}}</td>
                                     <td style="word-break: break-all;">{{NhanXet}}</td>
                                 </tr>
