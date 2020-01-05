@@ -1,10 +1,23 @@
+
 /* disable horizontal scroll */
 html{
+	position: relative;
+	min-height: 100%;
 	overflow-x: hidden;
 }
 
+body {
+	min-height: 200vh;
+	display: flex;
+	flex-direction: column;
+  }
+main {
+	flex-grow: 1;
+}
 /* Footer main */
 .footer{	
+	flex-grow: 0;
+	display: block;
 	padding: 20px 0;	
 	background: #343a40;
 }

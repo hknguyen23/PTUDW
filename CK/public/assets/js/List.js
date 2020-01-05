@@ -69,16 +69,12 @@ $(document).ready(function() {
             var str = this.innerHTML;
             var pos = str.length;
             var mask = ""
-            for (i=0; i < pos-5; i++){
-                mask = mask + "*"
-            }
-            mask = mask + str.substring(pos - 5);
+            
+            mask = "****" + str.substring(pos - 4);
             this.innerHTML = mask;
             $(this).removeClass( "hidden" )
         }
     );
-
-    
 });
 
 

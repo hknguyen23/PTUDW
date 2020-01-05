@@ -1,0 +1,53 @@
+<main class="main" role="main">
+    <div class="container-fruid mb-3">
+        <div class="d-flex wrapper">
+            <div class="text-center mt-3" id="page-content-wrapper">
+                <h1>Điểm đánh giá và chi tiết</h1>
+                <div>Xem điểm đánh giá và chi tiết các lần được đánh giá & đoạn nhận xét mà người đánh giá gửi</div>
+
+                <div class="card m-3">
+                    <h2 class="card-header">Điểm đánh giá</h2>
+                    <div class="card-body">
+                        <h3>
+						{{#each this.point}}
+						{{TongDiemDanhGia}}%
+						{{/each}}
+						</h3>
+                    </div>
+                </div>
+
+                <div class="card m-3">
+                    <h2 class="card-header">Chi tiết các lần được đánh giá</h2>
+					{{#if this.empty}}
+					<div class="card-body">
+						<p class="card-text">Không có dữ liệu.</p>
+					</div>
+					{{else}}
+                    <div class="card-body">
+                        <table class="table table-hover text-left">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;" scope="col">ID</th>
+                                    <th style="word-break: break-all; width: 20%;" scope="col">Người đánh giá</th>
+                                    <th style="text-align: center; width: 20%;" scope="col">Điểm đánh giá</th>
+                                    <th scope="col">Nhận xét</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+								{{#each this.details}}
+                                <tr>
+                                    <th style="width: 5%;" scope="row">{{IDNguoiDanhGia}}</th>
+                                    <td class="maskHalf hidden" style="word-break: break-all; width: 20%;">{{TenTaiKhoan}}</td>
+                                    <td style="text-align: center; width: 20%;">{{DiemDanhGia}}</td>
+                                    <td style="word-break: break-all;">{{NhanXet}}</td>
+                                </tr>
+								{{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+					{{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

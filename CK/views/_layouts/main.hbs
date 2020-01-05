@@ -44,13 +44,6 @@
                                     </a>
                                 </li>
 
-                                <li>
-                                    <a class="pl-2 pr-3" href="/about">
-                                        <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-                                        Thông tin
-                                    </a>
-                                </li>
-
                                 <li class="dropright">
                                     <a class="" href="Product list.html" id="navbarDropdown" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -112,7 +105,9 @@
         </div>
     </header>
 
+    <main>
     {{{body}}}
+    </main>
 
     <footer class="footer">
         <div class="text-white bg-dark">
@@ -140,6 +135,8 @@
                         <div>
                             <h5>Chào mừng đến với website của chúng tôi</h5>
                             <p>Bạn muốn tham gia vào các cuộc đấu giá thú vị, mua được sản phẩm giá rẻ</p>
+                            {{#if isAuthenticated}}
+                            {{else}}
                             <p>
                                 Nếu bạn chưa có tài khoản<br>
                                 <a class="btn btn-primary" href="Login.html#sign-up" target="_blank">
@@ -147,13 +144,14 @@
                                     Đăng ký ngay bây giờ
                                 </a>
                             </p>
+                            {{/if}}
                         </div>
                     </div>
 
                     <div class="col-xs-12 col-sm-6 col-md-3">
                         <div>
                             <h5>Thông tin liên hệ</h5>
-                            <p>Mail: <a href="mailto:info@domain.com" title="glorythemes">info@domain.com</a></p>
+                            <p>Mail: <a href="mailto:info@domain.com" title="glorythemes">auctionwebsiteltw@gmail.com</a></p>
                             <p>Tel: <a href="tel:0987654321">0987654321</a></p>
                         </div>
                     </div>
@@ -161,7 +159,7 @@
             </div>
         </div>
     </footer>
-
+</body>
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

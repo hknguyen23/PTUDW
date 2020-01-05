@@ -15,11 +15,11 @@ module.exports = {
                 from sanpham sp join hinhanh hinh on sp.id = hinh.idsanpham
                 where sp.id = '${id}'`),
     getBiddingHistory: id =>
-        db.load(`select ndg.id as id_ndg,ndg.tentaikhoan, ndg.hoten,ndg.tongdiemdanhgia as diemndg, ctdg.thoigiandaugia as thoigian, ctdg.gia
+        db.load(`select ndg.id as id_ndg,ndg.tentaikhoan, ndg.hoten,ndg.tongdiemdanhgia as diemndg, ctdg.thoigiandaugia as thoigian, ctdg.gia, ctdg.MaxGia as max
                   from chitietdaugia ctdg join nguoidung ndg on ctdg.idnguoidaugia = ndg.id
                   where idsanpham = '${id}'
-                  order by ctdg.thoigiandaugia desc, ctdg.gia desc`),
-
+                  order by ctdg.gia desc, ctdg.thoigiandaugia asc`),
+    
     // route list                  
     countProductByCat: async id => {
         const rows = await db.load(`SELECT count(*) AS total FROM SANPHAM SP 
@@ -308,7 +308,31 @@ module.exports = {
 													FROM SANPHAM SP RIGHT JOIN LOAICAP2 C2 ON SP.IDLoai = C2.ID 
 													WHERE C2.IDLoaiCap1 = ${id} 
 													GROUP BY C2.ID, C2.TenLoai`),
-
+	
+	isExistCatLv1: id => db.load(`SELECT * FROM LOAICAP1 WHERE ID = ${id}`),
+	
+	updateCatLv1Name: entity => {
+		const condition = { ID: entity.ID };
+        delete entity.ID;
+        return db.patch('LOAICAP1', entity, condition);
+	},
+	
+	updateCatLv2Name: entity => {
+		const condition = { ID: entity.ID };
+        delete entity.ID;
+        return db.patch('LOAICAP2', entity, condition);
+	},
+	
+	delCatLv1ById: entity => db.delete('DELETE FROM LOAICAP1 WHERE ID = ?', [entity.ID]),
+	
+	delCatLv2ById: entity => db.delete('DELETE FROM LOAICAP2 WHERE ID = ?', [entity.ID]),
+	
+	addCatLv1: entity => db.add('LOAICAP1', entity),
+	
+	addCatLv2: entity => db.add('LOAICAP2', entity),
+	
+	addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
+	
     getTop5HighestBidTimes: () => db.load(`SELECT * FROM SANPHAM 
                                            WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW()
                                            ORDER BY SoLanDuocDauGia DESC LIMIT 5`),
@@ -391,12 +415,22 @@ module.exports = {
     delRating: (entity) => 
         db.delete('DELETE FROM CHITIETDANHGIA WHERE IDNguoiDanhGia = ? AND IDNguoiDuocDanhGia = ? AND IDSanPham = ?', [entity.IDNguoiDanhGia, entity.IDNguoiDuocDanhGia, entity.IDSanPham]),
     
+    getScoreById: id => db.loadSafe(`SELECT COUNT(*) as score 
+                                    FROM CHITIETDANHGIA DG 
+                                    WHERE IDNguoiDuocDanhGia = ? AND DiemDanhGia = 1
+                                    UNION ALL
+                                    SELECT COUNT(*) as score
+                                    FROM CHITIETDANHGIA DG 
+                                    WHERE IDNguoiDuocDanhGia = ? AND DiemDanhGia = -1`, [id, id]),
+    
     // Favorite
     addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
 
     delFav: (entity) => db.delete('DELETE FROM SANPHAMYEUTHICH WHERE IDNguoiDung = ? AND IDSanPham = ?', [entity.IDNguoiDung, entity.IDSanPham]),
 
     // Bid
+    getMaxBid: entity => db.loadSafe('SELECT * FROM CHITIETDAUGIA WHERE ', entity),
+
     addBidDetail: entity => db.add('chitietdaugia', entity),
 
     addUser: entity => db.add('NGUOIDUNG', entity),
@@ -414,6 +448,7 @@ module.exports = {
         }
     },
 
+    removeBid: (id, idsp) => db.delete('delete from chitietdaugia where idnguoidaugia = ? and idsanpham = ?', [id, idsp]),
 
     rejectBidding: async function(proId, idToReject) {
         await Promise.all([

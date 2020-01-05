@@ -158,25 +158,38 @@
                         {{else}}
                         {{#if details.LUONDUOCDAUGIA}}
                         <div>
-                            <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
-                                Đặt giá của bạn:
-                            </div>
-
                             <form method="POST" id="frmain" onsubmit="return checkPrice({{details.GIA}})">
+
+                                <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
+                                    Đặt giá của bạn:
+                                </div>
+
                                 <div class="dropdown bg-info">
-                                    <input type="number" class="float-left col-md-7" id="price" name="price"  onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
+                                    <input type="number" class="float-left col-md-5" id="price" name="price"  onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
                                         step="{{details.BUOCGIA}}" min="{{details.GIA}}"
                                         placeholder="Bước giá: {{formatMoney details.BUOCGIA}}"/>
                                 </div>
+
+                                <input type="checkbox" class="ml-3" name="auto" value="1" {{#if hasMaxBid}}checked{{/if}}> Tự động<br>
+                                
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
                                     <script>
                                         var x = {{ details.GIA }} + {{ details.BUOCGIA }};
-                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
+                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + ' VNĐ';
                                     </script>
                                 </div>
-
+                                {{#if hasMaxBid}}
+                                <div class="float-right mt-3 col-md-8 text-muted">
+                                    Tự động đặt tối giá:
+                                    <span id="max" name="max"></span>
+                                    <script>
+                                        var x = {{hasMaxBid}};
+                                        document.getElementById("max").innerHTML = x.toLocaleString() + ' VNĐ';
+                                    </script>
+                                </div>
+                                {{/if}}
                                 <div class="clearfix"></div>
                                 <div class="mt-4 text-center">
                                     <button type="submit" class="btn btn-danger">
@@ -186,29 +199,44 @@
                             </form>
                         </div>
                         {{else}}
-                        {{#if (isLessThanOrEqual userScore.diem 8)}}
+                        {{#if (isLessThanOrEqual userScore.diem 80)}}
                         <div><b class="text-danger">Bạn không đủ điểm để đấu giá sản phầm này</b></div>
                         {{else}}
                         <div>
-                            <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
-                                Đặt giá của bạn:
-                            </div>
 
                             <form method="POST" id="frmain" onsubmit="return checkPrice({{biddingHistory.0.gia}})">
+                                <div class="float-left col-md-4 text-right font-weight-bold" style="color:tomato;">
+                                    Đặt giá của bạn:
+                                </div>
+
                                 <div class="dropdown bg-info">
                                     <input type="number" class="float-left col-md-7" id="price" name="price"
                                         step="{{details.BUOCGIA}}" onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
                                         placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
                                 </div>
+
+                                <input type="checkbox" class="ml-3" name="auto" value="1" {{#if hasMaxBid}}checked{{/if}}> Tự động<br>
+
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
                                     <script>
                                         var x = {{ details.GIA }} + {{ details.BUOCGIA }};
                                         alert
-                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + 'VNĐ';
+                                        document.getElementById("suggest").innerHTML = x.toLocaleString() + ' VNĐ';
                                     </script>
                                 </div>
+
+                                {{#if hasMaxBid}}
+                                <div class="float-right mt-3 col-md-8 text-muted">
+                                    Tự động đặt tối giá:
+                                    <span id="max" name="max"></span>
+                                    <script>
+                                        var x = {{hasMaxBid}};
+                                        document.getElementById("max").innerHTML = x.toLocaleString() + ' VNĐ';
+                                    </script>
+                                </div>
+                                {{/if}}
 
                                 <div class="clearfix"></div>
                                 <div class="mt-4 text-center">
@@ -277,7 +305,7 @@
         <div class="text-center my-5">
             <h2>Các sản phẩm liên quan</h2>
             <div class="mx-auto my-auto">
-                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
                     <div class="carousel-inner" role="listbox">
                         {{#each relationProduct}}
                         <div class="carousel-item {{#if @index}}  {{else}}active {{/if}}">

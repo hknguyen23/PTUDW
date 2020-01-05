@@ -164,8 +164,9 @@ router.post('/forgot', async(req, res) => {
         var result = await model.updateNguoiDung(entity);
         result = await model.updateTokenExpire(user[0].ID);
 
-        var string = 'http://localhost:3000/newPass/' + token;
-        emailserver.send(req.body.Email, string)
+        var title = 'Sàn đấu giá trực tuyến'
+        var string = 'Nhấn vào đây để đặt lại mật khẩu mới: http://localhost:3000/newPass/' + token;
+        emailserver.send(req.body.Email, string, title)
 
         delete user;
         res.redirect('/login');

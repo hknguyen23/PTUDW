@@ -1,7 +1,25 @@
-body {
-  background: #fff;
-  background: whitesmoke;
+html{
+	position: relative;
+	min-height: 100%;
+	overflow-x: hidden;
 }
+
+body {
+	min-height: 200vh;
+	display: flex;
+	flex-direction: column;
+  }
+main {
+	flex-grow: 1;
+}
+/* Footer main */
+.footer{	
+	flex-grow: 0;
+	display: block;
+	padding: 20px 0;	
+	background: #343a40;
+}
+
 .offset-left  {
   margin-left:250px;  
 }
@@ -101,11 +119,6 @@ body {
   color: #fff;
 }
 
-/* Footer main */
-.footer{	
-	padding: 20px 0;	
-	background: #343a40;
-}
 
 
 /* Nav - Menu */
@@ -219,6 +232,7 @@ body {
 .sidebar-container {
   position: absolute;
   width: 220px;
+  max-height: 120vh;
   left: 0;
   overflow-x: hidden;
   overflow-y: auto;
