@@ -17,14 +17,11 @@ router.get("/", async(req, res) => {
 
 router.post("/save", async(req, res) => {
 	console.log(req.body);
-	var entity;
-	for (i = 0; i < req.body.rowSelected.length; i++){
-		entity = {
-			ID: req.body.id[req.body.rowSelected[i] - 1],
-			TenLoai: req.body.catName[req.body.rowSelected[i] - 1]
-		}
-		console.log(entity);
+	const entity = {
+		ID: req.body.id[req.body.rowSelected - 1],
+		TenLoai: req.body.catName[req.body.rowSelected - 1]
 	}
+	console.log(entity);
 	
 	const result = await model.updateCatLv1Name(entity);
 		
@@ -33,14 +30,11 @@ router.post("/save", async(req, res) => {
 
 router.post("/del", async(req, res) => {
 	console.log(req.body);
-	var entity;
-	for (i = 0; i < req.body.rowSelected.length; i++){
-		entity = {
-			ID: req.body.id[req.body.rowSelected[i] - 1],
-			TenLoai: req.body.catName[req.body.rowSelected[i] - 1]
-		}
-		console.log(entity);
+	const entity = {
+		ID: req.body.id[req.body.rowSelected - 1],
+		TenLoai: req.body.catName[req.body.rowSelected - 1]
 	}
+	console.log(entity);
 	
 	const result = await model.delCatLv1ById(entity);
 		
