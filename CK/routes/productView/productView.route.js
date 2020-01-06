@@ -105,7 +105,8 @@ router.post("/:Id", UserOnly, async(req, res) => {
             }
         }
     }
-
+    if (details[0].GIA >= details[0].GIAMUANGAY)
+        errMsg.push("Đã có người thắng đấu giá trước lượt của bạn");
 
     const today = moment().format('YYYY-MM-DD HH:mm:ss');
     var endate = moment(details[0].NGAYHETHAN);
