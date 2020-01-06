@@ -72,6 +72,8 @@ router.post("/", upload.array('fuMain'), async(req, res) => {
         if (entity.GiaMuaNgay % 1000 !== 0)
             errMsg.push("Giá mua ngay phải là bội số của 1.000 VNĐ");
     }
+    if (entity.songay <= 0)
+        errMsg.push("Số ngày đăng bán không phải lớn hơn 1");
     if (entity.MoTaDai.length >= 1000)
         errMsg.push("Mô tả sản phẩm quá dài");
     if (req.files.length < 3)

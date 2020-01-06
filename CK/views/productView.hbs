@@ -9,7 +9,8 @@
                     {{details.TENSANPHAM}}
                 </div>
                 {{#if isAdmin}}
-                <form method="POST" action="/productView/removeProduct/{{details.ID}}" onsubmit="javascript: return confirm('Bạn chắc chắn muốn xóa sản phẩm này');">
+                <form method="POST" action="/productView/removeProduct/{{details.ID}}"
+                    onsubmit="javascript: return confirm('Bạn chắc chắn muốn xóa sản phẩm này');">
                     <button class="btn btn-outline-danger float-right w-35 mx-2" type="submit">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                         Xóa sản phẩm
@@ -98,7 +99,8 @@
                                 Tên người bán:
                             </div>
                             <div class="col-md-8 text-left" id="seller" name="seller">
-                                {{details.SELLER}} <span name="seller-score" id="seller-score">(Điểm:
+                                <a href="/score/{{details.IDNGUOIBAN}}"> {{details.SELLER}} </a><span
+                                    name="seller-score" id="seller-score">(Điểm:
                                     {{details.DIEMSELLER}})</span>
                             </div>
                         </div>
@@ -140,17 +142,22 @@
                                 Mô tả sản phẩm:
                             </div>
                             <div class="col-md-8">
-                                <div class="card-header rounded-lg text-left overflow-auto p-1"
-                                    style="border: 1px solid grey; height: 250px;">
-                                    {{{details.MOTADAI}}}
-                                </div>
-                                {{#if ownedByThisUser}}
-                                <a class="text-info float-right" href="/productView/{{details.ID}}/appendDes">Thêm mô tả
-                                    <i class="fa  fa-angle-right text-info" aria-hidden="true"></i></a>
 
-                                {{/if}}
                             </div>
                         </div>
+                        <div class="my-3">
+                            <div class="card-header rounded-lg text-left overflow-auto p-1"
+                                style="border: 1px solid grey; height: 250px;">
+                                {{{details.MOTADAI}}}
+                            </div>
+                            {{#if ownedByThisUser}}
+                            <a class="text-info float-right" href="/productView/{{details.ID}}/appendDes">Thêm mô
+                                tả
+                                <i class="fa  fa-angle-right text-info" aria-hidden="true"></i></a>
+
+                            {{/if}}
+                        </div>
+
                         {{!-- userid {{isDefinedVal userId}}
                         luondcdaugia {{details.LUONDUOCDAUGIA}}
                         nhỏ hơn 8 : {{isLessThanOrEqual userScore.diem 8}} --}}
@@ -279,7 +286,7 @@
                                     {{#each this.biddingHistory}}
                                     <tr>
                                         <td>{{formatDateTime thoigian}}</td>
-                                        <td id="{{id_ndg}}">{{tentaikhoan}}</td>
+                                        <td id="{{id_ndg}}"><a href="/score/{{id_ndg}}"> {{tentaikhoan}}</a></td>
                                         <td>{{formatMoney gia}}</td>
                                         {{#if ../ownedByThisUser}}
                                         <td>

@@ -49,6 +49,9 @@ router.get("/:Id", async(req, res) => {
         biddingHistory[i].tentaikhoan = mask;
     }
 
+    var maskSeller = "****" + productDetails[0].SELLER.substring(productDetails[0].SELLER.length / 2);
+    productDetails[0].SELLER = maskSeller;
+
     var hasMaxBid = null;
     if (biddingHistory.length > 0 && userId == biddingHistory[0].id_ndg) {
         if (biddingHistory[0].max != null) {
@@ -108,7 +111,7 @@ router.post("/:Id", UserOnly, async(req, res) => {
     var endate = moment(details[0].NGAYHETHAN);
     endate = endate.format("YYYY-MM-DD HH:mm:ss");
     if (today > endate)
-        req.session.proView_errMsg = "Đấu giá thất bại! Sản phẩm đã hết hạn đấu giá";
+        errMsg.push("Đấu giá thất bại! Sản phẩm đã hết hạn đấu giá");
     // end check ---------------
     if (errMsg.length !== 0) {
         req.session.proView_errMsg = errMsg;
