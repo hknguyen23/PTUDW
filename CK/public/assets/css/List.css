@@ -41,6 +41,10 @@ main {
 .green-color{
   color:green;
 }
+.red-color{
+  color:red;
+}
+
 .img-wrap .bookmark {
   position: absolute;
   top: 0px;

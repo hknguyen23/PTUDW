@@ -137,8 +137,13 @@
 								{{#each this.details}}
                                 <tr>
                                     <th style="width: 5%;" scope="row">{{IDNguoiDanhGia}}</th>
-                                    <td class="maskHalf hidden" style="word-break: break-all; width: 10%;">{{TenTaiKhoan}}</td>
-                                    <td style="text-align: center; width: 10%;">{{DiemDanhGia}}</td>
+                                    <td class="maskHalf hidden" style="word-break: break-all; width: 20%;">{{TenTaiKhoan}}</td>
+                                    <td style="text-align: center; width: 5%;">       
+										{{#if_eq DiemDanhGia 1}}                
+										<i id="{{ID}}_down" class="fa fa-thumbs-up mx-2 green-color"></i>
+										{{else}}
+										<i id="{{ID}}_down" class="fa fa-thumbs-down mx-2 red-color"></i>
+										{{/if_eq}}
                                     <td style="word-break: break-all;">{{NhanXet}}</td>
                                 </tr>
 								{{/each}}
