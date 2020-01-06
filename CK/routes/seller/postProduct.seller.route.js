@@ -63,7 +63,7 @@ router.post("/", upload.array('fuMain'), async(req, res) => {
         (entity.MoTaDai !== null && (/\S/.test(entity.MoTaDai)) === false) || entity.songay === '' || req.files.length === 0) // check rỗng
         errMsg.push("Các thông tin đánh (*) không được để trống");
     if (entity.TenSanPham.length <= 3)
-        errMsg.push("Tên sản phẩm không được quá ngắn (nhièu hơn 3 ký tự)");
+        errMsg.push("Tên sản phẩm không được quá ngắn (nhiều hơn 3 ký tự)");
     if (entity.Gia % 1000 !== 0)
         errMsg.push("Giá sản phẩm phải là bội số của 1.000 VNĐ");
     if (entity.BuocGia % 1000 !== 0)
@@ -71,6 +71,8 @@ router.post("/", upload.array('fuMain'), async(req, res) => {
     if (entity.GiaMuaNgay !== '0' || entity.GiaMuaNgay !== '') {
         if (entity.GiaMuaNgay % 1000 !== 0)
             errMsg.push("Giá mua ngay phải là bội số của 1.000 VNĐ");
+        if (entity.GiaMuaNgay <= entity.Gia)
+            errMsg.push("Giá mua ngay phải lớn hơn giá khởi điểm");
     }
     if (entity.songay <= 0)
         errMsg.push("Số ngày đăng bán không phải lớn hơn 1");
