@@ -33,9 +33,7 @@ router.post("/:id?/save", async(req, res) => {
 	
 	const result = await model.updateCatLv2Name(entity);
 		
-	const catLv1ID = +req.params.id || -1;
-
-	res.redirect(`/categoryLv2/${catLv1ID}`);
+	res.redirect(`/categoryLv2/${req.body.idLoaiCap1}`);
 });
 
 router.post("/:id?/del", async(req, res) => {
@@ -48,9 +46,7 @@ router.post("/:id?/del", async(req, res) => {
 	
 	const result = await model.delCatLv2ById(entity);	
 	
-	const catLv1ID = +req.params.id || -1;
-	
-	res.redirect(`/categoryLv2/${catLv1ID}`);
+	res.redirect(`/categoryLv2/${req.body.idLoaiCap1}`);
 });
 
 router.post("/:id?/add", async(req, res) => {
@@ -62,10 +58,8 @@ router.post("/:id?/add", async(req, res) => {
 	console.log(entity);
 	
 	const result = await model.addCatLv2(entity);
-	
-	const catLv1ID = +req.params.id || -1;
-	
-	res.redirect(`/categoryLv2/${catLv1ID}`);
+		
+	res.redirect(`/categoryLv2/${req.body.idLoaiCap1}`);
 });
 
 module.exports = router;

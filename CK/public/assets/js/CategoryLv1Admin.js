@@ -4,7 +4,7 @@ function editButtonClick(input) {
 	row.insertCell(4).innerHTML = `
 		<td style="float: right; text-align: right; width: 5%;">
 			<button class="btn btn-success" type="submit" formaction="save"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-			<button class="btn btn-danger" type="submit" formaction="del"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+			<button class="btn btn-danger" type="submit" formaction="del" onclick="return checkQuantity();"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 			<input name="rowSelected[]" id="rowSelected" hidden>
 		</td>`;
 	mainRow.insertCell(4).innerHTML = `<th style="text-align: right; width: 5%;" scope="col"></th>`;
@@ -23,7 +23,7 @@ function addButtonClick() {
 	var cell0 = row.insertCell(0);
 	cell0.innerHTML = `<th style="width: 5%;" scope="row"></th>`;
 	var cell1 = row.insertCell(1);
-	cell1.innerHTML = `<td><input name="newCatName" style="border: none; width: 100%;"></td>`;
+	cell1.innerHTML = `<td><input name="newCatName" id="newCatName" style="border: none; width: 100%;" required></td>`;
 	var cell2 = row.insertCell(2);
 	cell2.innerHTML = `<td><button class="btn btn-success" type="submit" formaction="add"><i class="fa fa-plus fa-sm" aria-hidden="true"></i></button></td>`;
 }
