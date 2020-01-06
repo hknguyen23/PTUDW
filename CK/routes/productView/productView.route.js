@@ -105,7 +105,7 @@ router.post("/:Id", UserOnly, async(req, res) => {
             }
         }
     }
-    if (details[0].GIA >= details[0].GIAMUANGAY)
+    if (details[0].GIA >= details[0].GIAMUANGAY && details[0].GIAMUANGAY != 0 && details[0].GIAMUANGAY != null)
         errMsg.push("Đã có người thắng đấu giá trước lượt của bạn");
 
     const today = moment().format('YYYY-MM-DD HH:mm:ss');
