@@ -11,6 +11,7 @@ $(document).ready(function() {
             
             mask = "****" + str.substring(pos - 4);
             this.innerHTML = mask;
+            $(this).removeClass( "hidden" )
         }
     );
 });
