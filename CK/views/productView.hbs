@@ -2,7 +2,7 @@
     <div id="page-content-wrapper">
         <div class="container pt-3">
             <div>
-                <div class="float-left w-65" style="color: royalblue;">
+                <div class="float-left" style="color: royalblue; max-width:50%;">
                     Danh mục: {{details.LOAI1}} <i class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>
                     {{details.LOAI2}}
                     <i class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>
@@ -11,14 +11,14 @@
                 {{#if isAdmin}}
                 <form method="POST" action="/productView/removeProduct/{{details.ID}}"
                     onsubmit="javascript: return confirm('Bạn chắc chắn muốn xóa sản phẩm này');">
-                    <button class="btn btn-outline-danger float-right w-35 mx-2" type="submit">
+                    <button class="btn btn-outline-danger float-right mx-2" type="submit" style="max-width: 25%;">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                         Xóa sản phẩm
                     </button></form>
                 {{/if}}
                 {{#if (isDefinedVal userId)}}
                 <button
-                    class="btn {{#if isFav}} btn-warning {{else}} btn-outline-warning {{/if}} addToFav float-right w-35"
+                    class="btn {{#if isFav}} btn-warning {{else}} btn-outline-warning {{/if}} addToFav float-right" style="max-width:25%"
                     name="{{details.ID}}" value="{{isFav}}" onclick="mySubmit(this);">
                     <i class="fa fa-heart" aria-hidden="true"></i>
                     Thêm vào Watch List
@@ -110,7 +110,8 @@
                             </div>
                             {{#if (isDefinedVal biddingHistory.0.tentaikhoan)}}
                             <div class="col-md-8 text-left" id="bidder" name="bidder">
-                                {{biddingHistory.0.tentaikhoan}} <span name="bidder-score" id="bidder-score">(Điểm:
+                                <a href="/score/{{biddingHistory.0.id_ndg}}"> {{biddingHistory.0.tentaikhoan}}</a>
+                                <span name="bidder-score" id="bidder-score">(Điểm:
                                     {{biddingHistory.0.diemndg}})</span>
                             </div>
                             {{else}}
