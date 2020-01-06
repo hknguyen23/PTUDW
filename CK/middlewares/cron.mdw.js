@@ -4,12 +4,12 @@ const emailserver = require('../middlewares/email.mdw');
 
 module.exports = function(app) {
     new cron.schedule("*/5 * * * * *", async function() {
-        //console.log("running a task every 5 second");
+        console.log("running a task every 5 second");
         const check = await model.checkExpireAuction();
 
         for (i = 0; i < check.length; i++) {
             //console.log("finish: " + check[i].ID);
-            if (check[i].winner == undefined) {
+            if (check[i].winner == undefined) {     // no winner when time's up, alert seller
                 const status = {
                     id: check[i].ID,
                     TrangThai: 0
@@ -19,8 +19,8 @@ module.exports = function(app) {
                 var string = 'Không có người mua' + check[i].TenSanPham + '. Hãy đăng lại sản phẩm nếu bạn muốn tiếp tục đấu giá';
                 var title = 'Sản phẩm đấu giá của bạn đã hết hạn'
                 emailserver.send(check[i].emailSeller, string, title)
-            } else {
-                const status = {
+            } else {                    
+                const status = {                    //alert winner, seller when time's up
                     id: check[i].ID,
                     TrangThai: 0
                 }

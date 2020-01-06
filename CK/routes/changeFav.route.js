@@ -45,12 +45,19 @@ router.post('/rating', async(req, res) => {
 
         // update score
         score = await model.getScoreById(entity.IDNguoiDuocDanhGia)
+        console.log(score)
+
         if (score.length == 2) {
-            var updateScore = Math.ceil(score[0].score/ (score[1].score + score[0].score) * 100)      // plus/all * 100
+            var updateScore = 0;                    // avoid / by zero
+            if (score[1].score != 0 || score[0].score != 0) {
+                var updateScore = Math.ceil(score[0].score/ (score[1].score + score[0].score) * 100)      // plus/all * 100
+            }
+
             const entity2 = {
                 id: req.body.IDNguoiDuocDanhGia,
                 TongDiemDanhGia: updateScore
             }    
+            console.log(entity2)
             await model.updateNguoiDung(entity2);
         }
     }

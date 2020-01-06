@@ -37,7 +37,7 @@ router.post("/del", async(req, res) => {
 	console.log(entity);
 	
 	const result = await model.delCatLv1ById(entity);
-		
+	
 	res.redirect(`/categoryLv1`);
 });
 

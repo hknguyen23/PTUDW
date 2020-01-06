@@ -11,7 +11,8 @@ module.exports = {
             },
             tls: {
                 rejectUnauthorized: false
-            }
+            },
+            pool: true
         });
           
         var mailOptions = {

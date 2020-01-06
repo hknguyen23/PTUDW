@@ -83,14 +83,14 @@
 			<div class="text-center mt-3" id="page-content-wrapper">
 				<h1>Danh mục con (Danh mục cấp 2)</h1>
 						
-				<form method="POST">
+				<form action="#" method="POST">
 					<div class="card m-3">
 						<h2 class="card-header">Danh sách</h2>
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<label class="input-group-text" for="catLv1">Tên danh mục cha</label>
 							</div>
-							<select class="custom-select" id="catLv1" onchange="location.href = '/categoryLv2/' + this.selectedIndex;">
+							<select class="custom-select" id="catLv1" onchange="location.href = '/categoryLv2/' + this.value;">
 								<option id="option" value="-1">-----</option>
 								{{#each this.catLv1}}
 								<option id="option" value="{{ID}}" {{#if_eq ID ../catLv1ID}}selected{{/if_eq}}>{{TenLoai}}</option>
@@ -114,7 +114,7 @@
 										<input name="id[]" id="id" value="{{ID}}" style="border: none; width: 100%; font-weight: bold;" readonly>
 									</th>
 									<td style="width: 50%;">
-										<input class="catName" name="catName[]" id="catName" value="{{TenLoai}}" style="border: none; width: 100%;" readonly>
+										<input class="catName" name="catName[]" id="catName" value="{{TenLoai}}" style="border: none; width: 100%;" readonly required>
 									</td>
 									<td style="text-align: center; word-break: break-all; width: 25%;">{{SoLuong}}</td>
 									<td style="text-align: right; width: 5%;">

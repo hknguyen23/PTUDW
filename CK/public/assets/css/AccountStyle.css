@@ -67,6 +67,12 @@ tbody tr.selected{
     margin-left: -15rem;
   }
 }
+.green-color{
+  color:green;
+}
+.red-color{
+  color:red;
+}
 
   /* Submenu item*/
 #sidebar-container .list-group .sidebar-submenu a {

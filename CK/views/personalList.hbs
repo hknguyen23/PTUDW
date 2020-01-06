@@ -28,8 +28,8 @@
             $(`#${id1}`).removeClass( "green-color" );
             value = 0;
         }
-        else if (e.value == -1 && $(`#${id2}`).hasClass( "green-color" )){  // remove rating -1
-            $(`#${id2}`).removeClass( "green-color" );
+        else if (e.value == -1 && $(`#${id2}`).hasClass( "red-color" )){  // remove rating -1
+            $(`#${id2}`).removeClass( "red-color" );
             value = 0;  
         }
         else if (e.value == 1){
@@ -43,11 +43,11 @@
         if (box != null || value == 0) {
             if (value == 1){                                         // change rating from 1->-1
                 $(`#${id1}`).addClass( "green-color" );
-                $(`#${id2}`).removeClass( "green-color" );
+                $(`#${id2}`).removeClass( "red-color" );
             } 
             else if (value == -1){
                 $(`#${id1}`).removeClass( "green-color" );                  // change rating from -1->1
-                $(`#${id2}`).addClass( "green-color" );     
+                $(`#${id2}`).addClass( "red-color" );     
             }
 
 
@@ -161,7 +161,7 @@
                                 <button class="asText" {{#if_eq ../pageTitle "Đã thắng"}}name="{{IDNguoiBan}}"{{/if_eq}}
                                                        {{#if_eq ../pageTitle "Đã bán"}}name="{{IDNguoiThangDauGia}}"{{/if_eq}}
                                                         value="-1" onclick="rating(this, {{ID}});">
-                                    <i id="{{ID}}_down" class="fa fa-thumbs-down mx-2 {{#if_eq DiemDanhGia -1}}green-color{{/if_eq}}"></i>
+                                    <i id="{{ID}}_down" class="fa fa-thumbs-down mx-2 {{#if_eq DiemDanhGia -1}}red-color{{/if_eq}}"></i>
                                 </button>
                             </div>
                             {{/if}}

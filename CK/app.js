@@ -82,6 +82,7 @@ require('./middlewares/cron.mdw')(app);
 // user route
 app.use('/', require('./routes/home/home.route'));
 app.use('/', require('./routes/changeFav.route'));
+
 app.use('/lists', require('./routes/lists/searchable.lists.route'));
 app.use('/lists/acc', UserOnly, require('./routes/lists/personal.lists.route'));
 app.use('/lists/category', require('./routes/lists/category.lists.route'));
