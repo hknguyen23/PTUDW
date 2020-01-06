@@ -273,7 +273,7 @@ module.exports = {
 
     getUserById: id => db.load(`SELECT * FROM NGUOIDUNG WHERE ID = '${id}'`),
 
-    getPointByID: id => db.load(`SELECT TongDiemDanhGia FROM NGUOIDUNG WHERE ID = '${id}'`),
+    getPointByID: id => db.load(`SELECT TenTaiKhoan, TongDiemDanhGia FROM NGUOIDUNG WHERE ID = '${id}'`),
 
     getYourPointAndDetail: id =>
         db.load(`SELECT ND1.TongDiemDanhGia, ND2.TenTaiKhoan, CTDANHGIA.*

@@ -90,3 +90,7 @@ display: inline;
 text-align: right;
 padding-left: 10px;
 }
+
+.hidden{
+  visibility: hidden;
+}

@@ -6,14 +6,14 @@
                 <div>Xem điểm đánh giá và chi tiết các lần được đánh giá & đoạn nhận xét mà người đánh giá gửi</div>
 
                 <div class="card m-3">
-                    <h2 class="card-header">Điểm đánh giá</h2>
+                    {{#each this.point}}
+                    <h2 class="card-header maskHalf hidden">{{TenTaiKhoan}}</h2>
                     <div class="card-body">
                         <h3>
-						{{#each this.point}}
 						{{TongDiemDanhGia}}%
-						{{/each}}
 						</h3>
                     </div>
+                    {{/each}}
                 </div>
 
                 <div class="card m-3">
