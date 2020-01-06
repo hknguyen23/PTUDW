@@ -8,6 +8,13 @@
                     <i class="fa fa-hand-o-right mx-2" aria-hidden="true"></i>
                     {{details.TENSANPHAM}}
                 </div>
+                {{#if isAdmin}}
+                <form method="POST" action="/productView/removeProduct/{{details.ID}}" onsubmit="javascript: return confirm('Bạn chắc chắn muốn xóa sản phẩm này');">
+                    <button class="btn btn-outline-danger float-right w-35 mx-2" type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Xóa sản phẩm
+                    </button></form>
+                {{/if}}
                 {{#if (isDefinedVal userId)}}
                 <button
                     class="btn {{#if isFav}} btn-warning {{else}} btn-outline-warning {{/if}} addToFav float-right w-35"
@@ -165,13 +172,15 @@
                                 </div>
 
                                 <div class="dropdown bg-info">
-                                    <input type="number" class="float-left col-md-5" id="price" name="price"  onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
+                                    <input type="number" class="float-left col-md-5" id="price" name="price"
+                                        onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
                                         step="{{details.BUOCGIA}}" min="{{details.GIA}}"
-                                        placeholder="Bước giá: {{formatMoney details.BUOCGIA}}"/>
+                                        placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
                                 </div>
 
-                                <input type="checkbox" class="ml-3" name="auto" value="1" {{#if hasMaxBid}}checked{{/if}}> Tự động<br>
-                                
+                                <input type="checkbox" class="ml-3" name="auto" value="1"
+                                    {{#if hasMaxBid}}checked{{/if}}> Tự động<br>
+
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
                                     <span id="suggest" name="suggest"></span>
@@ -185,7 +194,7 @@
                                     Tự động đặt tối giá:
                                     <span id="max" name="max"></span>
                                     <script>
-                                        var x = {{hasMaxBid}};
+                                        var x = {{ hasMaxBid }};
                                         document.getElementById("max").innerHTML = x.toLocaleString() + ' VNĐ';
                                     </script>
                                 </div>
@@ -211,11 +220,13 @@
 
                                 <div class="dropdown bg-info">
                                     <input type="number" class="float-left col-md-7" id="price" name="price"
-                                        step="{{details.BUOCGIA}}" onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
+                                        step="{{details.BUOCGIA}}"
+                                        onkeyup="check(this,{{details.GIAMUANGAY}}, {{details.BUOCGIA}})"
                                         placeholder="Bước giá: {{formatMoney details.BUOCGIA}}" />
                                 </div>
 
-                                <input type="checkbox" class="ml-3" name="auto" value="1" {{#if hasMaxBid}}checked{{/if}}> Tự động<br>
+                                <input type="checkbox" class="ml-3" name="auto" value="1"
+                                    {{#if hasMaxBid}}checked{{/if}}> Tự động<br>
 
                                 <div class="float-right mt-3 col-md-8 text-muted">
                                     Giá đề nghị:
@@ -232,7 +243,7 @@
                                     Tự động đặt tối giá:
                                     <span id="max" name="max"></span>
                                     <script>
-                                        var x = {{hasMaxBid}};
+                                        var x = {{ hasMaxBid }};
                                         document.getElementById("max").innerHTML = x.toLocaleString() + ' VNĐ';
                                     </script>
                                 </div>
@@ -327,11 +338,13 @@
                         </div>
                         {{/each}}
                     </div>
-                    <a class="left carousel-control-prev w-auto" href="#myCarousel"  data-target="#myCarousel" role="button" data-slide="prev">
+                    <a class="left carousel-control-prev w-auto" href="#myCarousel" data-target="#myCarousel"
+                        role="button" data-slide="prev">
                         <i class="carousel-control-prev-icon fa fa-chevron-left fa-2x" style="color: black;"
                             aria-hidden="true"></i>
                     </a>
-                    <a class="right carousel-control-next w-auto" href="#myCarousel"  data-target="#myCarousel" role="button" data-slide="next">
+                    <a class="right carousel-control-next w-auto" href="#myCarousel" data-target="#myCarousel"
+                        role="button" data-slide="next">
                         <i class="carousel-control-next-icon fa fa-chevron-right fa-2x" style="color: black;"
                             aria-hidden="true"></i>
                     </a>

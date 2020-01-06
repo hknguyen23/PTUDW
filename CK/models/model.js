@@ -487,4 +487,13 @@ module.exports = {
     },
 
     changeAvatar: (userId, imgurl) => db.patch('nguoidung', { AvatarURL: imgurl }, { id: userId }),
+
+    delProduct: async function(proId) {
+        await Promise.all([
+            db.delete('delete from hinhanh where idsanpham = ?', [proId]),
+            db.delete('delete from sanphamyeuthich where idsanpham = ?', [proId]),
+            db.delete('delete from chitietdaugia where idsanpham = ?', [proId]),
+            db.delete('delete from sanpham where id = ?', [proId]),
+        ])
+    },
 };
