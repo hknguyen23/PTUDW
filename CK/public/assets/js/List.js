@@ -69,7 +69,7 @@ $(document).ready(function() {
             var str = this.innerHTML;
             var pos = str.length;
             var mask = ""
-            
+            console.log(str)
             mask = "****" + str.substring(pos - 4);
             this.innerHTML = mask;
             $(this).removeClass( "hidden" )
