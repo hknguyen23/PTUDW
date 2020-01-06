@@ -213,17 +213,20 @@
 							<a class="btn btn-primary" href="modifyPass">
 								Thay đổi mật khẩu
 							</a>
+				</form>
 							{{#each this.info}}
 							{{#if this.isBidder}}
-							<button class="btn btn-primary" type="submit" onclick="upgradeRequest();">
+							<form action="/accountManagement" method="POST" onsubmit="return upgradeRequest();">
+							<button class="btn btn-primary mt-2 mb-1" type="submit">
 								Xin nâng cấp thành Seller
 							</button>
+							</form>
+
 							{{/if}}
 							{{/each}}
 						</div>
 						{{/if}}
 					</div>
-				</form>
 			</div>
 		</div>
 	</div>
