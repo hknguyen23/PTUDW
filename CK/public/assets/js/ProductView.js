@@ -42,11 +42,11 @@ $("a.history_expand").click(function() {
 
 });
 
-$(document).ready(function() {
-    $('.wrapper').click(function() {
-        $('.div1, .div2').toggle();
-    });
-});
+// $(document).ready(function() {
+//     $('.wrapper').click(function() {
+//         $('.div1, .div2').toggle();
+//     });
+// });
 
 $(".countdown").each(
     function countdown() {

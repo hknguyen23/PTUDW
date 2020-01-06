@@ -19,7 +19,7 @@ module.exports = {
                   from chitietdaugia ctdg join nguoidung ndg on ctdg.idnguoidaugia = ndg.id
                   where idsanpham = '${id}'
                   order by ctdg.gia desc, ctdg.thoigiandaugia asc`),
-    
+
     // route list                  
     countProductByCat: async id => {
         const rows = await db.load(`SELECT count(*) AS total FROM SANPHAM SP 
@@ -43,7 +43,7 @@ module.exports = {
                                                                     ) )
                     ORDER BY SP.NgayDang DESC, SP.TenSanPham ASC
                     LIMIT ? OFFSET ?`;
-                    
+
         const user = `SELECT L2.TenLoai, SP.ID, SP.TenSanPham, SP.Gia as GiaBanDau, SP.GiaMuaNgay, SP.NgayHetHan, SP.NgayDang, SP.SoLanDuocDauGia, SP.MainImg, CT.IDNguoiDauGia, CT.Gia, ND.TenTaiKhoan
                             ,(
                                 CASE
@@ -301,38 +301,38 @@ module.exports = {
 						FROM SANPHAM SP JOIN LOAICAP2 C2 ON SP.IDLoai = C2.ID
 						RIGHT JOIN LOAICAP1 C1 ON C1.ID = C2.IDLoaiCap1
 						GROUP BY C1.ID, C1.TenLoai`),
-	
+
     getAllCategoryLv1: () => db.load(`SELECT * FROM LOAICAP1`),
-	
+
     getAllCategoryLv2ByCategoryLv1ID: id => db.load(`SELECT C2.ID, C2.TenLoai, COUNT(SP.ID) AS SoLuong 
 													FROM SANPHAM SP RIGHT JOIN LOAICAP2 C2 ON SP.IDLoai = C2.ID 
 													WHERE C2.IDLoaiCap1 = ${id} 
 													GROUP BY C2.ID, C2.TenLoai`),
-	
-	isExistCatLv1: id => db.load(`SELECT * FROM LOAICAP1 WHERE ID = ${id}`),
-	
-	updateCatLv1Name: entity => {
-		const condition = { ID: entity.ID };
+
+    isExistCatLv1: id => db.load(`SELECT * FROM LOAICAP1 WHERE ID = ${id}`),
+
+    updateCatLv1Name: entity => {
+        const condition = { ID: entity.ID };
         delete entity.ID;
         return db.patch('LOAICAP1', entity, condition);
-	},
-	
-	updateCatLv2Name: entity => {
-		const condition = { ID: entity.ID };
+    },
+
+    updateCatLv2Name: entity => {
+        const condition = { ID: entity.ID };
         delete entity.ID;
         return db.patch('LOAICAP2', entity, condition);
-	},
-	
-	delCatLv1ById: entity => db.delete('DELETE FROM LOAICAP1 WHERE ID = ?', [entity.ID]),
-	
-	delCatLv2ById: entity => db.delete('DELETE FROM LOAICAP2 WHERE ID = ?', [entity.ID]),
-	
-	addCatLv1: entity => db.add('LOAICAP1', entity),
-	
-	addCatLv2: entity => db.add('LOAICAP2', entity),
-	
-	addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
-	
+    },
+
+    delCatLv1ById: entity => db.delete('DELETE FROM LOAICAP1 WHERE ID = ?', [entity.ID]),
+
+    delCatLv2ById: entity => db.delete('DELETE FROM LOAICAP2 WHERE ID = ?', [entity.ID]),
+
+    addCatLv1: entity => db.add('LOAICAP1', entity),
+
+    addCatLv2: entity => db.add('LOAICAP2', entity),
+
+    addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
+
     getTop5HighestBidTimes: () => db.load(`SELECT * FROM SANPHAM 
                                            WHERE IDNGUOITHANGDAUGIA IS NULL AND NGAYHETHAN > NOW()
                                            ORDER BY SoLanDuocDauGia DESC LIMIT 5`),
@@ -412,9 +412,9 @@ module.exports = {
 
     addRating: entity => db.add('CHITIETDANHGIA', entity),
 
-    delRating: (entity) => 
+    delRating: (entity) =>
         db.delete('DELETE FROM CHITIETDANHGIA WHERE IDNguoiDanhGia = ? AND IDNguoiDuocDanhGia = ? AND IDSanPham = ?', [entity.IDNguoiDanhGia, entity.IDNguoiDuocDanhGia, entity.IDSanPham]),
-    
+
     getScoreById: id => db.loadSafe(`SELECT COUNT(*) as score 
                                     FROM CHITIETDANHGIA DG 
                                     WHERE IDNguoiDuocDanhGia = ? AND DiemDanhGia = 1
@@ -422,7 +422,7 @@ module.exports = {
                                     SELECT COUNT(*) as score
                                     FROM CHITIETDANHGIA DG 
                                     WHERE IDNguoiDuocDanhGia = ? AND DiemDanhGia = -1`, [id, id]),
-    
+
     // Favorite
     addFav: (entity) => db.add('SANPHAMYEUTHICH', entity),
 
@@ -484,5 +484,7 @@ module.exports = {
         delete entity.idsanpham;
         //console.log(entity);
         return db.patch('sanpham', entity, condition);
-    }
+    },
+
+    changeAvatar: (userId, imgurl) => db.patch('nguoidung', { AvatarURL: imgurl }, { id: userId }),
 };
