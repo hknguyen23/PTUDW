@@ -46,7 +46,7 @@ router.post("/:id?/del", async(req, res) => {
 	}
 	console.log(entity);
 	
-	const result = await model.delCatLv2ById(entity);
+	const result = await model.delCatLv2ById(entity);	
 	
 	const catLv1ID = +req.params.id || -1;
 	
