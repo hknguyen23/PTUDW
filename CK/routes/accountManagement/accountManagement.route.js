@@ -3,12 +3,15 @@ const model = require("../../models/model");
 const moment = require('moment');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const path = require("path");
 const multer = require("multer");
+const fs = require("fs");
 const storage = multer.diskStorage({
     filename: function(req, file, cb) {
-        cb(null, Date.now() + file.originalname);
+        cb(null, req.session.authUser.ID + path.extname(file.originalname));
     },
     destination: function(req, file, cb) {
+
         destination = `./public/assets/images/avatar`;
         var stat = null;
         try {
@@ -45,7 +48,7 @@ router.get("/", async(req, res) => {
     res.render("accountManagement", {
         title: "Quản lý thông tin cá nhân",
         css: ["HomeStyle.css", "AccountStyle.css"],
-        js: ["AccountScript.js", "AccountView.js"],
+        js: ["AccountScript.js", "AccountView.js", "ProductView.js"],
         empty: info.length === 0,
         info
     });
@@ -206,16 +209,14 @@ router.post("/modifyPass", [
     .not().isEmpty()
     .custom(async(val, { req }) => {
         const user = await model.getIdByUsername(req.body.TenTaiKhoan);
-        if (user.length == 0){
+        if (user.length == 0) {
             throw new Error("Tài khoản không tồn tại. Hãy đăng nhập lại");
-        }
-        else {
+        } else {
             const rs = bcrypt.compareSync(val, user[0].MatKhau);
             if (rs === false) {
                 throw new Error("Sai mật khẩu");
             } else {
                 return val;
-
             }
         }
     }),
@@ -248,8 +249,17 @@ router.post("/modifyPass", [
     }
 });
 
-router.post('/changeAvatar/:id', (req, res) => {
+router.post('/changeAvatar', upload.single('fuMain'), async(req, res) => {
+    const userID = req.session.authUser.ID;
+    const userdetail = await model.getUserById(userID);
+    // chưa có ảnh đại diện
+    var oldAvatar = userdetail[0].AvatarURL;
+    oldAvatar = './public/' + oldAvatar;
+    if (userdetail[0].AvatarURL !== null)
+        fs.unlinkSync(oldAvatar);
+    await model.changeAvatar(userID, `assets/images/avatar/${userID}` + path.extname(req.file.originalname));
 
-})
+    res.redirect(req.headers.referer);
+});
 
 module.exports = router;

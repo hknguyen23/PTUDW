@@ -5,6 +5,7 @@ const date = require("date-and-time");
 const router = express.Router({ mergeParams: true });
 const SellerOnly = require('../../middlewares/SellerOnly.mdw');
 const UserOnly = require('../../middlewares/UserOnly.mdw');
+const AdminOnly = require('../../middlewares/AdminOnly.mdw')
 const emailserver = require('../../middlewares/email.mdw');
 
 router.use('/:Id', express.static("public"));
@@ -13,8 +14,13 @@ router.get("/:Id", async(req, res) => {
     //Id = id sản phẩm
     const productId = +req.params.Id;
     let userId = null;
-    if (res.locals.authUser !== null)
+    if (res.locals.authUser !== null) {
         userId = res.locals.authUser.ID;
+        if (res.locals.authUser.Loai === 3)
+            res.locals.isAdmin = true;
+        else res.locals.isAdmin = false;
+    }
+
 
     const [productDetails, image, biddingHistory, relationProduct, favProduct, userScore, hasEverBid, isBanned] = //hasEverBid <=> has this User win anny items?
     await Promise.all([
@@ -35,6 +41,7 @@ router.get("/:Id", async(req, res) => {
         res.locals.ownedByThisUser = true; // tạo biến này lưu trong res.locals để bên view xài
     else res.locals.ownedByThisUser = false;
 
+
     //mask name in bidding history
     for (let i = 0; i < biddingHistory.length; i++) {
         var username = (biddingHistory[i].tentaikhoan);
@@ -43,11 +50,11 @@ router.get("/:Id", async(req, res) => {
     }
 
     var hasMaxBid = null;
-    if (biddingHistory.length > 0 && userId == biddingHistory[0].id_ndg) {   
+    if (biddingHistory.length > 0 && userId == biddingHistory[0].id_ndg) {
         if (biddingHistory[0].max != null) {
             hasMaxBid = biddingHistory[0].max;
         }
-    }   
+    }
 
     let errMsg;
     if (req.session.proView_errMsg !== 'undefined') {
@@ -141,8 +148,8 @@ router.post("/:Id", UserOnly, async(req, res) => {
     var changeBid = 0;
     // check if same id as current holder: update bid
     result = await model.getBiddingHistory(details[0].ID);
-    if (result.length > 0 && userId == result[0].id_ndg) {      
-        await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);    // remove and add new bid
+    if (result.length > 0 && userId == result[0].id_ndg) {
+        await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham); // remove and add new bid
         if (req.body.auto != undefined) {
             entity1.MaxGia = entity1.gia;
             entity1.gia = details[0].GIA;
@@ -150,10 +157,9 @@ router.post("/:Id", UserOnly, async(req, res) => {
         await model.addBidDetail(entity1);
         emailUser = entity1;
         changeBid = 1;
-    }
-    else {                                              // Different bidder
-        if (result.length > 0 && result[0].max != null){                // if current holder's auto is on
-            if (result[0].max >= entity1.gia) {                // if current holder wins
+    } else { // Different bidder
+        if (result.length > 0 && result[0].max != null) { // if current holder's auto is on
+            if (result[0].max >= entity1.gia) { // if current holder wins
                 var current = {
                     idnguoidaugia: result[0].id_ndg,
                     idsanpham: productId,
@@ -164,34 +170,30 @@ router.post("/:Id", UserOnly, async(req, res) => {
                 console.log(1);
                 await model.removeBid(current.idnguoidaugia, current.idsanpham);
                 await model.addBidDetail(current);
-                
+
                 entity1.thoigiandaugia = moment(today).add(1, 'seconds').format('YYYY-MM-DD HH:mm:ss');
                 await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
                 await model.addBidDetail(entity1);
                 emailUser = current;
-            }
-            else if (req.body.auto != undefined){               // if new bid wins and auto is on
+            } else if (req.body.auto != undefined) { // if new bid wins and auto is on
                 entity1.MaxGia = entity1.gia;
                 entity1.gia = result[0].max + details[0].BUOCGIA;
                 await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
                 await model.addBidDetail(entity1);
                 emailUser = entity1;
-            }
-            else{                                               // if new bid wins and auto is off
+            } else { // if new bid wins and auto is off
                 await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
                 await model.addBidDetail(entity1);
                 emailUser = entity1;
             }
             entity2.solanduocdaugia++;
-        }
-        else {                                                              // if current holder's auto is off
-            if (req.body.auto != undefined){            // if new bid wins and auto is on
+        } else { // if current holder's auto is off
+            if (req.body.auto != undefined) { // if new bid wins and auto is on
                 entity1.MaxGia = entity1.gia;
                 entity1.gia = details[0].GIA + details[0].BUOCGIA;
                 await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
                 await model.addBidDetail(entity1);
-            }
-            else{                                        // if new bid wins and auto is off
+            } else { // if new bid wins and auto is off
                 await model.removeBid(entity1.idnguoidaugia, entity1.idsanpham);
                 await model.addBidDetail(entity1);
             }
@@ -201,7 +203,7 @@ router.post("/:Id", UserOnly, async(req, res) => {
 
     // update current price of product
     entity2.gia = emailUser.gia;
-    const update = await  model.updateProduct(entity2) // update current price of product
+    const update = await model.updateProduct(entity2) // update current price of product
 
 
     var title = 'Sàn đấu giá trực tuyến'
@@ -209,14 +211,14 @@ router.post("/:Id", UserOnly, async(req, res) => {
     // mail to bidder
     var string = 'Bạn đã ra giá thành công: ' + emailUser.gia + ' VND cho sản phẩm ' + details[0].TENSANPHAM;
     const bidder = await model.getUserById(emailUser.idnguoidaugia);
-    if (bidder.length > 0){
+    if (bidder.length > 0) {
         emailserver.send(bidder[0].Email, string, title)
     }
 
     // mail to seller
     var string = 'Có người đã đấu giá sản phẩm ' + details[0].TENSANPHAM + ' của bạn với giá ' + emailUser.gia + ' VND';
     const seller = await model.getUserById(details[0].IDNGUOIBAN);
-    if (seller.length > 0){
+    if (seller.length > 0) {
         emailserver.send(seller[0].Email, string, title)
     }
 
@@ -225,7 +227,7 @@ router.post("/:Id", UserOnly, async(req, res) => {
     if (previousUser.length > 1 && changeBid == 0) {
         var string = 'Có người đã vượt giá của bạn ở sản phẩm ' + details[0].TENSANPHAM + ' với giá ' + emailUser.gia + ' VND';
         const bidder = await model.getUserById(previousUser[1].id_ndg);
-        if (bidder.length > 0){
+        if (bidder.length > 0) {
             emailserver.send(bidder[0].Email, string, title)
         }
     }
@@ -268,7 +270,7 @@ router.post("/:proID/rejectBidding/:IDToReject", SellerOnly, async(req, res) => 
     var string = 'Bạn đã bị cấm đấu giá sản phẩm ' + productDetails[0].TENSANPHAM + ' bởi chủ đấu giá.';
     var title = 'Sàn đấu giá trực tuyến'
     const user = await model.getUserById(idToReject);
-    if (user.length > 0){
+    if (user.length > 0) {
         emailserver.send(user[0].Email, string, title)
     }
 
@@ -324,6 +326,16 @@ router.post('/:Id/appendDes', SellerOnly, async(req, res) => {
     }
     await model.appendDes(productId, newDes);
     res.redirect(`/productView/${productId}`);
+});
+
+router.post('/removeProduct/:Id', AdminOnly, async(req, res) => {
+    const productId = req.params.Id;
+    const result = await model.getProduct(productId);
+    if (result.length === 0)
+        res.send("Không có sản phẩm này");
+
+    const delResult = await model.delProduct(productId);
+    res.redirect('/');
 });
 
 module.exports = router;
