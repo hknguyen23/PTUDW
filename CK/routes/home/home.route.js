@@ -24,7 +24,7 @@ router.get("/", async(req, res) => {
     res.render("home", {
         title: "Online Auction",
         css: ["HomeStyle.css", "carousel.css"],
-        js: ["carousel.js"],
+        js: ["carousel.js", "ProductView.js"],
         highestPrice,
         highestBidTimes,
         nearlyExpired
@@ -46,7 +46,7 @@ router.get("/login", GuestOnly, (req, res) => {
 
 router.post('/login', async(req, res) => {
     // if g-recaptcha-response is blank or null means user has not selected the captcha, so return the error.
-    if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+    if (req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
         req.session.errors = [{ msg: 'Vui lòng nhập captcha' }];
         return res.redirect('/login')
     }
@@ -55,10 +55,10 @@ router.post('/login', async(req, res) => {
     // req.connection.remoteAddress will provide IP address of connected user.
     var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
     // Hitting GET request to the URL, Google will respond with success or error scenario.
-    request(verificationUrl,function(error,response,body) {
+    request(verificationUrl, function(error, response, body) {
         body = JSON.parse(body);
         // Success will be true or false depending upon captcha validation.
-        if(body.success !== undefined && !body.success) {
+        if (body.success !== undefined && !body.success) {
             req.session.errors = [{ msg: 'Vui lòng nhập lại captcha' }];
             return res.redirect('/login')
         }
@@ -69,8 +69,7 @@ router.post('/login', async(req, res) => {
     if (user.length == 0) {
         req.session.errors = [{ msg: 'Tài khoản không tồn tại' }];
         res.redirect('/login');
-    } 
-    else {
+    } else {
 
         const rs = bcrypt.compareSync(req.body.fPass, user[0].MatKhau);
         if (rs === false) {
@@ -101,7 +100,7 @@ router.post('/login/register', [
     .not().isEmpty()
     .trim()
     .isLength({ min: 6 }).withMessage("Tên tài khoản phải có ít nhất 6 ký tự")
-    .isLength({ max:20 }).withMessage("Tên tài khoản tối đa 20 ký tự")
+    .isLength({ max: 20 }).withMessage("Tên tài khoản tối đa 20 ký tự")
     .custom(async value => {
         return id = await model.getIdByUsername(value).then(result => {
             if (result.length > 0) {
@@ -113,7 +112,7 @@ router.post('/login/register', [
     .not().isEmpty()
     .isEmail()
     .normalizeEmail()
-    .isLength({ max:50 }).withMessage("Email tối đa 50 ký tự")
+    .isLength({ max: 50 }).withMessage("Email tối đa 50 ký tự")
     .custom(async value => {
         return id = await model.getIdByEmail(value).then(result => {
             if (result.length > 0) {
@@ -135,11 +134,11 @@ router.post('/login/register', [
     check('fFirstName', "Họ không hợp lệ")
     .not().isEmpty()
     .trim()
-    .isLength({ max:20 }).withMessage("Họ tối đa 20 ký tự"),
+    .isLength({ max: 20 }).withMessage("Họ tối đa 20 ký tự"),
     check('fLastName', "Tên không hợp lệ")
     .not().isEmpty()
     .trim()
-    .isLength({ max:10 }).withMessage("Tên tối đa 10 ký tự"),
+    .isLength({ max: 10 }).withMessage("Tên tối đa 10 ký tự"),
 ], async(req, res) => {
     var errors = validationResult(req).array();
     if (errors.length > 0) {
@@ -149,7 +148,7 @@ router.post('/login/register', [
     } else {
 
         // if g-recaptcha-response is blank or null means user has not selected the captcha, so return the error.
-        if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
+        if (req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null) {
             req.session.errors = [{ msg: 'Vui lòng nhập lại captcha' }];
             req.session.saveForm = req.body;
             return res.redirect('/login#sign-up')
@@ -159,16 +158,16 @@ router.post('/login/register', [
         // req.connection.remoteAddress will provide IP address of connected user.
         var verificationUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
         // Hitting GET request to the URL, Google will respond with success or error scenario.
-        request(verificationUrl,function(error,response,body) {
+        request(verificationUrl, function(error, response, body) {
             body = JSON.parse(body);
             // Success will be true or false depending upon captcha validation.
-            if(body.success !== undefined && !body.success) {
+            if (body.success !== undefined && !body.success) {
                 req.session.errors = [{ msg: 'Vui lòng nhập lại captcha' }];
                 req.session.saveForm = req.body;
                 return res.redirect('/login#sign-up')
             }
         });
-        
+
 
 
         const N = 10;
@@ -241,38 +240,38 @@ router.post('/newPass', [
     check('fPass')
     .not().isEmpty()
     .isLength({ min: 6 }).withMessage("Mật khẩu phải có ít nhất 6 ký tự")
-    .isLength({ max:100 }).withMessage("Mật khẩu tối đa 100 ký tự")
+    .isLength({ max: 100 }).withMessage("Mật khẩu tối đa 100 ký tự")
     .custom((val, { req }) => {
         if (val !== req.body.fRPass) {
             throw new Error("Mật khẩu nhập lại không đúng");
         } else {
             return val;
         }
-      }),
-],async (req, res) => {
-  var errors = validationResult(req).array();
-  if (errors.length > 0) {
-    req.session.errors = errors;
-    res.redirect('/newPass/'+req.body.token);
-  } else {  
-    const user = await model.checkTimeoutToken(req.body.token)
-    const N = 10;
-    const hash = bcrypt.hashSync(req.body.fPass, N);
+    }),
+], async(req, res) => {
+    var errors = validationResult(req).array();
+    if (errors.length > 0) {
+        req.session.errors = errors;
+        res.redirect('/newPass/' + req.body.token);
+    } else {
+        const user = await model.checkTimeoutToken(req.body.token)
+        const N = 10;
+        const hash = bcrypt.hashSync(req.body.fPass, N);
 
-    var entity = {
-      MatKhau: hash,
-      token: req.body.token
-    }
-    await model.changePassByToken(entity);
-    
-    entity = {
-      token: 0,
-      id: user[0].ID
-    }
-    await model.updateNguoiDung(entity);
+        var entity = {
+            MatKhau: hash,
+            token: req.body.token
+        }
+        await model.changePassByToken(entity);
 
-    res.redirect('/login');
-  }
+        entity = {
+            token: 0,
+            id: user[0].ID
+        }
+        await model.updateNguoiDung(entity);
+
+        res.redirect('/login');
+    }
 });
 
 module.exports = router;
