@@ -6,9 +6,12 @@ const bcrypt = require('bcryptjs');
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
+const util = require("util");
+const unlink = util.promisify(fs.unlink);
+const rename = util.promisify(fs.rename);
 const storage = multer.diskStorage({
     filename: function(req, file, cb) {
-        cb(null, req.session.authUser.ID + path.extname(file.originalname));
+        cb(null, Date.now() + path.extname(file.originalname));
     },
     destination: function(req, file, cb) {
 
@@ -252,11 +255,10 @@ router.post("/modifyPass", [
 router.post('/changeAvatar', upload.single('fuMain'), async(req, res) => {
     const userID = req.session.authUser.ID;
     const userdetail = await model.getUserById(userID);
-    // chưa có ảnh đại diện
-    var oldAvatar = userdetail[0].AvatarURL;
-    oldAvatar = './public/' + oldAvatar;
+    console.log(req.file);
     if (userdetail[0].AvatarURL !== null)
-        fs.unlinkSync(oldAvatar);
+        await unlink('./public/' + userdetail[0].AvatarURL);
+    await rename(`./public/assets/images/avatar/${req.file.filename}`, `./public/assets/images/avatar/${userID}` + path.extname(req.file.originalname));
     await model.changeAvatar(userID, `assets/images/avatar/${userID}` + path.extname(req.file.originalname));
 
     res.redirect(req.headers.referer);
