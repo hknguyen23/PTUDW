@@ -137,3 +137,7 @@ main {
 		padding: 5px;
 	}
 }
+
+.hidden{
+	visibility: hidden;
+}
